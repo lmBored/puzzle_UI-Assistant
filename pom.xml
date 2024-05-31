@@ -101,5 +101,5 @@
             </plugin>
         </plugins>
     </build>
-
+    <name>YourPuzzleAssistant</name>
 </project>
