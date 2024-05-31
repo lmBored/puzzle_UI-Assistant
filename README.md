@@ -13,7 +13,7 @@
 - Nguyen Thanh Vinh (1957104)
 - Miquel Ibáñez Solbes (2118998)
 - Isabel Cantero Corchero (2064413)
-- Hoang Bao Khoi Nguyen - 1979388
+- Hoang Bao Khoi Nguyen - (1979388)
 
 ### Project Description
 
