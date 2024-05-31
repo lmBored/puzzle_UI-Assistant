@@ -4,6 +4,12 @@ package ypa.command; // <<<<< TODO: Comment this line out when submitting to Mom
  * Facilities for an undo-redo mechanism, on the basis of commands.
  *
 <!--//# BEGIN TODO: Names, student IDs, group name, and date-->
+<p><b>Group 6, dd/mm/yy</b></p>
+<p><b>Miquel Ibáñez Solbes, 2118998</b></p>
+<p><b>Replace this line</b></p>
+<p><b>Replace this line</b></p>
+<p><b>Replace this line</b></p>
+<p><b>Replace this line</b></p>
 <p><b>Replace this line</b></p>
 <!--//# END TODO-->
  */
