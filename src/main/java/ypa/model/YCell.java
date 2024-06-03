@@ -72,10 +72,6 @@ public class YCell {
      * @return whether this cell conforms to the rules
      */
     public boolean isValid() {
-        if (!this.isFilled()) {
-            return true;
-        }
-        
         return EMPTY <= state && state <= 9;
     }
 

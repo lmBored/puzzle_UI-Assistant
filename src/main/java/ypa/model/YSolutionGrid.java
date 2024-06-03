@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * A 3x3 grid of cells for a Kakuro puzzle,
+ * A 3x3 grid of cells for a Sujiko puzzle,
  * representing the solution grid.
  *
  */
@@ -47,33 +47,48 @@ public class YSolutionGrid {
         grid.get(position).setState(value);
     }
 
-    public boolean isValid() {        
+    /**
+     * Checks whether this grid is valid.
+     *
+     * @return whether this is valid
+     */
+    public boolean isValid() {          
+        HashSet<Integer> seen = new HashSet<>();
         for (YCell cell : grid) {
+            // Check if every value is between 0 and 9 (both included)
             if (!cell.isValid()) {
                 return false;
             }
-        }
-        
-        HashSet<Integer> seen = new HashSet<>();
-
-        for (YCell cell : grid) {
-            int value = cell.getState();
-            if (value < -1 || value > 9) {
-                return false;
-            }
             
-            // Check for duplicates between 1 and 9
-            if (value != -1 && value != 0) {
+            // Check for duplicates between 1 and 9 (there shouldn't be any)
+            int value = cell.getState();    
+            if (value > 0) {
                 if (!seen.add(value)) {
                     return false;
                 }
             }
-        }
-
-        
+        }        
         return true;
     }
     
+    /**
+     * Checks whether this grid is full (non empty values).
+     *
+     * @return whether this is full
+     */
+    public boolean isFull() {        
+        for (YCell cell : grid) {
+            if (cell.isEmpty()) {
+                return false;
+            }
+        }        
+        return true;
+    }
+    
+    /**
+     * Clears grid and sets all values to empty.
+     *
+     */
     public void clear() {
         for (final YCell cell : grid) {
             cell.setState(YCell.EMPTY);
@@ -96,5 +111,5 @@ public class YSolutionGrid {
         }
         return builder.toString();
     }
-    
+
 }

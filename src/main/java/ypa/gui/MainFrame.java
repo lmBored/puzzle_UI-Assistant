@@ -820,7 +820,7 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /** Whether to provide Undo. */
-    public static final boolean UNDO = true; // TODO: implement true
+    public static final boolean UNDO = false; // TODO: implement true
 
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY =
