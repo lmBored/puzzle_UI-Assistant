@@ -6,14 +6,8 @@ package ypa.model;
  */
 public class YCell {
 
-    /** The blocked state. */
-    public static final int BLOCKED = -1;
-
     /** The empty state. */
     public static final int EMPTY = 0;
-    
-    /** String for blocked state. */
-    public static final String BLOCKED_STR = "\\";
 
     /** String for empty state. */
     public static final String EMPTY_STR = ".";
@@ -28,7 +22,7 @@ public class YCell {
      * @pre {@code state} is a valid state
      */
     public YCell(final int state) {
-        if (state < BLOCKED) {
+        if (state < EMPTY || state > 9) {
             throw new IllegalArgumentException(getClass().getSimpleName()
                     + "(" + state + ").pre failed");
         }
@@ -46,21 +40,12 @@ public class YCell {
      * @pre {@code state} is valid
      */
     public void setState(int state) {
-        if (state < BLOCKED) {
+        if (state < EMPTY || state > 9) {
             throw new IllegalArgumentException(getClass().getSimpleName()
-                    + ".setState().pre failed: state == " + state + " < " + BLOCKED);
+                    + ".setState().pre failed: state == ");
         }
         
         this.state = state;
-    }
-
-    /**
-     * Returns whether cell is blocked.
-     *
-     * @return whether {@code this} is blocked
-     */
-    public boolean isBlocked() {
-        return state == BLOCKED;
     }
 
     /**
@@ -86,18 +71,17 @@ public class YCell {
      *
      * @return whether this cell conforms to the rules
      */
-    public boolean isOK() {
+    public boolean isValid() {
         if (!this.isFilled()) {
             return true;
         }
         
-        return state < 10;
+        return EMPTY <= state && state <= 9;
     }
 
     @Override
     public String toString() {
         return switch (state) {
-            case BLOCKED -> BLOCKED_STR;
             case EMPTY -> EMPTY_STR;
             default -> String.valueOf(state);
         };
