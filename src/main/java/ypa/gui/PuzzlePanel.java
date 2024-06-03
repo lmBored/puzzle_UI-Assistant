@@ -51,7 +51,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     /** Cell size in pixels */
-    private final int cellSize = 30;
+    private final int cellSize = 60;
     // TODO: Consider making the cell size changeable by user
 
    final int offsetX = cellSize; // margin for horizontal coordinates
@@ -172,6 +172,57 @@ public class PuzzlePanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+    /**
+     * Draws given sujiko circle containing the inputs the canvas at given location.
+     *
+     * @param g  Graphics object to draw on
+     * @param cell  cell to draw
+     */
+    private void paintCircle(Graphics g) {
+        FontMetrics fm = g.getFontMetrics();
+        final int delta_x = ((int) (0.5 * cellSize) - fm.charWidth('0')) / 2 + 1;
+        final int delta_y = ((int) (1.4 * cellSize) - fm.getAscent() + fm.getDescent()) / 2;
+        int[] circles = puzzle.getCircles();
+        int index = 0;
+    
+        // Constants for circle dimensions and offsets
+        // 18 = 3 / 5 cellSize, 6 = 1 / 5 cellSize
+        // Offset x, y by 0.6 cellSize, dimensions by 0.2 cellSize
+        final int circleOffset = (int) (0.6 * cellSize);
+        final int circleDiameter = cellSize - (int) (0.2 * cellSize);
+        final int circleOffsetAdjustment = 1;
+    
+        for (int i = 1; i <= 2; i++) {
+            for (int j = 1; j <= 2; j++) {
+                int x = j * cellSize + circleOffset;
+                int y = i * cellSize + circleOffset;
+    
+                drawFilledCircle(g, x, y, circleDiameter, circleOffsetAdjustment);
+                drawCircleBorder(g, x, y, circleDiameter);
+                drawCircleNumber(g, x, y, circles[index], delta_x, delta_y);
+    
+                index++;
+            }
+        }
+    }
+    
+    private void drawFilledCircle(Graphics g, int x, int y, int diameter, int adjustment) {
+        g.setColor(Color.WHITE);
+        g.fillOval(x + adjustment, y + adjustment, diameter - adjustment, diameter - adjustment);
+    }
+    
+    private void drawCircleBorder(Graphics g, int x, int y, int diameter) {
+        g.setColor(Color.BLACK);
+        g.drawOval(x, y, diameter, diameter);
+    }
+    
+    private void drawCircleNumber(Graphics g, int x, int y, int number, int delta_x, int delta_y) {
+        g.setColor(Color.BLACK);
+        g.drawString(String.valueOf(number), x + delta_x, y + delta_y);
+    }
+    
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -214,6 +265,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
                 paintCell(g, cell, x, y, delta_x, delta_y);
             }
         }
+        paintCircle(g);
         /*
         // draw entries sums
         g.setColor(Color.WHITE);
