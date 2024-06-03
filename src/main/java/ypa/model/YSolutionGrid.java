@@ -43,6 +43,10 @@ public class YSolutionGrid {
         return grid.get(position);
     }
     
+    public int getValue(int position) {
+        return grid.get(position).getState();
+    }
+    
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
     }

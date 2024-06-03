@@ -9,13 +9,17 @@ import java.util.Scanner;
  * Acts as a facade for the underlying classes.
  * A Sujiko puzzle has
  * <ul>
+ * <li>a name;
  * <li>a mode of operation;
- * <li>a grid of cells YSolutionGrid representing the solution.
- * <li>an array of 4 numbers representing the 4 given hints
+ * <li>a grid of cells YSolutionGrid representing the solution;
+ * <li>an array of 4 numbers representing the 4 given hints / circles;
  * </ul>
  *
  */
 public class YPuzzle {
+    
+    /** The puzzle's (file) name. */
+    private String name;
 
     /** The possible modes of a puzzle. */
     public enum Mode {
@@ -34,29 +38,51 @@ public class YPuzzle {
     private final YSolutionGrid grid;
     
     /** The array of 4 numbers representing the 4 given hints. */
-    private final int[] hints;
+    private final int[] circles;
 
     /**
      * Constructs a new puzzle with initial state read from given scanner
+     * and with a given name.
      * The actual dimensions are determined from the input.
      *
      * @param scanner  the given scanner
+     * @param name  the given name
      */
-    public YPuzzle(Scanner scanner) {
+    public YPuzzle(final Scanner scanner, final String name) {
+        this.name = name;
         this.mode = Mode.VIEW;
         this.grid = new YSolutionGrid();
-        this.hints = getHints(scanner);
+        this.circles = createCircles(scanner);
     }
     
-    private static int[] getHints(Scanner sc) {
-        int[] hints = new int[4];
+    private static int[] createCircles(Scanner sc) {
+        int[] circles = new int[4];
         
         for (int i = 0; i < 4; i++) {
-            hints[i] = sc.nextInt();
+            circles[i] = sc.nextInt();
         }
         sc.close();
         
-        return hints;
+        return circles;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name of this puzzle.  Only allowed in edit mode.
+     *
+     * @param name  the new name
+     * @throws IllegalStateException  if not in edit mode
+     * @pre puzzle is in edit mode
+     */
+    public void setName(String name) {
+        if (mode != Mode.EDIT) {
+            throw new IllegalStateException(this.getClass().getSimpleName()
+                    + ".setName(): not in EDIT mode");
+        }
+        this.name = name;
     }
 
     /**
@@ -94,20 +120,15 @@ public class YPuzzle {
     public YSolutionGrid getGrid() {
         return grid;
     }
-
     
     /**
-     * Gets number of cells with a given state.
+     * Gets the circles in this puzzle, so as to iterate over them.
      *
-     * @param state  the given state
-     * @return number of cells with state {@code state}
-     * @post {@code \result == (\num_of Cell cell : getCells();
-     *   cell.getState() == state)}
-     
-    public int getStateCount(final int state) {
-        return grid.getStateCount(state);
+     * @return the hints / circles of the puzzle
+     */
+    public int[] getCircles() {
+        return circles;
     }
-    * */
 
     /**
      * Returns whether puzzle is solved.
@@ -124,16 +145,36 @@ public class YPuzzle {
     public void clear() {
         grid.clear();
     }
+    
+    public int getRowCount() {
+        return 3;
+    }
+    
+    public int getColumnCount() {
+        return 3;
+    }
+    
+    /**
+     * Returns a YCell given a row and a column (for the paintComponent).
+     * @param r row number
+     * @param c column number
+     * @return YCell
+     */
+    public YCell getCell(int r, int c) {
+        int index = 3 * r + c;
+        return grid.getCell(index);
+    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append("\n");
         sb.append("Mode: ").append(mode).append("\n");
         sb.append(grid.toString()).append("\n");
 
-        sb.append("Hints:\n");
-        sb.append(hints[0]).append(" ").append(hints[1]).append("\n");
-        sb.append(hints[2]).append(" ").append(hints[3]).append("\n");
+        sb.append("Circles:\n");
+        sb.append(circles[0]).append(" ").append(circles[1]).append("\n");
+        sb.append(circles[2]).append(" ").append(circles[3]).append("\n");
 
         return sb.toString();
     }
