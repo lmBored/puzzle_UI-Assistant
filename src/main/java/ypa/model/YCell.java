@@ -15,6 +15,8 @@ public class YCell {
     /** The cell's state. */
     private int state;
 
+    private int location;
+
     /**
      * Constructs a cell with a given state.
      *
@@ -73,6 +75,14 @@ public class YCell {
      */
     public boolean isValid() {
         return EMPTY <= state && state <= 9;
+    }
+
+    public int getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
     }
 
     @Override

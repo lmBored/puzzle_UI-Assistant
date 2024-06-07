@@ -19,7 +19,9 @@ public class YSolutionGrid {
      */
     public YSolutionGrid() {
         for (int i = 0; i < 9; i++) {
+
             grid.add(new YCell(YCell.EMPTY));
+            grid.get(i).setLocation(i + 1);
         }
     }
     
@@ -47,6 +49,12 @@ public class YSolutionGrid {
         return grid.get(position).getState();
     }
     
+    /**
+     * Set the cell location within the grid.
+     *
+     * @param position the position of the cell.
+     * @param value the value of the cell.
+     */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
     }
