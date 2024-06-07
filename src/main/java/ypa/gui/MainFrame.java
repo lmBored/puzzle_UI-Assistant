@@ -500,8 +500,8 @@ public class MainFrame extends javax.swing.JFrame {
             // clicked an unblocked cell
             this.puzzlePanel.setSelected(cell);
             // comment added to test. TODO: remove
-            //jTextArea.append("Selected cell " + cell.getLocation().toString()
-             //       + "\n");
+            jTextArea.append("Selected cell " + String.valueOf(cell.getLocation())
+                   + "\n");
         } else {
             this.puzzlePanel.setSelected(null);
         }

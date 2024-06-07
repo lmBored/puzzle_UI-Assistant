@@ -19,7 +19,9 @@ public class YSolutionGrid {
      */
     public YSolutionGrid() {
         for (int i = 0; i < 9; i++) {
+
             grid.add(new YCell(YCell.EMPTY));
+            grid.get(i).setLocation(i + 1);
         }
     }
     
@@ -47,6 +49,14 @@ public class YSolutionGrid {
         return grid.get(position).getState();
     }
     
+    /**
+     * Constructor that initializes the grid with a list of integers.
+     * Each integer represents the state of a cell in the grid.
+     *
+     * @param position the list of initial states for the cells.
+     * @param value the list of initial states for the cells.
+     * @throws IllegalArgumentException if the list does not contain exactly 9 elements.
+     */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
     }
