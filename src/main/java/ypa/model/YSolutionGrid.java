@@ -50,12 +50,10 @@ public class YSolutionGrid {
     }
     
     /**
-     * Constructor that initializes the grid with a list of integers.
-     * Each integer represents the state of a cell in the grid.
+     * Set the cell location within the grid.
      *
-     * @param position the list of initial states for the cells.
-     * @param value the list of initial states for the cells.
-     * @throws IllegalArgumentException if the list does not contain exactly 9 elements.
+     * @param position the position of the cell.
+     * @param value the value of the cell.
      */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
