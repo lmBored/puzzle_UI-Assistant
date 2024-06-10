@@ -247,7 +247,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemHelp">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Help"/>
+                <Property name="text" type="java.lang.String" value="How to play"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemHelpActionPerformed"/>

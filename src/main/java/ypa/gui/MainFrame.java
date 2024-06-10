@@ -316,7 +316,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuHelp.setText("Help");
 
-        jMenuItemHelp.setText("Help");
+        jMenuItemHelp.setText("How to play");
         jMenuItemHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemHelpActionPerformed(evt);
@@ -646,31 +646,28 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItemHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHelpActionPerformed
         JOptionPane.showMessageDialog(this,
                 new String[] {
-                    "A Sujiko Puzzle consists of a rectangular grid of cells.",
-                    "A group of horizontally or vertically adjacent empty cells",
-                    "forms an entry.",
-                    " ",
-                    "Rule 1:",
-                    "  Enter one positive digit (1 - 9) in each empty cell.",
-                    " ",
-                    "Rule 2:",
-                    "  Within an entry, the digits must be distinct.",
-                    " ",
-                    "Rule 3:",
-                    "  The sum of the digits in an entry is prescribed by its",
-                    "  hint, appearing on its left, or above it.",
-                    " ",
-                    "Rule 4:",
-                    "  There is exactly one solution."
+                    "Sujiko is a number puzzle game played on a 3x3 grid.",
+                    "The objective is to fill in the empty cells with numbers from 1 to 9.",
+                    "Each of the four central circles in the 2x2 subgrids must add up to the",
+                    "given target sum. Use logical reasoning to determine the correct",
+                    "placement of the numbers, ensuring that all conditions are met.",
+                    "",
+                    "Rules:",
+                    "1. Enter one positive digit (1 - 9) in each empty cell.",
+                    "2. The sum of the numbers in the central cells of each 2x2 subgrid",
+                    "   must equal the target value provided.",
+                    "3. Each number from 1 to 9 must be used only once in the entire grid.",
+                    "",
                 },
-                "Help for Sujiko Puzzle Assistant", JOptionPane.INFORMATION_MESSAGE);
+                "Help - Sujiko Puzzle Assistant", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItemHelpActionPerformed
 
     private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAboutActionPerformed
         JOptionPane.showMessageDialog(this,
                 new String[] {
-                    "Author: Tom Verhoeff (TU/e, Eindhoven University of Technology)",
-                    "Copyright 2013-2-16"
+                    "This Sujiko puzzle solver is developed by Group 6 as part of the",
+                    "course Software Design 2IRR00 at Eindhoven University of Technology (TU/e),",
+                    "for the academic year 2023-34."
                 },
                 "About Sujiko Puzzle Assistant", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItemAboutActionPerformed
@@ -734,7 +731,6 @@ public class MainFrame extends javax.swing.JFrame {
             message = "Puzzle solved";
             // handle result of solver
             final Collection<Command> commands = solver.getCommands();
-            message = message + ": " + commands.size() + " steps";
             for (final Command command : commands) {
                 if (command instanceof CompoundCommand &&
                         ((CompoundCommand) command).size() == 0) {
@@ -986,7 +982,7 @@ public class MainFrame extends javax.swing.JFrame {
         puzzleChooser.setCurrentDirectory(DEFAULT_PUZZLE_DIRECTORY);
         puzzle = null;
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Sujiko puzzle files", "txt");
+                "Sujiko puzzle files (.txt)", "txt");
         puzzleChooser.setFileFilter(filter);
         this.setTitle("Sujiko Puzzle Assistant: No puzzle loaded");
         this.jTextArea.append("Open a puzzle file to start.\n");
