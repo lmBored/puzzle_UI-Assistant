@@ -60,7 +60,6 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItemNew = new javax.swing.JMenuItem();
         jMenuItemOpen = new javax.swing.JMenuItem();
         jMenuItemSaveAs = new javax.swing.JMenuItem();
-        jMenuItemDump = new javax.swing.JMenuItem();
         jSeparatorFile1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemQuit = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
@@ -113,7 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelPuzzle.setLayout(jPanelPuzzleLayout);
         jPanelPuzzleLayout.setHorizontalGroup(
             jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addGap(0, 376, Short.MAX_VALUE)
         );
         jPanelPuzzleLayout.setVerticalGroup(
             jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,15 +147,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenuFile.add(jMenuItemSaveAs);
-
-        jMenuItemDump.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItemDump.setText("Dump");
-        jMenuItemDump.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDumpActionPerformed(evt);
-            }
-        });
-        jMenuFile.add(jMenuItemDump);
         jMenuFile.add(jSeparatorFile1);
 
         jMenuItemQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -342,9 +332,9 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelPuzzle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelPuzzle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -490,6 +480,20 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         
+        if (puzzle == null) {
+            return;
+        }
+        
+        if (puzzle.isSolved()) {
+            jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
+            return;
+        }
+        
+        if (puzzle.getMode() == YPuzzle.Mode.VIEW) {
+            jTextArea.append("Mode is " + puzzle.getMode() + "\n");
+            return;
+        }
+        
         final YCell cell = puzzlePanel.mouseToCell(evt);
         if (cell == null) {
             return;
@@ -510,27 +514,40 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelPuzzleMouseClicked
 
     private void jPanelPuzzleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelPuzzleKeyTyped
-        jTextArea.append("Key typed: " + evt.getKeyChar() + "\n");
+        //jTextArea.append("Key typed: " + evt.getKeyChar() + "\n");
         if (puzzle == null) {
             return;
         }
+        
+        if (puzzle.isSolved()) {
+            jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
+            return;
+        }
+        
+        if (puzzle.getMode() == YPuzzle.Mode.VIEW) {
+            jTextArea.append("Mode is " + puzzle.getMode() + "\n");
+            return;
+        } 
+        // else it is EDIT or SOLVE mode and it is possible to type
+        
         final YCell cell = this.puzzlePanel.getSelected();
         if (cell == null) {
             return;
         }
         // cell != null
-        if (puzzle.getMode() != YPuzzle.Mode.SOLVE) {
-            return;
-        }
 
         // convert key typed to new state
         final char c = evt.getKeyChar();
         final int state;
         if ('1' <= c && c <= '9') {
+            jTextArea.append("Numberic value typed: " + c + "\n");
             state = c - '0';
         } else if (c == '0' | c == ' ') {
+            jTextArea.append("Empty value typed: " + c + "\n");
             state = YCell.EMPTY;
         } else {
+            jTextArea.append("Incorrect key.\n" 
+                + "Enter a number from 1 to 9, or 0 for empty.\n");
             return;
         }
         if (! UNDO) {
@@ -548,14 +565,7 @@ public class MainFrame extends javax.swing.JFrame {
         updateFrame();
     }//GEN-LAST:event_jPanelPuzzleKeyTyped
 
-    private void jMenuItemDumpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDumpActionPerformed
-        if (puzzle == null) {
-            jTextArea.append("No puzzle to dump.\n");
-            return;
-        }
-        jTextArea.append(puzzle.toString());
-    }//GEN-LAST:event_jMenuItemDumpActionPerformed
-
+    /**/
     private void jMenuItemCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCopyActionPerformed
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         String selectedText = jTextArea.getSelectedText();
@@ -713,6 +723,16 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         // puzzle != null
+        
+        if (puzzle.getMode() != YPuzzle.Mode.SOLVE) {
+            jTextArea.append("Mode is " + puzzle.getMode() + "\n");
+            return;
+        }
+        
+        if (puzzle.isSolved()) {
+            jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
+            return;
+        }
 
         String message;
         Reasoner reasoner = null;
@@ -926,7 +946,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemClear;
     private javax.swing.JMenuItem jMenuItemClearTextArea;
     private javax.swing.JMenuItem jMenuItemCopy;
-    private javax.swing.JMenuItem jMenuItemDump;
     private javax.swing.JMenuItem jMenuItemHelp;
     private javax.swing.JMenuItem jMenuItemNew;
     private javax.swing.JMenuItem jMenuItemOpen;

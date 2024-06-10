@@ -9,7 +9,7 @@ import java.util.List;
  * representing the solution grid.
  *
  */
-public class YSolutionGrid {
+public class YGrid {
     
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();
@@ -17,7 +17,7 @@ public class YSolutionGrid {
     /**
      * Constructor for an empty grid.
      */
-    public YSolutionGrid() {
+    public YGrid() {
         for (int i = 0; i < 9; i++) {
 
             grid.add(new YCell(YCell.EMPTY));
@@ -32,7 +32,7 @@ public class YSolutionGrid {
      * @param initialStates the list of initial states for the cells.
      * @throws IllegalArgumentException if the list does not contain exactly 9 elements.
      */
-    public YSolutionGrid(List<Integer> initialStates) {
+    public YGrid(List<Integer> initialStates) {
         if (initialStates == null || initialStates.size() != 9) {
             throw new IllegalArgumentException("Initial states must contain exactly 9 elements.");
         }

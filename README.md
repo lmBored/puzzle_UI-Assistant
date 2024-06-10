@@ -1,8 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/_p0yNlNQ)
 
-
-
-
 # Sujiko Puzzle Assistant
 
 ## Group Assignment 2IRR00 2024 Group 6
@@ -27,6 +24,8 @@ numbers, ensuring that all conditions are met.
 2. The sum of the numbers in the central cells of each 2x2 subgrid must equal the target value provided.
 3. Each number from 1 to 9 must be used only once in the entire grid.
 
+For more information read [this](https://en.wikipedia.org/wiki/Sujiko).
+
 ### File Format and Application Details:
 The puzzle description is stored in a text file (.txt). Each file assigns the 
 four numbers to the four central circles of the Sujiko puzzle, with each number 
@@ -46,6 +45,18 @@ On the left side of the panel, there is a visual representation of the puzzle.
 On the right side of the panel, there is a text area that provides real-time 
 updates on the puzzle's state, including the moves made and the mode.
 This area helps users keep track of their progress.
+When selecting and typing into the cells, the possible values are 
+1 to 9 and also 0 to indicate an empty cell.
+
+### Modes
+The Sujiko Puzzle Assistant operates in three distinct modes:
+- **VIEW Mode**: This is a read-only mode where the puzzle can be viewed, 
+    but it is not possible to solve it or type any keys.
+- **EDIT Mode**: In this mode, you can type to fill in the puzzle cells, 
+    but the "Solve" button in the menu is disabled.
+- **SOLVE Mode**: This mode allows full interaction; you can type to fill 
+    in the puzzle cells and also press the "Solve" button in the menu 
+    to find the solution.
 
 ## Use Case
 To experience the Sujiko Puzzle Assistant, follow these steps:

@@ -4,7 +4,7 @@ import ypa.command.Command;
 import ypa.command.SetCommand;
 import ypa.model.YCell;
 import ypa.model.YPuzzle;
-import ypa.model.YSolutionGrid;
+import ypa.model.YGrid;
 import ypa.reasoning.Reasoner;
 
 /**
@@ -18,7 +18,7 @@ public class YBacktrackSolver extends YAbstractSolver {
     protected Reasoner reasoner;
     
     /** The grid of cells. */
-    private final YSolutionGrid grid;
+    private final YGrid grid;
     
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
@@ -44,7 +44,7 @@ public class YBacktrackSolver extends YAbstractSolver {
      */
     @Override
     public boolean solve() {
-        YSolutionGrid solution = sujikoSolver(circles, grid);
+        YGrid solution = sujikoSolver(circles, grid);
         return solution != null;
     }
     
@@ -54,11 +54,11 @@ public class YBacktrackSolver extends YAbstractSolver {
      * @param circles array of 4 integers representing the sums of the numbers 
      *         in each circle
      * @param grid the initially empty 3x3 grid that will contain the solutions
-     * @return YSolutionGrid of 9 integers with the solution grid or 
-     *          {@code null} if no solution exists
+     * @return YGrid of 9 integers with the solution grid or 
+          {@code null} if no solution exists
      */
-    public static YSolutionGrid sujikoSolver(int[] circles, 
-            YSolutionGrid grid) {
+    public static YGrid sujikoSolver(int[] circles, 
+            YGrid grid) {
         if (backtrack(grid, circles, 0)) {
             return grid;
         }
@@ -75,7 +75,7 @@ public class YBacktrackSolver extends YAbstractSolver {
      * @param index the current index in the grid being filled
      * @return {@code true} if a solution is found, {@code false} otherwise
      */
-    private static boolean backtrack(YSolutionGrid grid, 
+    private static boolean backtrack(YGrid grid, 
             int[] circles, int index) {
         if (index == 9) {
             return checkSums(circles, grid);
@@ -93,7 +93,7 @@ public class YBacktrackSolver extends YAbstractSolver {
         return false;
     }
     
-    private static boolean isUsed(YSolutionGrid grid, int num) {
+    private static boolean isUsed(YGrid grid, int num) {
         for (int i = 0; i < 9; i++) {
             if (grid.getValue(i) == num) {
                 return true;
@@ -102,7 +102,7 @@ public class YBacktrackSolver extends YAbstractSolver {
         return false;
     }    
     
-    private static boolean checkSums(int[] circles, YSolutionGrid grid) {
+    private static boolean checkSums(int[] circles, YGrid grid) {
         return (grid.getValue(0) + grid.getValue(1) + grid.getValue(3) 
                 + grid.getValue(4) == circles[0]) 
                && (grid.getValue(1) + grid.getValue(2) + grid.getValue(4)

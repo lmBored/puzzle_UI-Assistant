@@ -11,8 +11,8 @@ import java.util.Scanner;
  * <ul>
  * <li>a name;
  * <li>a mode of operation;
- * <li>a grid of cells YSolutionGrid representing the solution;
- * <li>an array of 4 numbers representing the 4 given hints / circles;
+ * <li>a grid of cells YGrid representing the solution;
+ <li>an array of 4 numbers representing the 4 given hints / circles;
  * </ul>
  *
  */
@@ -35,7 +35,7 @@ public class YPuzzle {
     private Mode mode;
 
     /** The grid of cells. */
-    private final YSolutionGrid grid;
+    private final YGrid grid;
     
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
@@ -51,7 +51,7 @@ public class YPuzzle {
     public YPuzzle(final Scanner scanner, final String name) {
         this.name = name;
         this.mode = Mode.VIEW;
-        this.grid = new YSolutionGrid();
+        this.grid = new YGrid();
         this.circles = createCircles(scanner);
     }
     
@@ -117,7 +117,7 @@ public class YPuzzle {
      *
      * @return the cells of this puzzle as iterable
      */
-    public YSolutionGrid getGrid() {
+    public YGrid getGrid() {
         return grid;
     }
     
