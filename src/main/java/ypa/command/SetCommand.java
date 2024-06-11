@@ -1,8 +1,7 @@
 package ypa.command;
 
-import ypa.model.KCell;
-
 import java.util.Collection;
+import ypa.model.KCell;
 
 /**
  * The command to set the state of a cell.
@@ -11,13 +10,13 @@ import java.util.Collection;
  */
 public class SetCommand extends GenericCommand<KCell> {
 
-// Representation of command state
+    // Representation of command state
     /** The command's parameter. */
     private final int newState;
 
     /** Previous state of the receiver, for revert(). */
     private int oldState;
-//
+    //
 
     /**
      * Constructs a set command for a given receiver and new state.
@@ -27,12 +26,12 @@ public class SetCommand extends GenericCommand<KCell> {
      */
     public SetCommand(final KCell receiver, final int newState) {
         super(receiver);
-// Initialize command state
+        // Initialize command state
         this.newState = newState;
-//
+        //
     }
 
-// Operations
+    // Operations
     @Override
     public void execute() {
         super.execute();
@@ -52,6 +51,6 @@ public class SetCommand extends GenericCommand<KCell> {
         result.add(receiver);
         return result;
     }
-//
+    //
 
 }

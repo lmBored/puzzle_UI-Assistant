@@ -1,9 +1,8 @@
 package ypa.command;
 
-import ypa.model.KCell;
-
 import java.util.Collection;
 import java.util.HashSet;
+import ypa.model.KCell;
 
 /**
  * Abstract base class to represent an executable and revertible command,
@@ -45,7 +44,7 @@ public abstract class Command {
      *
      * @throws IllegalStateException  if {@code executed}
      * @pre {@code ! executed && }
-     *   precondition of the command holds in the receiver
+     precondition of the command holds in the receiver
      * @post {@code executed}
      */
     public void execute() throws IllegalStateException {
@@ -61,7 +60,7 @@ public abstract class Command {
      * A concrete command will override this method.
      *
      * @pre {@code executed && }
-     *   precondition of the reversal holds in the receiver
+     precondition of the reversal holds in the receiver
      * @throws IllegalStateException  if {@code ! executed}
      * @post {@code ! executed}
      */

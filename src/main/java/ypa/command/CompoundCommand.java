@@ -1,10 +1,9 @@
 package ypa.command;
 
-import ypa.model.KCell;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import ypa.model.KCell;
 
 /**
  * A compound command consists of a sequence of commands.
@@ -42,7 +41,7 @@ public class CompoundCommand extends Command {
      *
      * @param command  the command to add
      * @throws IllegalStateException  if execution state of added command
-     *   does not match that of this compound command
+     does not match that of this compound command
      * @pre {@code command != null \implies
      *   this.isExecuted() == command.isExecuted()}
      */
@@ -66,7 +65,7 @@ public class CompoundCommand extends Command {
      * @param compound  the compound command to add
      * @throws IllegalArgumentException  if {@code compound == null}
      * @throws IllegalStateException  if execution state of {@code compound}
-     *   does not match that of this compound command
+     does not match that of this compound command
      * @pre {@code compound != null &&
      *   this.isExecuted() == compound.isExecuted()}
      */
