@@ -13,13 +13,13 @@ public class YGrid {
     
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();
+    private List<YGroup> groups = new ArrayList<>();
     
     /**
      * Constructor for an empty grid.
      */
     public YGrid() {
         for (int i = 0; i < 9; i++) {
-
             grid.add(new YCell(YCell.EMPTY));
             grid.get(i).setLocation(i + 1);
         }

@@ -1,5 +1,6 @@
 package ypa.model;
 
+import java.util.List;
 /**
  * A grid cell for a Sujiko puzzle.
  *
@@ -17,6 +18,8 @@ public class YCell {
 
     private int location;
 
+    /** The group which the cell belongs to **/
+    private List<YGroup> group;
     /**
      * Constructs a cell with a given state.
      *
