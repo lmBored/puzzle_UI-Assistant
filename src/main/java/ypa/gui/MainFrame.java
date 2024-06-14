@@ -362,6 +362,18 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private boolean checkPuzzleSolvability() {
+        Reasoner reasoner = null;
+        YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
+    
+        if (solver.solve()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     private void jMenuItemSaveAsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSaveAsActionPerformed
         if (puzzle == null) {
             jTextArea.append("No puzzle to save.\n");
@@ -488,6 +500,19 @@ public class MainFrame extends javax.swing.JFrame {
 
             try {
                 puzzle = new YPuzzle(scanner, puzzleName);
+                while (!checkPuzzleSolvability()) {
+                    jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
+                    circleValues = JOptionPane.showInputDialog(this,
+                            "Enter the circle values for the new puzzle (comma-separated)", "New Puzzle Circle Values",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    if (circleValues == null || circleValues.isEmpty()) {
+                        jTextArea.append("No circle values entered for the new puzzle.\n");
+                        return;
+                    }
+                    scanner = new Scanner(circleValues);
+                    scanner.useDelimiter(",");
+                    puzzle = new YPuzzle(scanner, puzzleName);
+                }
                 this.setTitle("Sujiko Puzzle Assistant: " + puzzle.getName());
                 jTextArea.append("Created new puzzle " + puzzle.getName() + "\n");
                 jTextArea.append(puzzle.toString() + "\n");
@@ -502,7 +527,8 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Invalid circle values entered for the new puzzle.\n");
                 jTextArea.append(e + "\n");
             }
-        } else {
+        } 
+        else {
             jTextArea.append("Clearing existing puzzle.\n");
             puzzle.clear();
             updateFrame();
@@ -785,30 +811,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
     private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
-        String message;
-        Reasoner reasoner = null;
-
-        // Configure a reasoning strategy
-        reasoner = new BasicEmptyCellByContradiction(puzzle);
-
-        if (reasoner == null) {
-            message = "Apply Reasoning is not yet implemented.";
-        } else {
-            if (!jCheckBoxMenuItemStopAtFirstChange.isSelected()) {
-                reasoner = new FixpointReasoner(puzzle, reasoner);
-            }
-            CompoundCommand command = reasoner.apply();
-            if (command == null) {
-                message = "Puzzle is not solvable.";
-            } else if (command.size() > 0) {
-                this.undoRedo.did(command);
-                message = "Reasoning determined " + command.getCells().size() + " cells.";
-            } else {
-                message = "Reasoning did not help.";
-            }
-        }
-        jTextArea.append(message + "\n");
-        updateFrame();
+        
         // comment added to test. TODO: remove
         /*
          * String message;
