@@ -23,6 +23,31 @@ public class YGrid {
             grid.add(new YCell(YCell.EMPTY));
             grid.get(i).setLocation(i + 1);
         }
+
+        for (int i = 0; i < 4; i++) {
+            groups.add(new YGroup());
+        }
+        // 1 2 4 5
+        groups.get(0).addCell(grid.get(0));
+        groups.get(0).addCell(grid.get(1));
+        groups.get(0).addCell(grid.get(3));
+        groups.get(0).addCell(grid.get(4));
+
+        // 2 3 5 6
+        groups.get(1).addCell(grid.get(1));
+        groups.get(1).addCell(grid.get(2));
+        groups.get(1).addCell(grid.get(4));
+        groups.get(1).addCell(grid.get(5));
+        // 4 5 7 8
+        groups.get(2).addCell(grid.get(3));
+        groups.get(2).addCell(grid.get(4));
+        groups.get(2).addCell(grid.get(6));
+        groups.get(2).addCell(grid.get(7));
+        // 5 6 8 9
+        groups.get(3).addCell(grid.get(4));
+        groups.get(3).addCell(grid.get(5));
+        groups.get(3).addCell(grid.get(7));
+        groups.get(3).addCell(grid.get(8));
     }
     
     /**
@@ -49,6 +74,10 @@ public class YGrid {
         return grid.get(position).getState();
     }
     
+    public List<YGroup> getGroups() {
+        return this.groups;
+    }
+
     /**
      * Set the cell location within the grid.
      *

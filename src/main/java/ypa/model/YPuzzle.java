@@ -1,6 +1,7 @@
 package ypa.model;
 
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * State of a Sujiko puzzle, without auxiliary solver-related information:
@@ -53,6 +54,10 @@ public class YPuzzle {
         this.mode = Mode.VIEW;
         this.grid = new YGrid();
         this.circles = createCircles(scanner);
+        List<YGroup> list = grid.getGroups();
+        for (int i = 0; i < 4; i++) {
+            list.get(i).setExpectedSum(circles[i]);
+        }
     }
     
     private static int[] createCircles(Scanner sc) {

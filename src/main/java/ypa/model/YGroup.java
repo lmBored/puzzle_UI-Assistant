@@ -25,13 +25,11 @@ public class YGroup {
     }
 
     /** Add a cell to the current group. */    
-    public void addTypedCell(YCell ycell) {
-        if (currCellCount < 4) {
-            cellGroup.add(ycell);
-            currCellCount++;
-        }
+    public void addCell(YCell cell) {
+        cellGroup.add(cell);
+        cell.setGroup(this);
     }
-
+    
     public void removeCell(int index) {
         cellGroup.remove(index);
     }
@@ -44,5 +42,14 @@ public class YGroup {
         }
         return currSum == expectedSum;
     } 
+    
+    /** Get this list of the loations of the cells whose sum do not equal the target. */
+    public List<Integer> getViolatedCells() {
+        List<Integer> list = new ArrayList<>();
+        for (YCell cell: cellGroup) {
+            list.add(cell.getLocation());
+        }
+        return list;
+    }
 
 }

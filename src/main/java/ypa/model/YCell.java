@@ -90,6 +90,10 @@ public class YCell {
         this.location = location;
     }
 
+    public void setGroup(YGroup group) {
+        this.group.add(group);
+    }
+
     @Override
     public String toString() {
         return switch (state) {
