@@ -397,6 +397,17 @@ public class MainFrame extends javax.swing.JFrame {
                     "File Save Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
+        // Auto close file instead of calling out.close()
+        // try (PrintWriter out = new PrintWriter(puzzleFile)) {
+        //     out.print(puzzle.toFileFormat());
+        //     unsavedModifications = false;
+        // } catch (FileNotFoundException e) {
+        //     JOptionPane.showMessageDialog(this,
+        //             "IO error while saving file: " + e,
+        //             "File Save Error",
+        //             JOptionPane.ERROR_MESSAGE);
+        // }
     }// GEN-LAST:event_jMenuItemSaveAsActionPerformed
 
     private void jMenuItemQuitActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemQuitActionPerformed
