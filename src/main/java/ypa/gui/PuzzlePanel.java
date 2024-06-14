@@ -1,13 +1,14 @@
 package ypa.gui;
 
 import ypa.model.YCell;
-import ypa.model.KEntry;
 import ypa.model.YPuzzle;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -50,24 +51,27 @@ public class PuzzlePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    /** Cell size in pixels */
+    /** Cell size in pixels. */
     private final int cellSize = 60;
     // TODO: Consider making the cell size changeable by user
 
-   final int offsetX = cellSize; // margin for horizontal coordinates
-   final int offsetY = cellSize; // margin for vertical coordinates
+    final int offsetX = cellSize; // margin for horizontal coordinates
+    final int offsetY = cellSize; // margin for vertical coordinates
 
-   /** The puzzle being manipulated */
+    /** The puzzle being manipulated. */
     private YPuzzle puzzle;
 
     /** Selected cell, affected by keystrokes. */
     private YCell selected;
 
-    /** Whether symbols are highlighted */
+    /** Whether symbols are highlighted. */
     private boolean highlight;
 
-    /** Marked cells (by different background color) */
+    /** Marked cells (by different background color). */
     private Set<YCell> markedCells;
+
+    /** Checks for duplicating values. */
+    private Set<Integer> typedValues;
 
     /**
      * Initializes this panel.
@@ -76,7 +80,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
         setPuzzle(null);
         highlight = true;
     }
-
+    
     /**
      * Sets the puzzle.
      *
@@ -86,6 +90,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
         this.puzzle = puzzle;
         this.selected = null;
         this.markedCells = null;
+        this.typedValues = new HashSet<>();
     }
 
     /**
@@ -128,6 +133,35 @@ public class PuzzlePanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * 1 <= value <= 9. 
+     * Sets the value the user has typed in to be used for duplication checking.
+     *
+     * @param value  the value the user has inputted
+     */
+    public void addTypedInput(int value) {
+        typedValues.add(Integer.valueOf(value));
+    } 
+
+    /**
+     * Sets the value the user has typed in to be used for duplication checking.
+     *
+     * @param value  the value the user has inputted
+     */
+    public boolean inputAlreadyPresent(int value) {
+        return typedValues.contains(Integer.valueOf(value));
+    }    
+
+    /**
+     * Remove the cell value from the duplicate-checking set.
+     *
+     * @param value  the value the user has inputted
+     */
+    public void removeTypedValue(int value) {
+        if (inputAlreadyPresent(value)) {
+            typedValues.remove(Integer.valueOf(value));
+        }
+    }
     /**
     /**
      * Draws given cell on given canvas at given location.

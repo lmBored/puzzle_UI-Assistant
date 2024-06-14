@@ -542,7 +542,11 @@ public class MainFrame extends javax.swing.JFrame {
         if ('1' <= c && c <= '9') {
             jTextArea.append("Numberic value typed: " + c + "\n");
             state = c - '0';
+            DUPLICATE = puzzlePanel.inputAlreadyPresent(state);
+
         } else if (c == '0' | c == ' ') {
+            int prevCellValue = cell.getState();
+            puzzlePanel.removeTypedValue(prevCellValue);
             jTextArea.append("Empty value typed: " + c + "\n");
             state = YCell.EMPTY;
         } else {
@@ -551,7 +555,15 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         if (! UNDO) {
-            cell.setState(state);
+            if (!DUPLICATE || state == 0) {
+                cell.setState(state);
+                if (state != 0) {
+                    puzzlePanel.addTypedInput(state);
+                }
+            } else {
+                jTextArea.append("Duplicate key detected.\n");
+                return;                
+            }
         } else {
 // Create undoable set command and pass it to undo-redo facility
             // comment added to test. TODO: remove
@@ -973,6 +985,7 @@ public class MainFrame extends javax.swing.JFrame {
     /** Whether to provide Undo. */
     public static final boolean UNDO = false; // TODO: implement true
 
+    public static boolean DUPLICATE;
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY =
             new File(new File(".."), "puzzles");
