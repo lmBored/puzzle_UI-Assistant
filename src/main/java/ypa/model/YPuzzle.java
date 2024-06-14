@@ -173,12 +173,12 @@ public class YPuzzle {
      * cell's value to 1.
      * If all cells are filled (none have a value of 0), this method does nothing.
      */
-    public void fillNextNumber() {
+    public void fillNextNumber(int hint) {
         for (int i = 0; i < getRowCount(); i++) {
             for (int j = 0; j < getColumnCount(); j++) {
                 YCell cell = getCell(i, j);
                 if (cell.isEmpty()) {
-                    cell.setState(1);
+                    cell.setState(hint);
                     return;
                 }
             }

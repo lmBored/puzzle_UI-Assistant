@@ -815,7 +815,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
     
-        puzzle.fillNextNumber();
+        puzzle.fillNextNumber(1);
         jTextArea.append("Number hinted.\n");
         updateFrame();
         
