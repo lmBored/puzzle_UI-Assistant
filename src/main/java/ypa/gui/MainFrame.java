@@ -361,7 +361,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jMenuItemSaveAsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSaveAsActionPerformed
         if (puzzle == null) {
             jTextArea.append("No puzzle to save.\n");
@@ -462,7 +462,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean checkPuzzleSolvability() {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
-    
+
         if (solver.isSolvable()) {
             return true;
         } else {
@@ -526,39 +526,47 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Invalid circle values entered for the new puzzle.\n");
                 jTextArea.append(e + "\n");
             }
-        } 
-        else {
+        } else {
             jTextArea.append("Clearing existing puzzle.\n");
             puzzle.clear();
             updateFrame();
 
             int[] circles = puzzle.getCircles();
+            boolean validPuzzle = false;
 
-            for (int index = 0; index < circles.length; index++) {
-                int newCircleProperty = 0;
-                boolean validInput = false;
-                do {
-                    String value = JOptionPane.showInputDialog(this,
-                            "Enter new property for circle " + index, "Input Circle Property",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    if (value == null || value.isEmpty()) {
-                        jTextArea.append("No property entered for circle " + index + ".\n");
-                        continue;
-                    }
-                    try {
-                        newCircleProperty = Integer.parseInt(value);
-                        validInput = true;
-                    } catch (NumberFormatException e) {
-                        jTextArea.append(
-                                "Invalid property entered for circle " + index + ". Please enter a valid number.\n");
-                    }
-                } while (!validInput);
+            while (validPuzzle == false) {
+                for (int index = 0; index < circles.length; index++) {
+                    int newCircleProperty = 0;
+                    boolean validInput = false;
+                    do {
+                        String value = JOptionPane.showInputDialog(this,
+                                "Enter new property for circle " + index, "Input Circle Property",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        if (value == null || value.isEmpty()) {
+                            jTextArea.append("No property entered for circle " + index + ".\n");
+                            continue;
+                        }
+                        try {
+                            newCircleProperty = Integer.parseInt(value);
+                            validInput = true;
+                        } catch (NumberFormatException e) {
+                            jTextArea.append(
+                                    "Invalid property entered for circle " + index
+                                            + ". Please enter a valid number.\n");
+                        }
+                    } while (!validInput);
 
-                circles[index] = newCircleProperty;
-                jTextArea.append("New property for circle " + index + ": " + newCircleProperty + "\n");
-                updateFrame();
+                    circles[index] = newCircleProperty;
+                    jTextArea.append("New property for circle " + index + ": " + newCircleProperty + "\n");
+                    updateFrame();
+                }
+
+                if (checkPuzzleSolvability()) {
+                    validPuzzle = true;
+                } else {
+                    jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
+                }
             }
-
             updateFrame();
         }
 
@@ -814,11 +822,11 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append("Please create a puzzle first.\n");
             return;
         }
-    
+
         puzzle.fillNextNumber();
         jTextArea.append("Number hinted.\n");
         updateFrame();
-        
+
         // comment added to test. TODO: remove
         /*
          * String message;
@@ -1107,7 +1115,7 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /** Whether to provide Undo. */
-    public static final boolean UNDO = false; // TODO: implement true 
+    public static final boolean UNDO = false; // TODO: implement true
 
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY = new File(new File(".."), "puzzles");
