@@ -10,7 +10,7 @@ import java.util.Stack;
 <p><b>Miquel Ibáñez Solbes, 2118998</b></p>
 <p><b>Vinh Nguyen, 1957104</b></p>
 <p><b>Nam Mai, 1959190</b></p>
-<p><b>Replace this line</b></p>
+<p><b>Khoi Nguyen, 1979388</b></p>
 <p><b>Replace this line</b></p>
 <p><b>Replace this line</b></p>
 <!--//# END TODO-->
@@ -102,7 +102,7 @@ public class UndoRedo {
         //# END TODO
     }
 
-    /**
+    /**]
      * Adds given command to the do-history.
      * If the command was not yet executed, then it is first executed.
      *
