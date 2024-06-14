@@ -5,6 +5,7 @@ import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
 import ypa.command.UndoRedo;
 import ypa.model.YCell;
+import ypa.model.YGrid;
 import ypa.model.YPuzzle;
 import ypa.reasoning.BasicEmptyCellByContradiction;
 import ypa.reasoning.EntryWithOneEmptyCell;
@@ -21,6 +22,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -818,14 +820,29 @@ public class MainFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
     private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
-        if (puzzle == null) {
-            jTextArea.append("Please create a puzzle first.\n");
-            return;
-        }
+        // if (puzzle == null) {
+        //     jTextArea.append("Please create a puzzle first.\n");
+        //     return;
+        // }
 
-        puzzle.fillNextNumber();
-        jTextArea.append("Number hinted.\n");
-        updateFrame();
+        // // Read the current state of the grid
+        // YGrid grid = puzzle.getGrid();
+
+        // // Check if the current grid state is solvable
+        // YBacktrackSolver solver = new YBacktrackSolver(puzzle, null);
+        // solver.setStopAtFirstSolution(true); // We just need to check if there's any solution
+
+        // if (solver.isSolvable()) {
+        //     // Fill in the next number
+        //     if (!fillNextNumber(grid)) {
+        //         jTextArea.append("No more numbers to fill. The puzzle is already solved or no hint can be given.\n");
+        //     } else {
+        //         jTextArea.append("Number hinted.\n");
+        //         updateFrame();
+        //     }
+        // } else {
+        //     jTextArea.append("Puzzle can't be solved.\n");
+        // }
 
         // comment added to test. TODO: remove
         /*
@@ -907,6 +924,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItemStopAtFirstChangeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
         // TODO add your handling code here:
+        boolean isSelected = jCheckBoxMenuItemStopAtFirstChange.isSelected();
+
+        if (isSelected) {
+            // Stop the application at the first change
+        } else {
+            // Continue the application even if changes occur
+        }
     }// GEN-LAST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
 
     /**

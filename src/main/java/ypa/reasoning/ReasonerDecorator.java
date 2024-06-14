@@ -1,6 +1,6 @@
 package ypa.reasoning;
 
-import ypa.model.KPuzzle;
+import ypa.model.YPuzzle;
 
 /**
  * Abstract base class for reasoner decorators, holding common code.
@@ -24,7 +24,7 @@ public abstract class ReasonerDecorator extends Reasoner {
      * @throws IllegalArgumentException  if precondition failed
      * @pre {@code puzzle != null  && reasoner != null && reasoner.puzzle == puzzle}
      */
-    public ReasonerDecorator(KPuzzle puzzle, final Reasoner reasoner) {
+    public ReasonerDecorator(YPuzzle puzzle, final Reasoner reasoner) {
         super(puzzle);
         if (reasoner == null) {
             throw new IllegalArgumentException(this.getClass().getSimpleName()

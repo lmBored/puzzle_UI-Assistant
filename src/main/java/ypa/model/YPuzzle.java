@@ -2,6 +2,8 @@ package ypa.model;
 
 import java.util.Scanner;
 
+import ypa.solvers.YBacktrackSolver;
+
 /**
  * State of a Sujiko puzzle, without auxiliary solver-related information:
  * the collection of entries, and the states of the cells in the grid
@@ -164,25 +166,6 @@ public class YPuzzle {
     public YCell getCell(int r, int c) {
         int index = 3 * r + c;
         return grid.getCell(index);
-    }
-
-    /**
-     * Fills the next empty cell in the grid with the number suggested.
-     * Iterates over the grid row by row, then column by column.
-     * When it finds a cell with a value of 0 (indicating it's empty), it sets the
-     * cell's value to 1.
-     * If all cells are filled (none have a value of 0), this method does nothing.
-     */
-    public void fillNextNumber(int hint) {
-        for (int i = 0; i < getRowCount(); i++) {
-            for (int j = 0; j < getColumnCount(); j++) {
-                YCell cell = getCell(i, j);
-                if (cell.isEmpty()) {
-                    cell.setState(hint);
-                    return;
-                }
-            }
-        }
     }
 
     @Override
