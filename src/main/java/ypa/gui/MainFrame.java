@@ -816,8 +816,9 @@ public class MainFrame extends javax.swing.JFrame {
         }
     
         puzzle.fillNextNumber();
-        jTextArea.append("Filled in the next number in the grid.\n");
+        jTextArea.append("Number hinted.\n");
         updateFrame();
+        
         // comment added to test. TODO: remove
         /*
          * String message;
