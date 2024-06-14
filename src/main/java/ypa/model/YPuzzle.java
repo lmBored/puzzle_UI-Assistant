@@ -12,12 +12,12 @@ import java.util.Scanner;
  * <li>a name;
  * <li>a mode of operation;
  * <li>a grid of cells YGrid representing the solution;
- <li>an array of 4 numbers representing the 4 given hints / circles;
+ * <li>an array of 4 numbers representing the 4 given hints / circles;
  * </ul>
  *
  */
 public class YPuzzle {
-    
+
     /** The puzzle's (file) name. */
     private String name;
 
@@ -36,7 +36,7 @@ public class YPuzzle {
 
     /** The grid of cells. */
     private final YGrid grid;
-    
+
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
 
@@ -45,8 +45,8 @@ public class YPuzzle {
      * and with a given name.
      * The actual dimensions are determined from the input.
      *
-     * @param scanner  the given scanner
-     * @param name  the given name
+     * @param scanner the given scanner
+     * @param name    the given name
      */
     public YPuzzle(final Scanner scanner, final String name) {
         this.name = name;
@@ -54,27 +54,27 @@ public class YPuzzle {
         this.grid = new YGrid();
         this.circles = createCircles(scanner);
     }
-    
+
     private static int[] createCircles(Scanner sc) {
         int[] circles = new int[4];
-        
+
         for (int i = 0; i < 4; i++) {
             circles[i] = sc.nextInt();
         }
         sc.close();
-        
+
         return circles;
     }
-    
+
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the name of this puzzle.  Only allowed in edit mode.
+     * Sets the name of this puzzle. Only allowed in edit mode.
      *
-     * @param name  the new name
-     * @throws IllegalStateException  if not in edit mode
+     * @param name the new name
+     * @throws IllegalStateException if not in edit mode
      * @pre puzzle is in edit mode
      */
     public void setName(String name) {
@@ -120,7 +120,7 @@ public class YPuzzle {
     public YGrid getGrid() {
         return grid;
     }
-    
+
     /**
      * Gets the circles in this puzzle, so as to iterate over them.
      *
@@ -145,17 +145,18 @@ public class YPuzzle {
     public void clear() {
         grid.clear();
     }
-    
+
     public int getRowCount() {
         return 3;
     }
-    
+
     public int getColumnCount() {
         return 3;
     }
-    
+
     /**
      * Returns a YCell given a row and a column (for the paintComponent).
+     * 
      * @param r row number
      * @param c column number
      * @return YCell
@@ -163,6 +164,25 @@ public class YPuzzle {
     public YCell getCell(int r, int c) {
         int index = 3 * r + c;
         return grid.getCell(index);
+    }
+
+    /**
+     * Fills the next empty cell in the grid with the number suggested.
+     * Iterates over the grid row by row, then column by column.
+     * When it finds a cell with a value of 0 (indicating it's empty), it sets the
+     * cell's value to 1.
+     * If all cells are filled (none have a value of 0), this method does nothing.
+     */
+    public void fillNextNumber() {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                YCell cell = getCell(i, j);
+                if (cell.isEmpty()) {
+                    cell.setState(1);
+                    return;
+                }
+            }
+        }
     }
 
     @Override

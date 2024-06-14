@@ -361,18 +361,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
-    private boolean checkPuzzleSolvability() {
-        Reasoner reasoner = null;
-        YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
-    
-        if (solver.solve()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     
     private void jMenuItemSaveAsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSaveAsActionPerformed
         if (puzzle == null) {
@@ -470,6 +458,17 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append(e + "\n");
         }
     }// GEN-LAST:event_jMenuItemOpenActionPerformed
+
+    private boolean checkPuzzleSolvability() {
+        Reasoner reasoner = null;
+        YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
+    
+        if (solver.isSolvable()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private void jMenuItemNewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemNewActionPerformed
         // jTextArea.append("New is not yet implemented.\n");
@@ -811,7 +810,14 @@ public class MainFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
     private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
-        
+        if (puzzle == null) {
+            jTextArea.append("Please create a puzzle first.\n");
+            return;
+        }
+    
+        puzzle.fillNextNumber();
+        jTextArea.append("Filled in the next number in the grid.\n");
+        updateFrame();
         // comment added to test. TODO: remove
         /*
          * String message;
@@ -1100,7 +1106,7 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /** Whether to provide Undo. */
-    public static final boolean UNDO = true; // TODO: implement true 
+    public static final boolean UNDO = false; // TODO: implement true 
 
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY = new File(new File(".."), "puzzles");
