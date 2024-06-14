@@ -400,13 +400,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Auto close file instead of calling out.close()
         // try (PrintWriter out = new PrintWriter(puzzleFile)) {
-        //     out.print(puzzle.toFileFormat());
-        //     unsavedModifications = false;
+        // out.print(puzzle.toFileFormat());
+        // unsavedModifications = false;
         // } catch (FileNotFoundException e) {
-        //     JOptionPane.showMessageDialog(this,
-        //             "IO error while saving file: " + e,
-        //             "File Save Error",
-        //             JOptionPane.ERROR_MESSAGE);
+        // JOptionPane.showMessageDialog(this,
+        // "IO error while saving file: " + e,
+        // "File Save Error",
+        // JOptionPane.ERROR_MESSAGE);
         // }
     }// GEN-LAST:event_jMenuItemSaveAsActionPerformed
 
@@ -505,7 +505,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             jTextArea.append("Clearing existing puzzle.\n");
             puzzle.clear();
-            repaint();
+            updateFrame();
 
             int[] circles = puzzle.getCircles();
 
@@ -531,10 +531,10 @@ public class MainFrame extends javax.swing.JFrame {
 
                 circles[index] = newCircleProperty;
                 jTextArea.append("New property for circle " + index + ": " + newCircleProperty + "\n");
-                repaint();
+                updateFrame();
             }
 
-            repaint();
+            updateFrame();
         }
 
         // if (! confirmDiscard()) {
@@ -785,6 +785,30 @@ public class MainFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
     private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
+        String message;
+        Reasoner reasoner = null;
+
+        // Configure a reasoning strategy
+        reasoner = new BasicEmptyCellByContradiction(puzzle);
+
+        if (reasoner == null) {
+            message = "Apply Reasoning is not yet implemented.";
+        } else {
+            if (!jCheckBoxMenuItemStopAtFirstChange.isSelected()) {
+                reasoner = new FixpointReasoner(puzzle, reasoner);
+            }
+            CompoundCommand command = reasoner.apply();
+            if (command == null) {
+                message = "Puzzle is not solvable.";
+            } else if (command.size() > 0) {
+                this.undoRedo.did(command);
+                message = "Reasoning determined " + command.getCells().size() + " cells.";
+            } else {
+                message = "Reasoning did not help.";
+            }
+        }
+        jTextArea.append(message + "\n");
+        updateFrame();
         // comment added to test. TODO: remove
         /*
          * String message;
@@ -1073,7 +1097,7 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /** Whether to provide Undo. */
-    public static final boolean UNDO = false; // TODO: implement true
+    public static final boolean UNDO = true; // TODO: implement true 
 
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY = new File(new File(".."), "puzzles");
