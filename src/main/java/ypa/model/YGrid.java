@@ -186,7 +186,7 @@ public class YGrid {
         }
     }
 
-
+    /**
      * Creates a deep copy of this YGrid for the background worker.
      * 
      * @return a cloned instance of this YGrid.

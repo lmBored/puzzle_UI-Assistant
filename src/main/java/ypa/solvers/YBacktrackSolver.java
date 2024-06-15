@@ -235,8 +235,7 @@ public class YBacktrackSolver extends YAbstractSolver {
     public YGrid getBackgroundGrid() {
         return this.backgroundGrid;
     }
-   
-}
+
 
     public boolean isSolvable() {
         YGrid gridCopy = new YGrid(this.grid);

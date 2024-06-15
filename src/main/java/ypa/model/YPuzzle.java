@@ -201,6 +201,7 @@ public class YPuzzle {
                 }
             }
         }
+    }
 
     /** Gets the list of cell locations that arent equal to the sum.  */
     public List<YCell> getViolatedCells() {

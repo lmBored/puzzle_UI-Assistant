@@ -3,8 +3,8 @@ package ypa.reasoning;
 import ypa.command.Command;
 import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
-import ypa.model.YCell;
-import ypa.model.YPuzzle;
+import ypa.model.KCell;
+import ypa.model.KPuzzle;
 
 /**
  * When only one way of filling an empty cell does not lead to an invalid state,
@@ -16,12 +16,12 @@ import ypa.model.YPuzzle;
  */
 public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
 
-    public BasicEmptyCellByContradiction(YPuzzle puzzle) {
+    public BasicEmptyCellByContradiction(KPuzzle puzzle) {
         super(puzzle);
     }
 
     @Override
-    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final KCell cell) throws NullPointerException {
         CompoundCommand result = super.applyToCell(cell);
         Command candidateForcedCommand = null; // command that worked, if any
 

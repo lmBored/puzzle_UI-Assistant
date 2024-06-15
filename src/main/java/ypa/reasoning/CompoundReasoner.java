@@ -1,7 +1,7 @@
 package ypa.reasoning;
 
 import ypa.command.CompoundCommand;
-import ypa.model.YPuzzle;
+import ypa.model.KPuzzle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class CompoundReasoner extends Reasoner {
     /** The sequence of reasoners. */
     private final List<Reasoner> reasoners = new ArrayList<>();
 
-    public CompoundReasoner(YPuzzle puzzle) {
+    public CompoundReasoner(KPuzzle puzzle) {
         super(puzzle);
     }
 
