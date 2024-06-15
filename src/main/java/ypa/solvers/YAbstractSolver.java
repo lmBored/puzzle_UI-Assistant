@@ -55,4 +55,6 @@ public abstract class YAbstractSolver {
      */
     public abstract boolean solve();
 
+    public abstract boolean isSolvable();
+
 }

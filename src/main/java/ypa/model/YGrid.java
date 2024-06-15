@@ -11,9 +11,10 @@ import java.util.List;
  *
  */
 public class YGrid {
-    
+
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();
+
     /** Groups of 4 cell and 1 circle. */
     private List<YGroup> groups = new ArrayList<>();
     
@@ -55,13 +56,14 @@ public class YGrid {
 
         filledCell = new HashSet<>();
     }
-    
+
     /**
      * Constructor that initializes the grid with a list of integers.
      * Each integer represents the state of a cell in the grid.
      *
      * @param initialStates the list of initial states for the cells.
-     * @throws IllegalArgumentException if the list does not contain exactly 9 elements.
+     * @throws IllegalArgumentException if the list does not contain exactly 9
+     *                                  elements.
      */
     public YGrid(List<Integer> initialStates) {
         if (initialStates == null || initialStates.size() != 9) {
@@ -71,15 +73,15 @@ public class YGrid {
             grid.add(new YCell(state));
         }
     }
-    
+
     public YCell getCell(int position) {
         return grid.get(position);
     }
-    
+
     public int getValue(int position) {
         return grid.get(position).getState();
     }
-    
+
     public List<YGroup> getGroups() {
         return this.groups;
     }
@@ -88,7 +90,7 @@ public class YGrid {
      * Set the cell location within the grid.
      *
      * @param position the position of the cell.
-     * @param value the value of the cell.
+     * @param value    the value of the cell.
      */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
@@ -110,39 +112,39 @@ public class YGrid {
      *
      * @return whether this is valid
      */
-    public boolean isValid() {          
+    public boolean isValid() {
         HashSet<Integer> seen = new HashSet<>();
         for (YCell cell : grid) {
             // Check if every value is between 0 and 9 (both included)
             if (!cell.isValid()) {
                 return false;
             }
-            
+
             // Check for duplicates between 1 and 9 (there shouldn't be any)
-            int value = cell.getState();    
+            int value = cell.getState();
             if (value > 0) {
                 if (!seen.add(value)) {
                     return false;
                 }
             }
-        }        
+        }
         return true;
     }
-    
+
     /**
      * Checks whether this grid is full (non empty values).
      *
      * @return whether this is full
      */
-    public boolean isFull() {        
+    public boolean isFull() {
         for (YCell cell : grid) {
             if (cell.isEmpty()) {
                 return false;
             }
-        }        
+        }
         return true;
     }
-    
+
     /**
      * Clears grid and sets all values to empty.
      *
@@ -171,6 +173,20 @@ public class YGrid {
     }
 
     /**
+     * Copy constructor that initializes the grid with a copy of another YGrid.
+     *
+     * @param original the YGrid to copy.
+     */
+    public YGrid(YGrid original) {
+        if (original == null) {
+            throw new IllegalArgumentException("Original YGrid cannot be null.");
+        }
+        for (YCell cell : original.grid) {
+            this.grid.add(new YCell(cell.getState()));
+        }
+    }
+
+
      * Creates a deep copy of this YGrid for the background worker.
      * 
      * @return a cloned instance of this YGrid.
