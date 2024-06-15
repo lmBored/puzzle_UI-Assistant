@@ -1,6 +1,8 @@
 package ypa.model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import ypa.solvers.YBacktrackSolver;
 
@@ -37,10 +39,12 @@ public class YPuzzle {
     private Mode mode;
 
     /** The grid of cells. */
-    private final YGrid grid;
 
+    private YGrid grid;
+    
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
+
 
     /**
      * Constructs a new puzzle with initial state read from given scanner
@@ -55,6 +59,10 @@ public class YPuzzle {
         this.mode = Mode.VIEW;
         this.grid = new YGrid();
         this.circles = createCircles(scanner);
+        List<YGroup> list = grid.getGroups();
+        for (int i = 0; i < 4; i++) {
+            list.get(i).setExpectedSum(circles[i]);
+        }
     }
 
     private static int[] createCircles(Scanner sc) {
@@ -124,6 +132,14 @@ public class YPuzzle {
     }
 
     /**
+     * Updates the puzzle grid.
+     * @param grid the new puzzle's grid
+     */
+    public void setGrid(YGrid grid) {
+        this.grid = grid;
+    }
+    
+    /**
      * Gets the circles in this puzzle, so as to iterate over them.
      *
      * @return the hints / circles of the puzzle
@@ -166,6 +182,36 @@ public class YPuzzle {
     public YCell getCell(int r, int c) {
         int index = 3 * r + c;
         return grid.getCell(index);
+    }
+
+    /**
+     * Fills the next empty cell in the grid with the number suggested.
+     * Iterates over the grid row by row, then column by column.
+     * When it finds a cell with a value of 0 (indicating it's empty), it sets the
+     * cell's value to 1.
+     * If all cells are filled (none have a value of 0), this method does nothing.
+     */
+    public void fillNextNumber(int hint) {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                YCell cell = getCell(i, j);
+                if (cell.isEmpty()) {
+                    cell.setState(hint);
+                    return;
+                }
+            }
+        }
+
+    /** Gets the list of cell locations that arent equal to the sum.  */
+    public List<YCell> getViolatedCells() {
+        List<YGroup> groups = grid.getGroups();
+        List<YCell> violated = new ArrayList<>();
+        for (YGroup yg: groups) {
+            if (!yg.equalsExpectedSum() && yg.isFull()) {
+                violated.addAll(yg.getCells());
+            }
+        }
+        return violated;
     }
 
     @Override

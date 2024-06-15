@@ -28,6 +28,10 @@ public class YBacktrackSolver extends YAbstractSolver {
     /** The grid of cells. */
     private final YGrid grid;
 
+    
+    /** The grid of cells in the background. */
+    public YGrid backgroundGrid = null;
+    
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
 
@@ -150,7 +154,9 @@ public class YBacktrackSolver extends YAbstractSolver {
      */
     @Override
     public boolean solve() {
-        YGrid solution = sujikoSolver(circles, grid);
+
+        this.backgroundGrid = this.grid.clone();
+        YGrid solution = sujikoSolver(circles, backgroundGrid);
         return solution != null;
     }
 
@@ -219,11 +225,19 @@ public class YBacktrackSolver extends YAbstractSolver {
                         + grid.getValue(8) == circles[3]);
     }
 
+
+    
     /**
-     * Checks if the current grid is solvable using the backtrack algorithm.
+     * Gets the cells in this puzzle, so as to iterate over them.
      *
-     * @return true if the grid is solvable, false otherwise
+     * @return the cells of this puzzle as iterable
      */
+    public YGrid getBackgroundGrid() {
+        return this.backgroundGrid;
+    }
+   
+}
+
     public boolean isSolvable() {
         YGrid gridCopy = new YGrid(this.grid);
 

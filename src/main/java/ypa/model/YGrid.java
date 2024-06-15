@@ -1,6 +1,7 @@
 package ypa.model;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 
@@ -14,15 +15,46 @@ public class YGrid {
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();
 
+    /** Groups of 4 cell and 1 circle. */
+    private List<YGroup> groups = new ArrayList<>();
+    
+    private Set<Integer> filledCell;
+
     /**
      * Constructor for an empty grid.
      */
     public YGrid() {
         for (int i = 0; i < 9; i++) {
-
             grid.add(new YCell(YCell.EMPTY));
             grid.get(i).setLocation(i + 1);
         }
+
+        for (int i = 0; i < 4; i++) {
+            groups.add(new YGroup(i + 1));
+        }
+        // 1 2 4 5
+        groups.get(0).addCell(grid.get(0));
+        groups.get(0).addCell(grid.get(1));
+        groups.get(0).addCell(grid.get(3));
+        groups.get(0).addCell(grid.get(4));
+
+        // 2 3 5 6
+        groups.get(1).addCell(grid.get(1));
+        groups.get(1).addCell(grid.get(2));
+        groups.get(1).addCell(grid.get(4));
+        groups.get(1).addCell(grid.get(5));
+        // 4 5 7 8
+        groups.get(2).addCell(grid.get(3));
+        groups.get(2).addCell(grid.get(4));
+        groups.get(2).addCell(grid.get(6));
+        groups.get(2).addCell(grid.get(7));
+        // 5 6 8 9
+        groups.get(3).addCell(grid.get(4));
+        groups.get(3).addCell(grid.get(5));
+        groups.get(3).addCell(grid.get(7));
+        groups.get(3).addCell(grid.get(8));
+
+        filledCell = new HashSet<>();
     }
 
     /**
@@ -50,6 +82,10 @@ public class YGrid {
         return grid.get(position).getState();
     }
 
+    public List<YGroup> getGroups() {
+        return this.groups;
+    }
+
     /**
      * Set the cell location within the grid.
      *
@@ -58,6 +94,17 @@ public class YGrid {
      */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
+    }
+
+    /** Used for duplicate checking. */
+    public boolean isValuePresent(int value) {
+        filledCell.clear();
+        for (YCell cell: grid) {
+            if (cell.getState() != 0) {
+                filledCell.add(cell.getState());
+            }
+        }
+        return filledCell.contains(value);
     }
 
     /**
@@ -139,4 +186,17 @@ public class YGrid {
         }
     }
 
+
+     * Creates a deep copy of this YGrid for the background worker.
+     * 
+     * @return a cloned instance of this YGrid.
+     */
+    @Override
+    public YGrid clone() {
+        List<Integer> initialStates = new ArrayList<>();
+        for (YCell cell : this.grid) {
+            initialStates.add(cell.getState());
+        }
+        return new YGrid(initialStates);
+    }
 }
