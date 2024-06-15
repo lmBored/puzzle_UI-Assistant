@@ -2,8 +2,8 @@ package ypa.reasoning;
 
 import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
-import ypa.model.KCell;
-import ypa.model.KPuzzle;
+import ypa.model.YCell;
+import ypa.model.YPuzzle;
 
 /**
  * When only one way of filling an empty cell does not lead to an invalid state
@@ -30,7 +30,7 @@ public class GeneralizedEmptyCellByContradiction extends EmptyCellReasoner {
      * @throws IllegalArgumentException  if precondition failed
      * @pre {@code puzzle != null  && reasoner != null && reasoner.puzzle == puzzle}
      */
-    public GeneralizedEmptyCellByContradiction(KPuzzle puzzle, final Reasoner reasoner) {
+    public GeneralizedEmptyCellByContradiction(YPuzzle puzzle, final Reasoner reasoner) {
         super(puzzle);
         if (reasoner == null) {
             throw new IllegalArgumentException(this.getClass().getSimpleName()
@@ -50,13 +50,13 @@ public class GeneralizedEmptyCellByContradiction extends EmptyCellReasoner {
      * @throws IllegalArgumentException  if precondition failed
      * @pre {@code puzzle != null}
      */
-    public GeneralizedEmptyCellByContradiction(KPuzzle puzzle) {
+    public GeneralizedEmptyCellByContradiction(YPuzzle puzzle) {
         super(puzzle);
         reasoner = this;
     }
 
     @Override
-    CompoundCommand applyToCell(final KCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         if (!puzzle.isValid()) {
             return null;
         }

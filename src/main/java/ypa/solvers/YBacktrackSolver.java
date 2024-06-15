@@ -7,6 +7,9 @@ import ypa.model.YPuzzle;
 import ypa.model.YGrid;
 import ypa.reasoning.Reasoner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 
 /**
@@ -32,8 +35,17 @@ public class YBacktrackSolver extends YAbstractSolver {
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
 
-    /** SwingWorker to run the solving process in the background. */
-    private SwingWorker<Boolean, Void> worker;
+    /** Flag to indicate if the solver should stop at the first solution. */
+    private boolean stopAtFirstSolution = false;
+
+    /** List to store all solutions if not stopping at the first solution. */
+    private List<YGrid> solutions = new ArrayList<>();
+
+    /** SwingWorker for running the solver in the background. */
+    private SolverWorker solverWorker;
+
+    /** Flag to indicate if the solver should be interrupted. */
+    private volatile boolean interrupted = false;
 
     /**
      * Constructs a backtracking solver for a given puzzle.
@@ -50,12 +62,89 @@ public class YBacktrackSolver extends YAbstractSolver {
     }
 
     /**
-     * Interrupts the solving process.
+     * Sets whether the solver should stop at the first solution.
+     *
+     * @param stopAtFirstSolution {@code true} to stop at the first solution,
+     *                            {@code false} to find all solutions
+     */
+    public void setStopAtFirstSolution(boolean stopAtFirstSolution) {
+        this.stopAtFirstSolution = stopAtFirstSolution;
+    }
+
+    /**
+     * Starts solving the puzzle in the background.
+     */
+    public void startSolving() {
+        solverWorker = new SolverWorker();
+        solverWorker.execute();
+    }
+
+    /**
+     * Interrupts the solver.
      */
     public void interrupt() {
-        if (worker != null) {
-            worker.cancel(true);
+        interrupted = true;
+        if (solverWorker != null) {
+            solverWorker.cancel(true);
         }
+    }
+
+    /**
+     * Inner class to handle background execution using SwingWorker.
+     */
+    private class SolverWorker extends SwingWorker<Void, Void> {
+        @Override
+        protected Void doInBackground() {
+            if (stopAtFirstSolution) {
+                YGrid solution = sujikoSolver(circles, grid);
+                if (solution != null) {
+                    solutions.add(solution);
+                }
+            } else {
+                findAllSolutions(grid, circles, 0);
+            }
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            // Handle completion (e.g., update UI or notify the user)
+        }
+    }
+
+    /**
+     * Finds all solutions to the Sujiko puzzle using backtracking.
+     *
+     * @param grid    the current grid being filled
+     * @param circles an array of 4 integers representing the sums of the
+     *                numbers in each circle
+     * @param index   the current index in the grid being filled
+     */
+    private void findAllSolutions(YGrid grid, int[] circles, int index) {
+        if (index == 9) {
+            if (checkSums(circles, grid)) {
+                solutions.add(new YGrid(grid));
+            }
+            return;
+        }
+
+        for (int num = 1; num <= 9; num++) {
+            if (interrupted) return;
+            if (!isUsed(grid, num)) {
+                grid.setCell(index, num);
+                findAllSolutions(grid, circles, index + 1);
+                grid.setCell(index, YCell.EMPTY);
+            }
+        }
+    }
+
+    /**
+     * Returns the list of solutions found.
+     *
+     * @return the list of solutions
+     */
+    public List<YGrid> getSolutions() {
+        return solutions;
     }
 
     /**

@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import ypa.solvers.YBacktrackSolver;
+
 /**
  * State of a Sujiko puzzle, without auxiliary solver-related information:
  * the collection of entries, and the states of the cells in the grid
