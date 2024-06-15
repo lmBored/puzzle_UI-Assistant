@@ -1,6 +1,8 @@
 package ypa.model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * State of a Sujiko puzzle, without auxiliary solver-related information:
@@ -35,10 +37,12 @@ public class YPuzzle {
     private Mode mode;
 
     /** The grid of cells. */
-    private final YGrid grid;
 
+    private YGrid grid;
+    
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
+
 
     /**
      * Constructs a new puzzle with initial state read from given scanner
@@ -53,6 +57,10 @@ public class YPuzzle {
         this.mode = Mode.VIEW;
         this.grid = new YGrid();
         this.circles = createCircles(scanner);
+        List<YGroup> list = grid.getGroups();
+        for (int i = 0; i < 4; i++) {
+            list.get(i).setExpectedSum(circles[i]);
+        }
     }
 
     private static int[] createCircles(Scanner sc) {
@@ -122,6 +130,14 @@ public class YPuzzle {
     }
 
     /**
+     * Updates the puzzle grid.
+     * @param grid the new puzzle's grid
+     */
+    public void setGrid(YGrid grid) {
+        this.grid = grid;
+    }
+    
+    /**
      * Gets the circles in this puzzle, so as to iterate over them.
      *
      * @return the hints / circles of the puzzle
@@ -183,6 +199,17 @@ public class YPuzzle {
                 }
             }
         }
+
+    /** Gets the list of cell locations that arent equal to the sum.  */
+    public List<YCell> getViolatedCells() {
+        List<YGroup> groups = grid.getGroups();
+        List<YCell> violated = new ArrayList<>();
+        for (YGroup yg: groups) {
+            if (!yg.equalsExpectedSum() && yg.isFull()) {
+                violated.addAll(yg.getCells());
+            }
+        }
+        return violated;
     }
 
     @Override

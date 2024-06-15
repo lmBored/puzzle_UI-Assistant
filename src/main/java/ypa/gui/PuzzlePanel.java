@@ -1,7 +1,6 @@
 package ypa.gui;
 
 import ypa.model.YCell;
-import ypa.model.KEntry;
 import ypa.model.YPuzzle;
 
 import java.awt.*;
@@ -50,24 +49,33 @@ public class PuzzlePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    /** Cell size in pixels */
+    /** Cell size in pixels. */
     private final int cellSize = 60;
     // TODO: Consider making the cell size changeable by user
 
-   final int offsetX = cellSize; // margin for horizontal coordinates
-   final int offsetY = cellSize; // margin for vertical coordinates
+    final int offsetX = cellSize; // margin for horizontal coordinates
+    final int offsetY = cellSize; // margin for vertical coordinates
 
-   /** The puzzle being manipulated */
+    /** The puzzle being manipulated. */
     private YPuzzle puzzle;
 
     /** Selected cell, affected by keystrokes. */
     private YCell selected;
 
-    /** Whether symbols are highlighted */
+    /** Whether symbols are highlighted. */
     private boolean highlight;
 
-    /** Marked cells (by different background color) */
+    /** Whether clearing the previous violated cell is used or not. */
+    private boolean clear;
+
+    /** Marked cells (by different background color). */
     private Set<YCell> markedCells;
+
+    /** Violated cells (by different background color). */
+    private Set<YCell> violatedCells;    
+
+    /** Clear previously violated cells. */
+    private Set<YCell> clearViolatedCells; 
 
     /**
      * Initializes this panel.
@@ -75,8 +83,9 @@ public class PuzzlePanel extends javax.swing.JPanel {
     private void initPanel() {
         setPuzzle(null);
         highlight = true;
+        clear = false;
     }
-
+    
     /**
      * Sets the puzzle.
      *
@@ -86,6 +95,8 @@ public class PuzzlePanel extends javax.swing.JPanel {
         this.puzzle = puzzle;
         this.selected = null;
         this.markedCells = null;
+        this.violatedCells = new HashSet<>();
+        this.clearViolatedCells = new HashSet<>();
     }
 
     /**
@@ -129,6 +140,35 @@ public class PuzzlePanel extends javax.swing.JPanel {
     }
 
     /**
+     * Sets the violated cells to red.
+     *
+     * @param violatedCells  the cells to mark, or {@code null} if none
+     */
+    public void setViolatedCells(final Collection<YCell> violatedCells) {
+        if (violatedCells == null) {
+            this.violatedCells = new HashSet<>();
+        } else {
+            this.violatedCells = new HashSet<>(violatedCells);
+            clear = false;
+        }
+    }    
+
+    /**
+     * Sets the violated cells to red.
+     *
+     * @param clearViolatedCells  the cells to mark, or {@code null} if none
+     */
+    public void clearViolatedCells(final Collection<YCell> clearViolatedCells) {
+        if (clearViolatedCells == null) {
+            this.clearViolatedCells = new HashSet<>();
+            clear = false;
+        } else {
+            this.clearViolatedCells = new HashSet<>(clearViolatedCells);
+            clear = true;
+
+        }
+    }     
+    /**
     /**
      * Draws given cell on given canvas at given location.
      *
@@ -141,6 +181,17 @@ public class PuzzlePanel extends javax.swing.JPanel {
      */
     private void paintCell(final Graphics g, final YCell cell,
             final int x, final int y, final int delta_x, final int delta_y) {
+
+        if (clear && this.clearViolatedCells.contains(cell)) {
+            g.setColor(Color.BLACK);
+            g.drawString(cell.toString(), x + delta_x, y - delta_y);
+            
+        }
+        if (!clear && this.violatedCells.contains(cell)) {
+            g.setColor(Color.RED);
+            g.fillRect(x + 1, y - cellSize + 1,
+                    cellSize - 1, cellSize - 1);
+        }
         // set background if cell is marked
         if (highlight && this.markedCells != null
                 && this.markedCells.contains(cell)) {

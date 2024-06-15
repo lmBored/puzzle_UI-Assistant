@@ -24,6 +24,8 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.List;
+import ypa.solvers.SolverWorker;
 import ypa.solvers.YAbstractSolver;
 import ypa.solvers.YBacktrackSolver;
 
@@ -445,12 +447,15 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append(puzzle.toString() + "\n");
             puzzlePanel.setPuzzle(puzzle);
             if (UNDO) {
-                // Clear undo-redo facility
+
+            // Clear undo-redo facility
                 undoRedo.clear();
-                //
+            //
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+            worker = new SolverWorker(puzzle, null); //Null is the reasoner we use
+            worker.execute();
             updateFrame();
         } catch (IllegalArgumentException e) {
             jTextArea.append("File does not contain a puzzle description:\n");
@@ -662,6 +667,7 @@ public class MainFrame extends javax.swing.JFrame {
         // else it is EDIT or SOLVE mode and it is possible to type
 
         final YCell cell = this.puzzlePanel.getSelected();
+        
         if (cell == null) {
             return;
         }
@@ -673,6 +679,8 @@ public class MainFrame extends javax.swing.JFrame {
         if ('1' <= c && c <= '9') {
             jTextArea.append("Numberic value typed: " + c + "\n");
             state = c - '0';
+            DUPLICATE = puzzle.getGrid().isValuePresent(state);
+
         } else if (c == '0' | c == ' ') {
             jTextArea.append("Empty value typed: " + c + "\n");
             state = YCell.EMPTY;
@@ -681,8 +689,18 @@ public class MainFrame extends javax.swing.JFrame {
                     + "Enter a number from 1 to 9, or 0 for empty.\n");
             return;
         }
-        if (!UNDO) {
-            cell.setState(state);
+        if (! UNDO) {
+            puzzlePanel.clearViolatedCells(violatedCell);            
+            if (!DUPLICATE || state == 0) {
+                cell.setState(state);
+                if (state != 0) {
+                    violatedCell = puzzle.getViolatedCells();
+                    puzzlePanel.setViolatedCells(violatedCell);
+                }
+            } else {
+                jTextArea.append("Duplicate key detected.\n");
+                return;                
+            }
         } else {
             // Create undoable set command and pass it to undo-redo facility
             // comment added to test. TODO: remove
@@ -875,22 +893,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         String message;
-        Reasoner reasoner = null;
-        YAbstractSolver solver = null;
-        // Configure and invoke solver
-        // reasoner = new EntryWithOneEmptyCell(puzzle);
-        // reasoner = new BasicEmptyCellByContradiction(puzzle);
-        // reasoner = new FixpointReasoner(puzzle, reasoner);
-        // solver = new BacktrackSolver(puzzle, reasoner);
 
-        solver = new YBacktrackSolver(puzzle, reasoner);
-
-        if (solver == null) {
+// Configure and invoke solver
+        //reasoner = new EntryWithOneEmptyCell(puzzle);
+        //reasoner = new BasicEmptyCellByContradiction(puzzle);
+        //reasoner = new FixpointReasoner(puzzle, reasoner);
+        //solver = new BacktrackSolver(puzzle, reasoner);
+        
+        if (worker == null) {
             message = "Solve is not yet implemented.";
-        } else if (solver.solve()) {
+        } else if (worker.solver.getBackgroundGrid() != null) {
+            worker.showSolution = true;
             message = "Puzzle solved";
             // handle result of solver
-            final Collection<Command> commands = solver.getCommands();
+            final Collection<Command> commands = worker.commands;
             for (final Command command : commands) {
                 if (command instanceof CompoundCommand &&
                         ((CompoundCommand) command).size() == 0) {
@@ -1117,11 +1133,14 @@ public class MainFrame extends javax.swing.JFrame {
     /** Whether to provide Undo. */
     public static final boolean UNDO = false; // TODO: implement true
 
+    public static boolean DUPLICATE;
     /** Default directory for loading of puzzles. */
     public static final File DEFAULT_PUZZLE_DIRECTORY = new File(new File(".."), "puzzles");
 
     /** The puzzle being solved, or null if no puzzle loaded. */
     private YPuzzle puzzle = null;
+
+    private List<YCell> violatedCell;
 
     /** The puzzle panel. */
     private final PuzzlePanel puzzlePanel;
@@ -1135,8 +1154,10 @@ public class MainFrame extends javax.swing.JFrame {
     // Undo-redo facility (via composition)
     /** Undo-redo facility. */
     private final UndoRedo undoRedo = new UndoRedo();
-    //
 
+//
+    SolverWorker worker;
+    
     /**
      * Completes initialization of this frame.
      */
