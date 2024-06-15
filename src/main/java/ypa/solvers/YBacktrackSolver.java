@@ -7,6 +7,8 @@ import ypa.model.YPuzzle;
 import ypa.model.YGrid;
 import ypa.reasoning.Reasoner;
 
+import javax.swing.*;
+
 /**
  * YBacktrackSolver is a solver for Sujiko puzzles using a backtracking
  * approach.
@@ -30,6 +32,9 @@ public class YBacktrackSolver extends YAbstractSolver {
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
 
+    /** SwingWorker to run the solving process in the background. */
+    private SwingWorker<Boolean, Void> worker;
+
     /**
      * Constructs a backtracking solver for a given puzzle.
      *
@@ -45,12 +50,22 @@ public class YBacktrackSolver extends YAbstractSolver {
     }
 
     /**
+     * Interrupts the solving process.
+     */
+    public void interrupt() {
+        if (worker != null) {
+            worker.cancel(true);
+        }
+    }
+
+    /**
      * Attempts to solve the Sujiko puzzle.
      *
      * @return {@code true} if a solution is found, {@code false} otherwise
      */
     @Override
     public boolean solve() {
+
         this.backgroundGrid = this.grid.clone();
         YGrid solution = sujikoSolver(circles, backgroundGrid);
         return solution != null;
@@ -121,6 +136,7 @@ public class YBacktrackSolver extends YAbstractSolver {
                         + grid.getValue(8) == circles[3]);
     }
 
+
     
     /**
      * Gets the cells in this puzzle, so as to iterate over them.
@@ -135,7 +151,7 @@ public class YBacktrackSolver extends YAbstractSolver {
 
     public boolean isSolvable() {
         YGrid gridCopy = new YGrid(this.grid);
-    
+
         if (backtrack(gridCopy, this.circles, 0)) {
             return true;
         }
