@@ -170,4 +170,17 @@ public class YGrid {
         return builder.toString();
     }
 
+    /**
+     * Creates a deep copy of this YGrid for the background worker.
+     * 
+     * @return a cloned instance of this YGrid.
+     */
+    @Override
+    public YGrid clone() {
+        List<Integer> initialStates = new ArrayList<>();
+        for (YCell cell : this.grid) {
+            initialStates.add(cell.getState());
+        }
+        return new YGrid(initialStates);
+    }
 }

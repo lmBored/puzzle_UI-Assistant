@@ -37,7 +37,7 @@ public class YPuzzle {
     private Mode mode;
 
     /** The grid of cells. */
-    private final YGrid grid;
+    private YGrid grid;
     
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
@@ -126,6 +126,14 @@ public class YPuzzle {
      */
     public YGrid getGrid() {
         return grid;
+    }
+    
+    /**
+     * Updates the puzzle grid.
+     * @param grid the new puzzle's grid
+     */
+    public void setGrid(YGrid grid) {
+        this.grid = grid;
     }
     
     /**
