@@ -1,6 +1,8 @@
 package ypa.model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * State of a Sujiko puzzle, without auxiliary solver-related information:
@@ -40,6 +42,7 @@ public class YPuzzle {
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
 
+
     /**
      * Constructs a new puzzle with initial state read from given scanner
      * and with a given name.
@@ -53,6 +56,10 @@ public class YPuzzle {
         this.mode = Mode.VIEW;
         this.grid = new YGrid();
         this.circles = createCircles(scanner);
+        List<YGroup> list = grid.getGroups();
+        for (int i = 0; i < 4; i++) {
+            list.get(i).setExpectedSum(circles[i]);
+        }
     }
     
     private static int[] createCircles(Scanner sc) {
@@ -171,6 +178,18 @@ public class YPuzzle {
     public YCell getCell(int r, int c) {
         int index = 3 * r + c;
         return grid.getCell(index);
+    }
+
+    /** Gets the list of cell locations that arent equal to the sum.  */
+    public List<YCell> getViolatedCells() {
+        List<YGroup> groups = grid.getGroups();
+        List<YCell> violated = new ArrayList<>();
+        for (YGroup yg: groups) {
+            if (!yg.equalsExpectedSum() && yg.isFull()) {
+                violated.addAll(yg.getCells());
+            }
+        }
+        return violated;
     }
 
     @Override
