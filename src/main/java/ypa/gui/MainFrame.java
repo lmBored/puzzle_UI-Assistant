@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
+import ypa.solvers.SolverWorker;
 import ypa.solvers.YAbstractSolver;
 import ypa.solvers.YBacktrackSolver;
 
@@ -422,12 +423,14 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append(puzzle.toString() + "\n");
             puzzlePanel.setPuzzle(puzzle);
             if (UNDO) {
-// Clear undo-redo facility
+            // Clear undo-redo facility
                 undoRedo.clear();
-//
+            //
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+            worker = new SolverWorker(puzzle, null); //Null is the reasoner we use
+            worker.execute();
             updateFrame();
         } catch (IllegalArgumentException e) {
             jTextArea.append("File does not contain a puzzle description:\n");
@@ -735,22 +738,19 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         String message;
-        Reasoner reasoner = null;
-        YAbstractSolver solver = null;
 // Configure and invoke solver
         //reasoner = new EntryWithOneEmptyCell(puzzle);
         //reasoner = new BasicEmptyCellByContradiction(puzzle);
         //reasoner = new FixpointReasoner(puzzle, reasoner);
         //solver = new BacktrackSolver(puzzle, reasoner);
         
-        solver = new YBacktrackSolver(puzzle, reasoner);
-
-        if (solver == null) {
+        if (worker == null) {
             message = "Solve is not yet implemented.";
-        } else if (solver.solve()) {
+        } else if (worker.solver.getBackgroundGrid() != null) {
+            worker.showSolution = true;
             message = "Puzzle solved";
             // handle result of solver
-            final Collection<Command> commands = solver.getCommands();
+            final Collection<Command> commands = worker.commands;
             for (final Command command : commands) {
                 if (command instanceof CompoundCommand &&
                         ((CompoundCommand) command).size() == 0) {
@@ -993,7 +993,8 @@ public class MainFrame extends javax.swing.JFrame {
     /** Undo-redo facility. */
     private final UndoRedo undoRedo = new UndoRedo();
 //
-
+    SolverWorker worker;
+    
     /**
      * Completes initialization of this frame.
      */
