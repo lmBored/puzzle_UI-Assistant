@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -67,11 +65,17 @@ public class PuzzlePanel extends javax.swing.JPanel {
     /** Whether symbols are highlighted. */
     private boolean highlight;
 
+    /** Whether clearing the previous violated cell is used or not. */
+    private boolean clear;
+
     /** Marked cells (by different background color). */
     private Set<YCell> markedCells;
 
-    /** Checks for duplicating values. */
-    private Set<Integer> typedValues;
+    /** Violated cells (by different background color). */
+    private Set<YCell> violatedCells;    
+
+    /** Clear previously violated cells. */
+    private Set<YCell> clearViolatedCells; 
 
     /**
      * Initializes this panel.
@@ -79,6 +83,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
     private void initPanel() {
         setPuzzle(null);
         highlight = true;
+        clear = false;
     }
     
     /**
@@ -90,7 +95,8 @@ public class PuzzlePanel extends javax.swing.JPanel {
         this.puzzle = puzzle;
         this.selected = null;
         this.markedCells = null;
-        this.typedValues = new HashSet<>();
+        this.violatedCells = new HashSet<>();
+        this.clearViolatedCells = new HashSet<>();
     }
 
     /**
@@ -134,34 +140,34 @@ public class PuzzlePanel extends javax.swing.JPanel {
     }
 
     /**
-     * 1 <= value <= 9. 
-     * Sets the value the user has typed in to be used for duplication checking.
+     * Sets the violated cells to red.
      *
-     * @param value  the value the user has inputted
+     * @param violatedCells  the cells to mark, or {@code null} if none
      */
-    public void addTypedInput(int value) {
-        typedValues.add(Integer.valueOf(value));
-    } 
-
-    /**
-     * Sets the value the user has typed in to be used for duplication checking.
-     *
-     * @param value  the value the user has inputted
-     */
-    public boolean inputAlreadyPresent(int value) {
-        return typedValues.contains(Integer.valueOf(value));
+    public void setViolatedCells(final Collection<YCell> violatedCells) {
+        if (violatedCells == null) {
+            this.violatedCells = new HashSet<>();
+        } else {
+            this.violatedCells = new HashSet<>(violatedCells);
+            clear = false;
+        }
     }    
 
     /**
-     * Remove the cell value from the duplicate-checking set.
+     * Sets the violated cells to red.
      *
-     * @param value  the value the user has inputted
+     * @param clearViolatedCells  the cells to mark, or {@code null} if none
      */
-    public void removeTypedValue(int value) {
-        if (inputAlreadyPresent(value)) {
-            typedValues.remove(Integer.valueOf(value));
+    public void clearViolatedCells(final Collection<YCell> clearViolatedCells) {
+        if (clearViolatedCells == null) {
+            this.clearViolatedCells = new HashSet<>();
+            clear = false;
+        } else {
+            this.clearViolatedCells = new HashSet<>(clearViolatedCells);
+            clear = true;
+
         }
-    }
+    }     
     /**
     /**
      * Draws given cell on given canvas at given location.
@@ -175,6 +181,17 @@ public class PuzzlePanel extends javax.swing.JPanel {
      */
     private void paintCell(final Graphics g, final YCell cell,
             final int x, final int y, final int delta_x, final int delta_y) {
+
+        if (clear && this.clearViolatedCells.contains(cell)) {
+            g.setColor(Color.BLACK);
+            g.drawString(cell.toString(), x + delta_x, y - delta_y);
+            
+        }
+        if (!clear && this.violatedCells.contains(cell)) {
+            g.setColor(Color.RED);
+            g.fillRect(x + 1, y - cellSize + 1,
+                    cellSize - 1, cellSize - 1);
+        }
         // set background if cell is marked
         if (highlight && this.markedCells != null
                 && this.markedCells.contains(cell)) {

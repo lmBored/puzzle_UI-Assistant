@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.List;
 import ypa.solvers.YAbstractSolver;
 import ypa.solvers.YBacktrackSolver;
 
@@ -531,6 +532,7 @@ public class MainFrame extends javax.swing.JFrame {
         // else it is EDIT or SOLVE mode and it is possible to type
         
         final YCell cell = this.puzzlePanel.getSelected();
+        
         if (cell == null) {
             return;
         }
@@ -542,11 +544,9 @@ public class MainFrame extends javax.swing.JFrame {
         if ('1' <= c && c <= '9') {
             jTextArea.append("Numberic value typed: " + c + "\n");
             state = c - '0';
-            DUPLICATE = puzzlePanel.inputAlreadyPresent(state);
+            DUPLICATE = puzzle.getGrid().isValuePresent(state);
 
         } else if (c == '0' | c == ' ') {
-            int prevCellValue = cell.getState();
-            puzzlePanel.removeTypedValue(prevCellValue);
             jTextArea.append("Empty value typed: " + c + "\n");
             state = YCell.EMPTY;
         } else {
@@ -555,10 +555,12 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         if (! UNDO) {
+            puzzlePanel.clearViolatedCells(violatedCell);            
             if (!DUPLICATE || state == 0) {
                 cell.setState(state);
                 if (state != 0) {
-                    puzzlePanel.addTypedInput(state);
+                    violatedCell = puzzle.getViolatedCells();
+                    puzzlePanel.setViolatedCells(violatedCell);
                 }
             } else {
                 jTextArea.append("Duplicate key detected.\n");
@@ -992,6 +994,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     /** The puzzle being solved, or null if no puzzle loaded. */
     private YPuzzle puzzle = null;
+
+    private List<YCell> violatedCell;
 
     /** The puzzle panel. */
     private final PuzzlePanel puzzlePanel;

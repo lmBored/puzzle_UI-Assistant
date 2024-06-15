@@ -1,6 +1,7 @@
 package ypa.model;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 
@@ -13,8 +14,11 @@ public class YGrid {
     
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();
+    /** Groups of 4 cell and 1 circle. */
     private List<YGroup> groups = new ArrayList<>();
     
+    private Set<Integer> filledCell;
+
     /**
      * Constructor for an empty grid.
      */
@@ -25,7 +29,7 @@ public class YGrid {
         }
 
         for (int i = 0; i < 4; i++) {
-            groups.add(new YGroup());
+            groups.add(new YGroup(i + 1));
         }
         // 1 2 4 5
         groups.get(0).addCell(grid.get(0));
@@ -48,6 +52,8 @@ public class YGrid {
         groups.get(3).addCell(grid.get(5));
         groups.get(3).addCell(grid.get(7));
         groups.get(3).addCell(grid.get(8));
+
+        filledCell = new HashSet<>();
     }
     
     /**
@@ -86,6 +92,17 @@ public class YGrid {
      */
     public void setCell(int position, int value) {
         grid.get(position).setState(value);
+    }
+
+    /** Used for duplicate checking. */
+    public boolean isValuePresent(int value) {
+        filledCell.clear();
+        for (YCell cell: grid) {
+            if (cell.getState() != 0) {
+                filledCell.add(cell.getState());
+            }
+        }
+        return filledCell.contains(value);
     }
 
     /**

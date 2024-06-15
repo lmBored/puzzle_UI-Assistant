@@ -1,5 +1,6 @@
 package ypa.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,8 @@ public class YCell {
 
     private int location;
 
-    /** The group which the cell belongs to. **/
-    private List<YGroup> group;
+    /** The 2 groups which the cell belongs to. **/
+    private List<YGroup> groups;
     
     /**
      * Constructs a cell with a given state.
@@ -34,6 +35,7 @@ public class YCell {
                     + "(" + state + ").pre failed");
         }
         this.state = state;
+        groups = new ArrayList<>();
     }
 
     public int getState() {
@@ -91,7 +93,7 @@ public class YCell {
     }
 
     public void setGroup(YGroup group) {
-        this.group.add(group);
+        this.groups.add(group);
     }
 
     @Override
