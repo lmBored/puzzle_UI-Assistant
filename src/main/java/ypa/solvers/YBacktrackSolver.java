@@ -129,7 +129,9 @@ public class YBacktrackSolver extends YAbstractSolver {
         }
 
         for (int num = 1; num <= 9; num++) {
-            if (interrupted) return;
+            if (interrupted) {
+                return;
+            }
             if (!isUsed(grid, num)) {
                 grid.setCell(index, num);
                 findAllSolutions(grid, circles, index + 1);
@@ -224,8 +226,6 @@ public class YBacktrackSolver extends YAbstractSolver {
                 && (grid.getValue(4) + grid.getValue(5) + grid.getValue(7)
                         + grid.getValue(8) == circles[3]);
     }
-
-
     
     /**
      * Gets the cells in this puzzle, so as to iterate over them.
@@ -236,7 +236,11 @@ public class YBacktrackSolver extends YAbstractSolver {
         return this.backgroundGrid;
     }
 
-
+    /**
+     * Checks whether the puzzle has at least one solution.
+     *
+     * @return true if the puzzle can be solved
+     */
     public boolean isSolvable() {
         YGrid gridCopy = new YGrid(this.grid);
 
