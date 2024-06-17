@@ -695,10 +695,8 @@ public class MainFrame extends javax.swing.JFrame {
             puzzlePanel.clearViolatedCells(violatedCell);            
             if (!DUPLICATE || state == 0) {
                 cell.setState(state);
-                if (state != 0) {
-                    violatedCell = puzzle.getViolatedCells();
-                    puzzlePanel.setViolatedCells(violatedCell);
-                }
+                violatedCell = puzzle.getViolatedCells();
+                puzzlePanel.setViolatedCells(violatedCell);
             } else {
                 jTextArea.append("Duplicate key detected.\n");
                 return;                

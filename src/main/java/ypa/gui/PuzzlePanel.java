@@ -184,8 +184,11 @@ public class PuzzlePanel extends javax.swing.JPanel {
 
         if (clear && this.clearViolatedCells.contains(cell)) {
             g.setColor(Color.BLACK);
-            g.drawString(cell.toString(), x + delta_x, y - delta_y);
-            
+            if (cell.isEmpty()) {
+                g.drawString(" ", x + delta_x, y - delta_y);
+            } else {
+                g.drawString(cell.toString(), x + delta_x, y - delta_y);
+            }            
         }
         if (!clear && this.violatedCells.contains(cell)) {
             g.setColor(Color.RED);
