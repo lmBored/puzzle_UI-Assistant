@@ -683,7 +683,7 @@ public class MainFrame extends javax.swing.JFrame {
             state = c - '0';
             DUPLICATE = puzzle.getGrid().isValuePresent(state);
 
-        } else if (c == '0' | c == ' ') {
+        } else if (c == '0' | c == ' ' | c == '\b') {
             jTextArea.append("Empty value typed: " + c + "\n");
             state = YCell.EMPTY;
         } else {
