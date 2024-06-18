@@ -6,7 +6,12 @@ import java.util.*;
  * A group of cells, without validity condition.
  *
  */
-public class YGroup {
+public class YGroup extends AbstractGroup {
+    @Override
+    public boolean isValid() {
+        return equalsExpectedSum() && isFull();
+    }
+
     public int groupNum;
     List<YCell> cellGroup;
     private int expectedSum;

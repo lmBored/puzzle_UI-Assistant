@@ -3,7 +3,7 @@ package ypa.command;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import ypa.model.KCell;
+import ypa.model.YCell;
 
 /**
  * A compound command consists of a sequence of commands.
@@ -120,8 +120,8 @@ public class CompoundCommand extends Command {
      * @return collection of cells involved in this command
      */
     @Override
-    public Collection<KCell> getCells() {
-        final Collection<KCell> result = super.getCells();
+    public Collection<YCell> getCells() {
+        final Collection<YCell> result = super.getCells();
         for (final Command command : sequence) {
             result.addAll(command.getCells());
         }

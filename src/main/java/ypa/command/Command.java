@@ -2,7 +2,7 @@ package ypa.command;
 
 import java.util.Collection;
 import java.util.HashSet;
-import ypa.model.KCell;
+import ypa.model.YCell;
 
 /**
  * Abstract base class to represent an executable and revertible command,
@@ -77,7 +77,7 @@ public abstract class Command {
      *
      * @return collection of all cells involved in this command
      */
-    public Collection<KCell> getCells() {
+    public Collection<YCell> getCells() {
         return new HashSet<>();
     }
 

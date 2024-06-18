@@ -14,8 +14,8 @@ public class Histogram extends HashMap<Integer, Integer> {
     /** Constructs an empty histogram. */
     public Histogram() {
         super();
-        put(KCell.BLOCKED, 0);
-        put(KCell.EMPTY, 0);
+        put(YCell.BLOCKED, 0);
+        put(YCell.EMPTY, 0);
     }
 
     /**

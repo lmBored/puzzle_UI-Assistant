@@ -1,8 +1,8 @@
 package ypa.reasoning;
 
 import ypa.command.CompoundCommand;
-import ypa.model.KCell;
-import ypa.model.KPuzzle;
+import ypa.model.YCell;
+import ypa.model.YPuzzle;
 
 /**
  * Abstract template class for reasoners based on empty cells,
@@ -19,7 +19,7 @@ import ypa.model.KPuzzle;
  */
 public abstract class EmptyCellReasoner extends Reasoner {
 
-    public EmptyCellReasoner(KPuzzle puzzle) {
+    public EmptyCellReasoner(YPuzzle puzzle) {
         super(puzzle);
     }
 
@@ -28,7 +28,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
         final CompoundCommand result = super.apply();
 
 // Apply reasoner to all empty cells, execute and return command
-        for (KCell cell : puzzle.getCells()) {
+        for (YCell cell : puzzle.getCells()) {
             if (cell.isEmpty()) {
                 CompoundCommand command = applyToCell(cell);
                 if (command == null) {
@@ -57,7 +57,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
      *      (\result == null  ==>  puzzle is not solvable and not modified) &&
      *      (\result.size() > 0  ==>  ! \result.isExecuted() && puzzle.isValid())}
      */
-    CompoundCommand applyToCell(final KCell cell) throws NullPointerException {
+    public CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         assert cell.isEmpty() : "cell at location " + cell.getLocation() + " not empty";
         return new CompoundCommand(false);
     }

@@ -11,8 +11,8 @@ import ypa.reasoning.BasicEmptyCellByContradiction;
 import ypa.reasoning.EntryWithOneEmptyCell;
 import ypa.reasoning.FixpointReasoner;
 import ypa.reasoning.Reasoner;
-import ypa.solvers.AbstractSolver;
-import ypa.solvers.BacktrackSolver;
+// import ypa.solvers.AbstractSolver;
+// import ypa.solvers.BacktrackSolver;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -392,7 +392,9 @@ public class MainFrame extends javax.swing.JFrame {
         PrintWriter out;
         try {
             out = new PrintWriter(puzzleFile);
-            out.print(puzzle);
+            for (Object circle : puzzle.getCircles()) {
+                out.println(circle);
+            }
             out.close();
             unsavedModifications = false;
         } catch (FileNotFoundException e) {
@@ -450,13 +452,13 @@ public class MainFrame extends javax.swing.JFrame {
             puzzlePanel.setPuzzle(puzzle);
             if (UNDO) {
 
-            // Clear undo-redo facility
+                // Clear undo-redo facility
                 undoRedo.clear();
-            //
+                //
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
-            worker = new SolverWorker(puzzle, null); //Null is the reasoner we use
+            worker = new SolverWorker(puzzle, null); // Null is the reasoner we use
             worker.execute();
             updateFrame();
         } catch (IllegalArgumentException e) {
@@ -669,7 +671,7 @@ public class MainFrame extends javax.swing.JFrame {
         // else it is EDIT or SOLVE mode and it is possible to type
 
         final YCell cell = this.puzzlePanel.getSelected();
-        
+
         if (cell == null) {
             return;
         }
@@ -691,15 +693,15 @@ public class MainFrame extends javax.swing.JFrame {
                     + "Enter a number from 1 to 9, or 0 for empty.\n");
             return;
         }
-        if (! UNDO) {
-            puzzlePanel.clearViolatedCells(violatedCell);            
+        if (!UNDO) {
+            puzzlePanel.clearViolatedCells(violatedCell);
             if (!DUPLICATE || state == 0) {
                 cell.setState(state);
                 violatedCell = puzzle.getViolatedCells();
                 puzzlePanel.setViolatedCells(violatedCell);
             } else {
                 jTextArea.append("Duplicate key detected.\n");
-                return;                
+                return;
             }
         } else {
             // Create undoable set command and pass it to undo-redo facility
@@ -836,59 +838,40 @@ public class MainFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
     private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
-        // if (puzzle == null) {
-        //     jTextArea.append("Please create a puzzle first.\n");
-        //     return;
-        // }
-
-        // // Read the current state of the grid
-        // YGrid grid = puzzle.getGrid();
-
-        // // Check if the current grid state is solvable
-        // YBacktrackSolver solver = new YBacktrackSolver(puzzle, null);
-        // solver.setStopAtFirstSolution(true); // We just need to check if there's any solution
-
-        // if (solver.isSolvable()) {
-        //     // Fill in the next number
-        //     if (!fillNextNumber(grid)) {
-        //         jTextArea.append("No more numbers to fill. The puzzle is already solved or no hint can be given.\n");
-        //     } else {
-        //         jTextArea.append("Number hinted.\n");
-        //         updateFrame();
-        //     }
-        // } else {
-        //     jTextArea.append("Puzzle can't be solved.\n");
-        // }
+        if (puzzle == null) {
+            jTextArea.append("Please create a puzzle first.\n");
+            return;
+        }
 
         // comment added to test. TODO: remove
-        /*
-         * String message;
-         * Reasoner reasoner = null;
-         * // Optionally, configure a reasoning strategy
-         * //reasoner = new EntryWithOneEmptyCell(puzzle);
-         * reasoner = new BasicEmptyCellByContradiction(puzzle);
-         * //reasoner = new GeneralizedEmptyCellByContradiction(puzzle, reasoner);
-         * //reasoner = new GeneralizedEmptyCellByContradiction(puzzle);
-         * //
-         * if (reasoner == null) {
-         * message = "Apply Reasoning is not yet implemented.";
-         * } else {
-         * if (! jCheckBoxMenuItemStopAtFirstChange.isSelected()) {
-         * reasoner = new FixpointReasoner(puzzle, reasoner);
-         * }
-         * CompoundCommand command = reasoner.apply();
-         * if (command == null) {
-         * message = "Puzzle is not solvable.";
-         * } else if (command.size() > 0) {
-         * this.undoRedo.did(command);
-         * message = "Reasoning determined " + command.getCells().size() + " cells.";
-         * } else {
-         * message = "Reasoning did not help.";
-         * }
-         * }
-         * jTextArea.append(message + "\n");
-         * updateFrame();
-         */
+
+        String message;
+        Reasoner reasoner = null;
+        // Optionally, configure a reasoning strategy
+        // reasoner = new EntryWithOneEmptyCell(puzzle);
+        reasoner = new BasicEmptyCellByContradiction(puzzle);
+        // reasoner = new GeneralizedEmptyCellByContradiction(puzzle, reasoner);
+        // reasoner = new GeneralizedEmptyCellByContradiction(puzzle);
+        //
+        // if (reasoner == null) {
+        //     message = "Apply Reasoning is not yet implemented.";
+        // } else {
+        if (!jCheckBoxMenuItemStopAtFirstChange.isSelected()) {
+            reasoner = new FixpointReasoner(puzzle, reasoner);
+        }
+        CompoundCommand command = reasoner.apply();
+        if (command == null) {
+            message = "Puzzle is not solvable.";
+        } else if (command.size() > 0) {
+            this.undoRedo.did(command);
+            message = "Reasoning determined " + command.getCells().size() + " cells.";
+        } else {
+            message = "Reasoning did not help.";
+        }
+        // }
+        jTextArea.append(message + "\n");
+        updateFrame();
+
     }// GEN-LAST:event_jMenuItemApplyReasoningActionPerformed
 
     private void jMenuItemSolveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSolveActionPerformed
@@ -909,12 +892,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         String message;
 
-// Configure and invoke solver
-        //reasoner = new EntryWithOneEmptyCell(puzzle);
-        //reasoner = new BasicEmptyCellByContradiction(puzzle);
-        //reasoner = new FixpointReasoner(puzzle, reasoner);
-        //solver = new BacktrackSolver(puzzle, reasoner);
-        
+        // Configure and invoke solver
+        // reasoner = new EntryWithOneEmptyCell(puzzle);
+        // reasoner = new BasicEmptyCellByContradiction(puzzle);
+        // reasoner = new FixpointReasoner(puzzle, reasoner);
+        // solver = new BacktrackSolver(puzzle, reasoner);
+
         if (worker == null) {
             message = "Solve is not yet implemented.";
         } else if (worker.solver.getBackgroundGrid() != null) {
@@ -1177,9 +1160,9 @@ public class MainFrame extends javax.swing.JFrame {
     /** Undo-redo facility. */
     private final UndoRedo undoRedo = new UndoRedo();
 
-//
+    //
     SolverWorker worker;
-    
+
     /**
      * Completes initialization of this frame.
      */

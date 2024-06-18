@@ -185,6 +185,21 @@ public class YPuzzle {
     }
 
     /**
+     * Returns all cells in the grid as a list.
+     * 
+     * @return List of all cells in the grid
+     */
+    public List<YCell> getCells() {
+        List<YCell> cells = new ArrayList<>();
+        for (int r = 0; r < getRowCount(); r++) {
+            for (int c = 0; c < getColumnCount(); c++) {
+                cells.add(getCell(r, c));
+            }
+        }
+        return cells;
+    }
+
+    /**
      * Fills the next empty cell in the grid with the number suggested.
      * Iterates over the grid row by row, then column by column.
      * When it finds a cell with a value of 0 (indicating it's empty), it sets the

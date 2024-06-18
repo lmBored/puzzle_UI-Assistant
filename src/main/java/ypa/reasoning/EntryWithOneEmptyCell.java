@@ -4,9 +4,10 @@ import ypa.command.Command;
 import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
 import ypa.model.AbstractGroup;
-import ypa.model.KCell;
-import ypa.model.KEntry;
-import ypa.model.KPuzzle;
+import ypa.model.YCell;
+import ypa.model.YEntry;
+import ypa.model.YPuzzle;
+import ypa.model.YGroup;
 
 /**
  * When all cells but one of an entry have been filled,
@@ -16,12 +17,12 @@ import ypa.model.KPuzzle;
  */
 public class EntryWithOneEmptyCell extends EmptyCellReasoner {
 
-    public EntryWithOneEmptyCell(KPuzzle puzzle) {
+    public EntryWithOneEmptyCell(YPuzzle puzzle) {
         super(puzzle);
     }
 
     @Override
-    CompoundCommand applyToCell(KCell cell) throws NullPointerException {
+    public CompoundCommand applyToCell(YCell cell) throws NullPointerException {
         if (!cell.isEmpty()) {
             throw new IllegalArgumentException(this.getClass().getSimpleName()
                     + "applyToCell.pre failed: cell is not empty");
@@ -29,11 +30,11 @@ public class EntryWithOneEmptyCell extends EmptyCellReasoner {
         CompoundCommand result = super.applyToCell(cell);
 
         for (AbstractGroup g : cell.groups()) {
-            if (g instanceof KEntry && g.getStateCount(KCell.EMPTY) == 1) {
+            if (g instanceof YEntry && g.getStateCount(YCell.EMPTY) == 1) {
                 // g is a horizontal or vertical entry with one empty cell
-                int sum = ((KEntry) g).getSpecification().getSum();
+                int sum = ((YEntry) g).getSpecification().getSum();
                 int newState = sum - g.getTotal();
-                if (!puzzle.isValidNumber(newState)) {
+                if (!puzzle.isValid()) {
                     return null;
                 }
                 final Command command = new SetCommand(cell, newState);
