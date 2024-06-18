@@ -66,3 +66,6 @@ To experience the Sujiko Puzzle Assistant, follow these steps:
 3. The puzzle will appear on the screen.
 4. To solve the puzzle, simply click `Puzzle > Solve`. The backtracking 
     algorithm will find the solution and display it to the user.
+
+## Design Patterns
+- The YPA project as a whole uses the MVC design pattern, with each packages representing each of the 3 layers.
