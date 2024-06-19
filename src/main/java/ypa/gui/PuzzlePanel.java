@@ -75,6 +75,9 @@ public class PuzzlePanel extends javax.swing.JPanel {
     /** Clear previously violated cells. */
     private Set<YCell> clearViolatedCells;
 
+    /** The circle selected by the user. */
+    private int circle;
+
     /**
      * Initializes this panel.
      */
@@ -95,6 +98,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
         this.markedCells = null;
         this.violatedCells = new HashSet<>();
         this.clearViolatedCells = new HashSet<>();
+        this.circle = -1;
     }
 
     /**
@@ -102,8 +106,13 @@ public class PuzzlePanel extends javax.swing.JPanel {
      *
      * @param value the value of the circle to set
      */
-    public void setSelectedCircle(final int value) {
-
+    /**
+     * Sets the selected circle to the specified index.
+     *
+     * @param i the index of the circle to be selected
+     */
+    public void setSelectedCircle(final int i) {
+        this.circle = i;
     }
 
     /**
@@ -281,6 +290,18 @@ public class PuzzlePanel extends javax.swing.JPanel {
 
                 index++;
             }
+        }
+
+        if (circle != -1) {
+            int x = (circle % 2 + 1) * cellSize + circleOffset;
+            int y = (circle / 2 + 1) * cellSize + circleOffset;
+
+            g.setColor(new Color(255, 153, 0));
+            g.fillOval(x + circleOffsetAdjustment, y + circleOffsetAdjustment,
+                        circleDiameter - circleOffsetAdjustment, circleDiameter - circleOffsetAdjustment);
+            g.setColor(Color.BLACK);
+            g.drawOval(x, y, circleDiameter, circleDiameter);
+            g.drawString(String.valueOf(circles[circle]), x + delta_x, y + delta_y);
         }
     }
 

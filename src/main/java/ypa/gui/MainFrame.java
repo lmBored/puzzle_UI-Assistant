@@ -645,6 +645,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             final int circle = puzzlePanel.mouseToCircle(evt);
             if (circle != -1) {
+                puzzlePanel.setSelectedCircle(circle);
                 circleIndex = circle;
                 jTextArea.append("Selected circle " + circle + "\n");
                 int[] circles = puzzle.getCircles();
