@@ -86,4 +86,8 @@ To experience the Sujiko Puzzle Assistant, follow these steps:
 6. To create new puzzle, click `File > New`, this will first ask you to name the puzzle, then enter the number in the circles with the format `X,X,X,X`.
 
 ## Design Patterns
-- The YPA project as a whole uses the MVC design pattern, with each packages representing each of the 3 layers.
+- The YPA project as a whole uses the MVC design pattern, with each packages representing each of the 3 layers. This structure not only separates the application's logic but also enhances maintainability and scalability. Below is a detailed explanation of the specific design patterns implemented or modified in different parts of the YPA project:
+
+Model: The model package manages the data and business logic. It includes classes that represent the application's data and handle the rules for manipulating that data. For instance, in the Sujiko puzzle implementation, the `YPuzzle` class encapsulates the puzzle's state, rules, and logic for validating moves.
+View: The view package handles the display and user interface. Classes here render the puzzle grid and provide visual feedback to the user. The `puzzlePanel` class is responsible for drawing the puzzle on the screen and updating it in response to user actions.
+Controller: The controller package processes user input and interacts with the model and view. The `MainFrame` class listens for user interactions, such as clicks or keystrokes, updates the model accordingly, and refreshes the view.
