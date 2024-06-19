@@ -10,9 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Scanner;
 
+/**
+ * This class contains unit tests for the BasicEmptyCellByContradiction class.
+ */
 public class BasicEmptyCellByContradictionTest {
     private BasicEmptyCellByContradiction reasoner;
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @BeforeEach
     void setUp() {
         String puzzleString = "17 18 15 15";
@@ -21,6 +27,9 @@ public class BasicEmptyCellByContradictionTest {
         reasoner = new BasicEmptyCellByContradiction(puzzle);
     }
 
+    /**
+     * Tests the checkSolvability method of the BasicEmptyCellByContradiction class.
+     */
     @Test
     void testCheckSolvability() {
         String puzzleString = "17 18 15 15";
@@ -36,6 +45,9 @@ public class BasicEmptyCellByContradictionTest {
         assertTrue(reasoner.checkSolvability(unsolvableGrid));
     }
 
+    /**
+     * Tests the applyToCell method of the BasicEmptyCellByContradiction class.
+     */
     @Test
     public void testApplyToCell() {
         String puzzleString = "17 18 15 15";

@@ -23,6 +23,12 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
         super(puzzle);
     }
 
+    /**
+     * Checks the solvability of a given grid using a backtracking solver.
+     *
+     * @param grid The grid to be checked for solvability.
+     * @return {@code true} if the grid is solvable, {@code false} otherwise.
+     */
     protected boolean checkSolvability(YGrid grid) {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
