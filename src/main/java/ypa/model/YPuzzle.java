@@ -69,7 +69,6 @@ public class YPuzzle {
             int value = scanner.nextInt();
             
             int position = row * 3 + col;  // Convert row and column to position
-            System.out.println("Row: " + row + "Col: " + col + " Value: " + value);
             this.grid.setCell(position, value);
         }
         scanner.close();
