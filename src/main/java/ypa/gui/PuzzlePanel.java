@@ -98,6 +98,15 @@ public class PuzzlePanel extends javax.swing.JPanel {
     }
 
     /**
+     * Sets the selected circle by typed value.
+     *
+     * @param value the value of the circle to set
+     */
+    public void setSelectedCircle(final int value) {
+
+    }
+
+    /**
      * Gets selected cell.
      *
      * @return the selected cell
@@ -377,6 +386,48 @@ public class PuzzlePanel extends javax.swing.JPanel {
          * }
          */
         return puzzle.getCell(row, col);
+    }
+
+    /**
+     * Converts a mouse event to determine which circle (if any) was clicked.
+     *
+     * @param evt the mouse event
+     * @return the index of the circle clicked, or -1 if no circle was clicked
+     */
+    public int mouseToCircle(MouseEvent evt) {
+        if (puzzle == null) {
+            return -1;
+        }
+
+        int[] circles = puzzle.getCircles();
+        int index = 0;
+
+        // Constants for circle dimensions and offsets
+        final int circleOffset = (int) (0.75 * cellSize);
+        final int circleDiameter = cellSize - (int) (0.5 * cellSize);
+
+        for (int i = 1; i <= 2; i++) {
+            for (int j = 1; j <= 2; j++) {
+                int x = j * cellSize + circleOffset;
+                int y = i * cellSize + circleOffset;
+
+                // Calculate circle bounds
+                int circleLeft = x;
+                int circleRight = x + circleDiameter;
+                int circleTop = y;
+                int circleBottom = y + circleDiameter;
+
+                // Check if the mouse event coordinates are within the current circle
+                if (evt.getX() >= circleLeft && evt.getX() <= circleRight &&
+                        evt.getY() >= circleTop && evt.getY() <= circleBottom) {
+                    return index; // Return the index of the circle clicked
+                }
+
+                index++;
+            }
+        }
+
+        return -1; // Return -1 if no circle was clicked
     }
 
 }

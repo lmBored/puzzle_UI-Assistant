@@ -67,8 +67,8 @@ public class YPuzzle {
             int row = rowChar.charAt(0) - 'a';
             int col = scanner.nextInt();
             int value = scanner.nextInt();
-            
-            int position = row * 3 + col;  // Convert row and column to position
+
+            int position = row * 3 + col; // Convert row and column to position
             this.grid.setCell(position, value);
         }
         scanner.close();
@@ -170,6 +170,20 @@ public class YPuzzle {
      */
     public int[] getCircles() {
         return circles;
+    }
+
+    /**
+     * Sets the selected circle by its value.
+     *
+     * @param value the value of the circle to select
+     */
+    public int getIndexSelectedCircle(final int value) {
+        for (int i = 0; i < circles.length; i++) {
+            if (circles[i] == value) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Circle with value " + value + " not found.");
     }
 
     /**
