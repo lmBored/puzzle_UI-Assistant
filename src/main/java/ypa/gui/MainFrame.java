@@ -706,7 +706,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             // Create undoable set command and pass it to undo-redo facility
             // comment added to test. TODO: remove
-            // undoRedo.did(new SetCommand(cell, state));
+            undoRedo.did(new SetCommand(cell, state));
             //
         }
         unsavedModifications = true;
@@ -1155,7 +1155,7 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /** Whether to provide Undo. */
-    public static final boolean UNDO = false; // TODO: implement true
+    public static final boolean UNDO = true; // TODO: implement true
 
     public static boolean DUPLICATE;
     /** Default directory for loading of puzzles. */
