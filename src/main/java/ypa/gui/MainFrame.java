@@ -504,7 +504,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
-            worker = new SolverWorker(puzzle, null); // Null is the reasoner we use
+            worker = new SolverWorker(puzzle, reasoner); // Null is the reasoner we use
             worker.execute();
             updateFrame();
         } catch (IllegalArgumentException e) {
@@ -658,6 +658,8 @@ public class MainFrame extends javax.swing.JFrame {
                     numberInput.setLength(0); // Reset the numberInput after an error
                 }
             }
+            worker = new SolverWorker(puzzle, reasoner); // Null is the reasoner we use
+            worker.execute();
         }
         updateFrame();
     } // GEN-LAST:event_jPanelPuzzleKeyTyped
@@ -877,7 +879,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         if (worker == null) {
             message = "Solve is not yet implemented.";
-        } else if (worker.solver.getBackgroundGrid() != null) {
+        } else if (worker.solver.getBackgroundGrid() != null && worker.solved) {
             worker.showSolution = true;
             message = "Puzzle solved";
             // handle result of solver
@@ -1138,9 +1140,12 @@ public class MainFrame extends javax.swing.JFrame {
     /** Undo-redo facility. */
     private final UndoRedo undoRedo = new UndoRedo();
 
-    //
+    // Creation of the worker, initialized later
     SolverWorker worker;
-
+    
+    // Reasoner to use in the solver
+    Reasoner reasoner = null;
+    
     /**
      * Completes initialization of this frame.
      */

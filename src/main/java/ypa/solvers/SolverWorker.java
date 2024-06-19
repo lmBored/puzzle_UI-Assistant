@@ -26,6 +26,7 @@ public class SolverWorker extends SwingWorker<Void, Void> {
     Reasoner reasoner = null;
     public YBacktrackSolver solver = null;
     public boolean showSolution = false;
+    public boolean solved = false;
 
     /**
      * SolverWorker constructor.
@@ -47,7 +48,7 @@ public class SolverWorker extends SwingWorker<Void, Void> {
     */
     @Override
     protected Void doInBackground() throws Exception {
-        boolean solved = solver.solve();
+        this.solved = solver.solve();
 
         if (solved) {            
             this.commands = solver.getCommands();
