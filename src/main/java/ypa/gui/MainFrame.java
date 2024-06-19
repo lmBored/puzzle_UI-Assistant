@@ -631,11 +631,18 @@ public class MainFrame extends javax.swing.JFrame {
         if (YPuzzle.errormsg != null) {
             jTextArea.append(YPuzzle.errormsg + "\n");
             updateModeRadioButtons(YPuzzle.Mode.EDIT);
+            YPuzzle.errormsg = null;
         }
     }// GEN-LAST:event_jRadioButtonMenuItemSolveActionPerformed
 
     private void jRadioButtonMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemEditActionPerformed
         updateModeRadioButtons(YPuzzle.Mode.EDIT);
+        YGrid grid = puzzle.getGrid();
+        grid.clear();
+        puzzlePanel.clearViolatedCells(violatedCell);
+        Graphics g = getGraphics();
+        puzzlePanel.paintGridWhite(g, 3, 90);
+        updateFrame();
     }// GEN-LAST:event_jRadioButtonMenuItemEditActionPerformed
 
     private int circleIndex; // circle index
@@ -669,8 +676,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
-            YGrid grid = puzzle.getGrid();
-            grid.clear();
             updateFrame();
 
             final int circle = puzzlePanel.mouseToCircle(evt);
@@ -726,8 +731,6 @@ public class MainFrame extends javax.swing.JFrame {
         updateFrame();
         jPanelPuzzle.requestFocusInWindow();
     }// GEN-LAST:event_jPanelPuzzleMouseClicked
-
-    private StringBuilder numberInput = new StringBuilder(); // Number input for circle values
 
     private void jPanelPuzzleKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jPanelPuzzleKeyTyped
         // jTextArea.append("Key typed: " + evt.getKeyChar() + "\n");
@@ -795,7 +798,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
             // Put in method above so it popup immediately
         }
-        
+
         updateFrame();
     }// GEN-LAST:event_jPanelPuzzleKeyTyped
 
