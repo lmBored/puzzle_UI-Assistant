@@ -183,6 +183,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
      */
     public void clearCell() {
         paintwhite = true;
+        return;
     }
 
     /**

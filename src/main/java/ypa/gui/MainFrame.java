@@ -566,6 +566,8 @@ public class MainFrame extends javax.swing.JFrame {
             YPuzzle.errormsg = null;
         }
         if (previousStateEdit) {
+            PuzzlePanel.paintwhite = false;
+
             String puzzleName = puzzle.getName();
             String circleValues = Arrays.toString(puzzle.getCircles())
                                     .replace("[", "").replace("]", "").replace(" ", "");
@@ -584,7 +586,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             puzzlePanel.setPuzzle(puzzle);
             // debugPuzzleState("after reinitialization");
-            
+
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
 
             if (UNDO) {
@@ -604,7 +606,6 @@ public class MainFrame extends javax.swing.JFrame {
         grid.clear();
         puzzlePanel.clearViolatedCells(violatedCell);
         puzzlePanel.clearCell();
-        PuzzlePanel.paintwhite = false;
         updateFrame();
     }// GEN-LAST:event_jRadioButtonMenuItemEditActionPerformed
 
