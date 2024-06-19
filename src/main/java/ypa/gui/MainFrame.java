@@ -640,8 +640,8 @@ public class MainFrame extends javax.swing.JFrame {
         YGrid grid = puzzle.getGrid();
         grid.clear();
         puzzlePanel.clearViolatedCells(violatedCell);
-        Graphics g = getGraphics();
-        puzzlePanel.paintGridWhite(g, 3, 90);
+        puzzlePanel.clearCell();
+        PuzzlePanel.paintwhite = false;
         updateFrame();
     }// GEN-LAST:event_jRadioButtonMenuItemEditActionPerformed
 
