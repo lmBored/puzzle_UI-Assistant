@@ -176,6 +176,15 @@ public class PuzzlePanel extends javax.swing.JPanel {
         }
     }
 
+    public static boolean paintwhite = false;
+
+    /**
+     * Clears the given cell and repaints it.
+     */
+    public void clearCell() {
+        paintwhite = true;
+    }
+
     /**
      * /**
      * Draws given cell on given canvas at given location.
@@ -212,6 +221,11 @@ public class PuzzlePanel extends javax.swing.JPanel {
         }
         if (selected != null && cell == selected) {
             g.setColor(Color.YELLOW);
+            g.fillRect(x + 1, y - cellSize + 1,
+                    cellSize - 1, cellSize - 1);
+        }
+        if (paintwhite){
+            g.setColor(Color.WHITE);
             g.fillRect(x + 1, y - cellSize + 1,
                     cellSize - 1, cellSize - 1);
         }
