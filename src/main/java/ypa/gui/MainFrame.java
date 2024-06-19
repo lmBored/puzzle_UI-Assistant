@@ -640,25 +640,30 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Empty value typed: " + c + "\n");
                 state = YCell.EMPTY;
             } else {
+                // if Ctrl+Z or Ctrl+Y, don't show message
+                if (evt.isControlDown()) {
+                    return;
+                }
+                
                 jTextArea.append("Incorrect key.\n"
                         + "Enter a number from 1 to 9, or 0 for empty.\n");
                 return;
             }
-            // if (UNDO) {
+            
+            // Check duplicates
             puzzlePanel.clearViolatedCells(violatedCell);
-            if (!DUPLICATE || state == 0) {
-                cell.setState(state);
-                violatedCell = puzzle.getViolatedCells();
-                puzzlePanel.setViolatedCells(violatedCell);
-            } else {
+            if (DUPLICATE && state != 0) {
                 jTextArea.append("Duplicate key detected.\n");
                 return;
             }
             
             // Create undoable set command and pass it to undo-redo facility
             undoRedo.did(new SetCommand(cell, state));
-            //
-            // }
+            // IMPORTANT: cell.setState must be after undoRedo. Do not change this
+            cell.setState(state);
+            violatedCell = puzzle.getViolatedCells();
+            puzzlePanel.setViolatedCells(violatedCell);
+
             unsavedModifications = true;
             if (puzzle.isSolved() && puzzle.isValid()) {
                 jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");

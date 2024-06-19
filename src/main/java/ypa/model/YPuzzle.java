@@ -127,11 +127,7 @@ public class YPuzzle {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
 
-        if (solver.isSolvable()) {
-            return true;
-        } else {
-            return false;
-        }
+        return solver.isSolvable();
     }
 
     /**

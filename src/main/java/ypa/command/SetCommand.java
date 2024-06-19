@@ -16,7 +16,6 @@ public class SetCommand extends GenericCommand<YCell> {
 
     /** Previous state of the receiver, for revert(). */
     private int oldState;
-    //
 
     /**
      * Constructs a set command for a given receiver and new state.
@@ -28,7 +27,6 @@ public class SetCommand extends GenericCommand<YCell> {
         super(receiver);
         // Initialize command state
         this.newState = newState;
-        //
     }
 
     // Operations
@@ -51,6 +49,5 @@ public class SetCommand extends GenericCommand<YCell> {
         result.add(receiver);
         return result;
     }
-    //
 
 }
