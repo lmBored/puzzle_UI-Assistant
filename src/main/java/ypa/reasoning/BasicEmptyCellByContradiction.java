@@ -27,11 +27,7 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
 
-        if (solver.isSolvableFromExisting(grid)) {
-            return true;
-        } else {
-            return false;
-        }
+        return solver.isSolvableFromExisting(grid);
     }
 
     @Override
