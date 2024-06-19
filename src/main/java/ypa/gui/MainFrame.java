@@ -664,9 +664,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
         updateFrame();
         jPanelPuzzle.requestFocusInWindow();
-    }// GEN-LAST:event_jPanelPuzzleMouseClicked
+    } // GEN-LAST:event_jPanelPuzzleMouseClicked
 
-    private void jPanelPuzzleKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jPanelPuzzleKeyTyped
+    private void jPanelPuzzleKeyTyped(java.awt.event.KeyEvent evt) {
+        // GEN-FIRST:event_jPanelPuzzleKeyTyped
         // jTextArea.append("Key typed: " + evt.getKeyChar() + "\n");
         if (puzzle == null) {
             return;
@@ -727,19 +728,21 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
         }
         updateFrame();
-    }// GEN-LAST:event_jPanelPuzzleKeyTyped
+    } // GEN-LAST:event_jPanelPuzzleKeyTyped
 
     /**/
-    private void jMenuItemCopyActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemCopyActionPerformed
+    private void jMenuItemCopyActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemCopyActionPerformed
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         String selectedText = jTextArea.getSelectedText();
         // Wrap text into StringSelection to be able to put it in system clipboard
         StringSelection selection = new StringSelection(selectedText);
         // Check the API for other parameter of setContents() method
         clipboard.setContents(selection, null);
-    }// GEN-LAST:event_jMenuItemCopyActionPerformed
+    } // GEN-LAST:event_jMenuItemCopyActionPerformed
 
-    private void jMenuItemClearActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemClearActionPerformed
+    private void jMenuItemClearActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemClearActionPerformed
         if (!confirmDiscard()) {
             return;
         }
@@ -751,9 +754,10 @@ public class MainFrame extends javax.swing.JFrame {
             //
         }
         updateFrame();
-    }// GEN-LAST:event_jMenuItemClearActionPerformed
+    } // GEN-LAST:event_jMenuItemClearActionPerformed
 
-    private void jMenuItemUndoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemUndoActionPerformed
+    private void jMenuItemUndoActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemUndoActionPerformed
         if (!UNDO) {
             jTextArea.append("Undo is not yet implemented.\n");
         } else {
@@ -762,13 +766,13 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Undoing last.\n");
                 undoRedo.undo(true);
                 unsavedModifications = true;
+                updateFrame();
             }
-            //
-            updateFrame();
         }
-    }// GEN-LAST:event_jMenuItemUndoActionPerformed
+    } // GEN-LAST:event_jMenuItemUndoActionPerformed
 
-    private void jMenuItemRedoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemRedoActionPerformed
+    private void jMenuItemRedoActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemRedoActionPerformed
         if (!UNDO) {
             jTextArea.append("Redo is not yet implemented.\n");
         } else {
@@ -781,13 +785,15 @@ public class MainFrame extends javax.swing.JFrame {
             //
             updateFrame();
         }
-    }// GEN-LAST:event_jMenuItemRedoActionPerformed
+    } // GEN-LAST:event_jMenuItemRedoActionPerformed
 
-    private void jMenuItemClearTextAreaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemClearTextAreaActionPerformed
+    private void jMenuItemClearTextAreaActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemClearTextAreaActionPerformed
         jTextArea.setText("");
-    }// GEN-LAST:event_jMenuItemClearTextAreaActionPerformed
+    } // GEN-LAST:event_jMenuItemClearTextAreaActionPerformed
 
-    private void jMenuItemUndoAllActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemUndoAllActionPerformed
+    private void jMenuItemUndoAllActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemUndoAllActionPerformed
         if (!UNDO) {
             jTextArea.append("Undo All is not yet implemented.\n");
         } else {
@@ -800,9 +806,10 @@ public class MainFrame extends javax.swing.JFrame {
             //
             updateFrame();
         }
-    }// GEN-LAST:event_jMenuItemUndoAllActionPerformed
+    } // GEN-LAST:event_jMenuItemUndoAllActionPerformed
 
-    private void jMenuItemRedoAllActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemRedoAllActionPerformed
+    private void jMenuItemRedoAllActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemRedoAllActionPerformed
         if (!UNDO) {
             jTextArea.append("Redo All is not yet implemented.\n");
         } else {
@@ -815,9 +822,10 @@ public class MainFrame extends javax.swing.JFrame {
             //
             updateFrame();
         }
-    }// GEN-LAST:event_jMenuItemRedoAllActionPerformed
+    } // GEN-LAST:event_jMenuItemRedoAllActionPerformed
 
-    private void jMenuItemHelpActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemHelpActionPerformed
+    private void jMenuItemHelpActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemHelpActionPerformed
         JOptionPane.showMessageDialog(this,
                 new String[] {
                         "Sujiko is a number puzzle game played on a 3x3 grid.",
@@ -834,9 +842,10 @@ public class MainFrame extends javax.swing.JFrame {
                         "",
                 },
                 "Help - Sujiko Puzzle Assistant", JOptionPane.INFORMATION_MESSAGE);
-    }// GEN-LAST:event_jMenuItemHelpActionPerformed
+    } // GEN-LAST:event_jMenuItemHelpActionPerformed
 
-    private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemAboutActionPerformed
+    private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemAboutActionPerformed
         JOptionPane.showMessageDialog(this,
                 new String[] {
                         "This Sujiko puzzle solver is developed by Group 6 as part of the",
@@ -844,13 +853,15 @@ public class MainFrame extends javax.swing.JFrame {
                         "for the academic year 2023-34."
                 },
                 "About Sujiko Puzzle Assistant", JOptionPane.INFORMATION_MESSAGE);
-    }// GEN-LAST:event_jMenuItemAboutActionPerformed
+    } // GEN-LAST:event_jMenuItemAboutActionPerformed
 
-    private void jCheckBoxMenuItemHighlightItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_jCheckBoxMenuItemHighlightItemStateChanged
+    private void jCheckBoxMenuItemHighlightItemStateChanged(java.awt.event.ItemEvent evt) {
+        // GEN-FIRST:event_jCheckBoxMenuItemHighlightItemStateChanged
         updateFrame();
-    }// GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
+    } // GEN-LAST:event_jCheckBoxMenuItemHighlightItemStateChanged
 
-    private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
+    private void jMenuItemApplyReasoningActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemApplyReasoningActionPerformed
         if (puzzle == null) {
             jTextArea.append("Please create a puzzle first.\n");
             return;
@@ -904,9 +915,10 @@ public class MainFrame extends javax.swing.JFrame {
         jTextArea.append(message + "\n");
         updateFrame();
 
-    }// GEN-LAST:event_jMenuItemApplyReasoningActionPerformed
+    } // GEN-LAST:event_jMenuItemApplyReasoningActionPerformed
 
-    private void jMenuItemSolveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemSolveActionPerformed
+    private void jMenuItemSolveActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jMenuItemSolveActionPerformed
         if (puzzle == null) {
             return;
         }
@@ -949,9 +961,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
         jTextArea.append(message + "\n");
         updateFrame();
-    }// GEN-LAST:event_jMenuItemSolveActionPerformed
+    } // GEN-LAST:event_jMenuItemSolveActionPerformed
 
-    private void jCheckBoxMenuItemStopAtFirstChangeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
+    private void jCheckBoxMenuItemStopAtFirstChangeActionPerformed(java.awt.event.ActionEvent evt) {
+        // GEN-FIRST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
         // TODO add your handling code here:
         boolean isSelected = jCheckBoxMenuItemStopAtFirstChange.isSelected();
 
@@ -960,10 +973,10 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             // Continue the application even if changes occur
         }
-    }// GEN-LAST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
+    } // GEN-LAST:event_jCheckBoxMenuItemStopAtFirstChangeActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments.
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1228,14 +1241,12 @@ public class MainFrame extends javax.swing.JFrame {
 
             final Collection<YCell> markedCells = new HashSet<>();
             // If available, set markedCells to cells involved in last command
-
             
-            // if (undoRedo.canUndo()) {
-            //     final Command command = undoRedo.lastDone();
-            //     markedCells.addAll(command.getCells());
-            // }
-
-            // puzzlePanel.setMarkedCells(markedCells);
+            if (undoRedo.canUndo()) {
+                final Command command = undoRedo.lastDone();
+                markedCells.addAll(command.getCells());
+            }
+            puzzlePanel.setMarkedCells(markedCells);
 
         }
 
