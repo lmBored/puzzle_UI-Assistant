@@ -6,7 +6,6 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 import ypa.model.YPuzzle;
 import ypa.reasoning.Reasoner;
-import ypa.solvers.YBacktrackSolver;
 
 /**
  * Test cases for {@link YBacktrackSolver}.
