@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import ypa.reasoning.Reasoner;
+import ypa.solvers.YAbstractSolver;
 import ypa.solvers.YBacktrackSolver;
 
 /**
@@ -44,6 +46,9 @@ public class YPuzzle {
 
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
+
+    /** Error message to display. */
+    public static String errormsg;
 
     /**
      * Constructs a new puzzle with initial state read from given scanner
@@ -114,11 +119,42 @@ public class YPuzzle {
     }
 
     /**
-     * Sets the mode of this puzzle.
+     * Checks the solvability of the puzzle.
+     *
+     * @return true if the puzzle is solvable, false otherwise.
+     */
+    private boolean checkPuzzleSolvability(YPuzzle puzzle) {
+        Reasoner reasoner = null;
+        YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
+
+        if (solver.isSolvable()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sets the mode of this puzzle with optional param puzzle.
      *
      * @param mode the new mode
      */
     public void setMode(Mode mode) {
+        setMode(mode, this);
+    }
+
+    /**
+     * Sets the mode of this puzzle.
+     *
+     * @param mode   the new mode
+     * @param puzzle the puzzle to check for solvability
+     */
+    public void setMode(Mode mode, YPuzzle puzzle) {
+        if (mode == Mode.SOLVE && !checkPuzzleSolvability(puzzle)) {
+            errormsg = "The puzzle is not solvable. Cannot switch to SOLVE mode.";
+            setMode(Mode.EDIT);
+            return;
+        }
         this.mode = mode;
     }
 

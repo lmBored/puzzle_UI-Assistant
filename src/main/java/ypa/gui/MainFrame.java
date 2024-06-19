@@ -478,6 +478,11 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jMenuItemOpenActionPerformed
 
+    /**
+     * Checks the solvability of the puzzle.
+     *
+     * @return true if the puzzle is solvable, false otherwise.
+     */
     private boolean checkPuzzleSolvability() {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
@@ -623,6 +628,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jRadioButtonMenuItemSolveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemSolveActionPerformed
         updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+        if (YPuzzle.errormsg != null) {
+            jTextArea.append(YPuzzle.errormsg + "\n");
+            updateModeRadioButtons(YPuzzle.Mode.EDIT);
+        }
     }// GEN-LAST:event_jRadioButtonMenuItemSolveActionPerformed
 
     private void jRadioButtonMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemEditActionPerformed
@@ -668,18 +677,23 @@ public class MainFrame extends javax.swing.JFrame {
             if (circle != -1) {
                 circleIndex = circle;
                 jTextArea.append("Selected circle " + circle + "\n");
-                // int[] circles = puzzle.getCircles();
-                // String userInput = JOptionPane.showInputDialog("Please enter a number:");
-                // if (userInput != null && !userInput.isEmpty()) {
-                // try {
-                // int number = Integer.parseInt(userInput);
-                // circles[circleIndex] = number;
-                // } catch (NumberFormatException e) {
-                // JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number.",
-                // "Error",
-                // JOptionPane.ERROR_MESSAGE);
-                // }
-                // }
+                int[] circles = puzzle.getCircles();
+                String input = JOptionPane.showInputDialog(null, "Please enter a number:", "Input",
+                        JOptionPane.PLAIN_MESSAGE);
+
+                if (input != null && input.matches("\\d+") && !input.isEmpty()) {
+                    try {
+                        circles[circleIndex] = Integer.parseInt(input);
+                        updateFrame();
+                        if (!checkPuzzleSolvability()) {
+                            jTextArea.append("The entered puzzle is not solvable.\n");
+                        }
+                    } catch (NumberFormatException e) {
+                        jTextArea.append("Invalid input. Please enter a number.\n");
+                    }
+                } else if (input != null) {
+                    jTextArea.append("Invalid input. Please enter a number.\n");
+                }
             }
         }
 
@@ -779,33 +793,9 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
-            int[] circles = puzzle.getCircles();
-            char keyChar = evt.getKeyChar();
-
-            // If the keyChar is a digit, append it to the numberInput
-            if (Character.isDigit(keyChar)) {
-                numberInput.append(keyChar);
-                try {
-                    circles[circleIndex] = Integer.parseInt(numberInput.toString());
-                    updateFrame();
-                } catch (NumberFormatException e) {
-                    // handle the situation where the StringBuilder does not contain a valid integer
-                }
-            } else if (keyChar == '\n') { // If the keyChar is the Enter key
-                try {
-                    int number = Integer.parseInt(numberInput.toString());
-                    circles[circleIndex] = number;
-                    numberInput.setLength(0); // Reset the numberInput for the next number
-                    if (!checkPuzzleSolvability()) {
-                        jTextArea.append("The entered puzzle is not solvable.\n");
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    numberInput.setLength(0); // Reset the numberInput after an error
-                }
-            }
+            // Put in method above so it popup immediately
         }
+        
         updateFrame();
     }// GEN-LAST:event_jPanelPuzzleKeyTyped
 
@@ -1309,12 +1299,12 @@ public class MainFrame extends javax.swing.JFrame {
             final Collection<YCell> markedCells = new HashSet<>();
             // If available, set markedCells to cells involved in last command
 
-            // if (undoRedo.canUndo()) {
-            // final Command command = undoRedo.lastDone();
-            // markedCells.addAll(command.getCells());
-            // }
+            if (undoRedo.canUndo()) {
+                final Command command = undoRedo.lastDone();
+                markedCells.addAll(command.getCells());
+            }
 
-            // puzzlePanel.setMarkedCells(markedCells);
+            puzzlePanel.setMarkedCells(markedCells);
 
         }
 
@@ -1355,7 +1345,7 @@ public class MainFrame extends javax.swing.JFrame {
         jRadioButtonMenuItemView.setSelected(mode == YPuzzle.Mode.VIEW);
         jRadioButtonMenuItemSolve.setSelected(mode == YPuzzle.Mode.SOLVE);
         jRadioButtonMenuItemEdit.setSelected(mode == YPuzzle.Mode.EDIT);
-        puzzle.setMode(mode);
+        puzzle.setMode(mode, puzzle);
         jTextArea.append("Mode changed to " + puzzle.getMode() + "\n");
     }
 
