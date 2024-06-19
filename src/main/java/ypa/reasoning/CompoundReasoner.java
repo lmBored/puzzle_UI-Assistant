@@ -41,7 +41,7 @@ public class CompoundReasoner extends Reasoner {
     @Override
     public CompoundCommand apply() {
 
-//  Apply sequence of reasoners until first change
+        //  Apply sequence of reasoners until first change
         for (Reasoner reasoner : reasoners) {
             final CompoundCommand command = reasoner.apply();
             if (command == null) {
@@ -50,7 +50,6 @@ public class CompoundReasoner extends Reasoner {
                 return command;
             }
         }
-//
 
         return super.apply();
     }

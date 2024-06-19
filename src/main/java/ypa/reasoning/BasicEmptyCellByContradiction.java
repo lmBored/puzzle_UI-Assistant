@@ -6,8 +6,6 @@ import ypa.command.SetCommand;
 import ypa.model.YCell;
 import ypa.model.YPuzzle;
 
-import ypa.model.*;
-
 /**
  * When only one way of filling an empty cell does not lead to an invalid state,
  * then that one way of filling is forced.
