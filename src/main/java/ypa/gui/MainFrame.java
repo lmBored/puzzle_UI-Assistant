@@ -19,6 +19,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -50,7 +51,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -112,17 +114,16 @@ public class MainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanelPuzzleLayout = new javax.swing.GroupLayout(jPanelPuzzle);
         jPanelPuzzle.setLayout(jPanelPuzzleLayout);
         jPanelPuzzleLayout.setHorizontalGroup(
-            jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
-        );
+                jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 402, Short.MAX_VALUE));
         jPanelPuzzleLayout.setVerticalGroup(
-            jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+                jPanelPuzzleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
 
         jMenuFile.setText("File");
 
-        jMenuItemNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemNew.setText("New…");
         jMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +132,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuFile.add(jMenuItemNew);
 
-        jMenuItemOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemOpen.setText("Open…");
         jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +142,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuFile.add(jMenuItemOpen);
 
-        jMenuItemSaveAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemSaveAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemSaveAs.setText("Save As…");
         jMenuItemSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,7 +153,8 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuFile.add(jMenuItemSaveAs);
         jMenuFile.add(jSeparatorFile1);
 
-        jMenuItemQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemQuit.setText("Quit");
         jMenuItemQuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +167,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuEdit.setText("Edit");
 
-        jMenuItemUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemUndo.setText("Undo");
         jMenuItemUndo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,7 +177,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuEdit.add(jMenuItemUndo);
 
-        jMenuItemUndoAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemUndoAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z,
+                java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemUndoAll.setText("Undo All");
         jMenuItemUndoAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +187,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuEdit.add(jMenuItemUndoAll);
 
-        jMenuItemRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemRedo.setText("Redo");
         jMenuItemRedo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,7 +197,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuEdit.add(jMenuItemRedo);
 
-        jMenuItemRedoAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemRedoAll.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y,
+                java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemRedoAll.setText("Redo All");
         jMenuItemRedoAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +216,8 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuEdit.add(jMenuItemClear);
         jMenuEdit.add(jSeparatorEdit1);
 
-        jMenuItemCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemCopy.setText("Copy");
         jMenuItemCopy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,7 +273,8 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuPuzzle.add(jCheckBoxMenuItemHighlight);
         jMenuPuzzle.add(jSeparator1);
 
-        jMenuItemApplyStrategies.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItemApplyStrategies.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R,
+                java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItemApplyStrategies.setText("Apply Reasoning");
         jMenuItemApplyStrategies.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,23 +340,26 @@ public class MainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelPuzzle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanelPuzzle, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelPuzzle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jPanelPuzzle, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466,
+                                                Short.MAX_VALUE))
+                                .addContainerGap()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -404,7 +417,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (!confirmDiscard()) {
             return;
         }
-        
+
         System.exit(0);
     }// GEN-LAST:event_jMenuItemQuitActionPerformed
 
@@ -455,7 +468,6 @@ public class MainFrame extends javax.swing.JFrame {
      * @return true if the puzzle is solvable, false otherwise.
      */
     private boolean checkPuzzleSolvability() {
-        Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
 
         return solver.isSolvable();
@@ -485,9 +497,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         Scanner scanner = new Scanner(circleValues);
         scanner.useDelimiter(",");
-        
+
         try {
-            puzzle = new YPuzzle(scanner, puzzleName);
+            try {
+                puzzle = new YPuzzle(scanner, puzzleName);
+            } catch (IllegalArgumentException e) {
+                // jTextArea.append("IllegalArgumentException: " + e.getMessage() + "\n");
+                return;
+            } catch (Exception e) {
+                // jTextArea.append("Exception reinitializing puzzle: " + e.getMessage() + "\n");
+                e.printStackTrace();
+                return;
+            }
             while (!checkPuzzleSolvability()) {
                 jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
                 circleValues = JOptionPane.showInputDialog(this,
@@ -517,12 +538,25 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append("Invalid circle values entered for the new puzzle.\n");
             jTextArea.append(e + "\n");
         }
-        
+
     }// GEN-LAST:event_jMenuItemNewActionPerformed
+
+    boolean previousStateEdit = false; // flag to check if the previous state was edit
 
     private void jRadioButtonMenuItemViewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemViewActionPerformed
         updateModeRadioButtons(YPuzzle.Mode.VIEW);
     }// GEN-LAST:event_jRadioButtonMenuItemViewActionPerformed
+
+    // private void debugPuzzleState(String stage) {
+    //     jTextArea.append("Debugging Puzzle State at " + stage + ":\n");
+    //     if (puzzle == null) {
+    //         jTextArea.append("Puzzle is null\n");
+    //         return;
+    //     }
+    //     jTextArea.append("Puzzle: " + puzzle.getName() + "\n");
+    //     jTextArea.append("Circles: " + Arrays.toString(puzzle.getCircles()) + "\n");
+    //     jTextArea.append(puzzle.toString() + "\n");
+    // }
 
     private void jRadioButtonMenuItemSolveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemSolveActionPerformed
         updateModeRadioButtons(YPuzzle.Mode.SOLVE);
@@ -530,6 +564,37 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append(YPuzzle.errormsg + "\n");
             updateModeRadioButtons(YPuzzle.Mode.EDIT);
             YPuzzle.errormsg = null;
+        }
+        if (previousStateEdit) {
+            String puzzleName = puzzle.getName();
+            String circleValues = Arrays.toString(puzzle.getCircles())
+                                    .replace("[", "").replace("]", "").replace(" ", "");
+            Scanner scanner = new Scanner(circleValues);
+            scanner.useDelimiter(",");
+
+            try {
+                puzzle = new YPuzzle(scanner, puzzleName);
+            } catch (IllegalArgumentException e) {
+                // jTextArea.append("IllegalArgumentException: " + e.getMessage() + "\n");
+                return;
+            } catch (Exception e) {
+                // jTextArea.append("Exception reinitializing puzzle: " + e.getMessage() + "\n");
+                e.printStackTrace();
+                return;
+            }
+            puzzlePanel.setPuzzle(puzzle);
+            // debugPuzzleState("after reinitialization");
+            
+            updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+
+            if (UNDO) {
+                undoRedo.clear();
+            }
+            unsavedModifications = false;
+            worker = new SolverWorker(puzzle, reasoner);
+            worker.execute();
+
+            previousStateEdit = false;
         }
     }// GEN-LAST:event_jRadioButtonMenuItemSolveActionPerformed
 
@@ -574,6 +639,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
+            previousStateEdit = true;
             updateFrame();
 
             final int circle = puzzlePanel.mouseToCircle(evt);
@@ -656,7 +722,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Duplicate key detected.\n");
                 return;
             }
-            
+
             // Create undoable set command and pass it to undo-redo facility
             undoRedo.did(new SetCommand(cell, state));
             // IMPORTANT: cell.setState must be after undoRedo. Do not change this
@@ -694,7 +760,7 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append("Try creating a new puzzle or opening a file.\n");
             return;
         }
-        
+
         if (!confirmDiscard()) {
             return;
         }
@@ -840,24 +906,6 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             message = "Reasoning did not help.";
         }
-        // }
-
-        // These line is supposed to work but no, it doesn't LLLLLLL
-        // // Start the solving process using YBacktrackSolver
-        // YBacktrackSolver solver = new YBacktrackSolver(puzzle, reasoner);
-        // solver.setStopAtFirstSolution(true);
-        // solver.startSolving();
-
-        // try {
-        // List<YGrid> solutions = solver.getSolutions();
-        // if (solutions.isEmpty()) {
-        // message += "\nNo solutions found.";
-        // } else {
-        // message += "\n" + solutions.size() + " solution(s) found.";
-        // updateFrame();
-        // }
-        // } catch (Exception e) {
-        // message += "\nError while solving: " + e.getMessage();
         // }
 
         jTextArea.append(message + "\n");
@@ -1155,10 +1203,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Creation of the worker, initialized later
     SolverWorker worker;
-    
+
     // Reasoner to use in the solver
     Reasoner reasoner = null;
-    
+
     /**
      * Completes initialization of this frame.
      */
@@ -1193,10 +1241,9 @@ public class MainFrame extends javax.swing.JFrame {
             final Collection<YCell> markedCells = new HashSet<>();
             // If available, set markedCells to cells involved in last command
 
-            
             // if (undoRedo.canUndo()) {
-            //     final Command command = undoRedo.lastDone();
-            //     markedCells.addAll(command.getCells());
+            // final Command command = undoRedo.lastDone();
+            // markedCells.addAll(command.getCells());
             // }
 
             puzzlePanel.setMarkedCells(markedCells);
