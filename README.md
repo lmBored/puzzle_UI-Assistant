@@ -37,6 +37,20 @@ appearing on a separate line. For example, a file sujiko1.txt might contain:
 15
 ```
 
+Or the file sujiko4.txt with the format:
+```
+17
+18
+15
+15
+a 0 4
+a 1 7
+a 2 8
+b 0 5
+c 0 6
+```
+In this file, `a, b, c` are the rows and `0, 1, 2` are the columns. So `a 0 4` means the cell at first row, first column have the value 4. This option is to save the state of the puzzle your are playing.
+
 This file format ensures that the puzzle can be easily read and interpreted 
 by the application.
 
