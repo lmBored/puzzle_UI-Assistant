@@ -395,6 +395,16 @@ public class MainFrame extends javax.swing.JFrame {
             for (Object circle : puzzle.getCircles()) {
                 out.println(circle);
             }
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
+                    // Convert row index to corresponding letter
+                    char rowChar = (char) ('a' + row);
+                    YCell cell = puzzle.getCell(row, col);
+                    if (cell != null) {
+                        out.println(rowChar + " " + col + " " + cell.getState());
+                    }
+                }
+            }
             out.close();
             unsavedModifications = false;
         } catch (FileNotFoundException e) {
