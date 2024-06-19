@@ -216,7 +216,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
             if (highlight) {
                 if (! cell.isValid()) {
                     color = Color.RED;
-                } else if (puzzle.isSolved()) {
+                } else if (puzzle.isSolved() && puzzle.isValid()) {
                     color = Color.GREEN;
                 }
             }

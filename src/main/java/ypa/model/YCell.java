@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class YCell {
 
+    /** The blocked state. */
+    public static final int BLOCKED = -1;
+
     /** The empty state. */
     public static final int EMPTY = 0;
 
@@ -21,7 +24,7 @@ public class YCell {
     private int location;
 
     /** The 2 groups which the cell belongs to. **/
-    private List<YGroup> groups;
+    private List<AbstractGroup> groups;
     
     /**
      * Constructs a cell with a given state.
@@ -102,6 +105,10 @@ public class YCell {
             case EMPTY -> EMPTY_STR;
             default -> String.valueOf(state);
         };
+    }
+
+    public List<AbstractGroup> groups() {
+        return groups;
     }
 
 }
