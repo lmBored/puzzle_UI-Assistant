@@ -23,7 +23,7 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
         super(puzzle);
     }
 
-    private boolean checkSolvability(YGrid grid) {
+    protected boolean checkSolvability(YGrid grid) {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
 
