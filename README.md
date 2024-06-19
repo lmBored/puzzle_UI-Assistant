@@ -67,7 +67,9 @@ The Sujiko Puzzle Assistant operates in three distinct modes:
 - **VIEW Mode**: This is a read-only mode where the puzzle can be viewed, 
     but it is not possible to solve it or type any keys.
 - **EDIT Mode**: In this mode, you can type to fill in the puzzle cells, 
-    but the "Solve" button in the menu is disabled.
+    but the "Solve" button in the menu is disabled. You can also edit the
+    number inside the circles, but you have to press enter every time you are
+    done with editing one.
 - **SOLVE Mode**: This mode allows full interaction; you can type to fill 
     in the puzzle cells and also press the "Solve" button in the menu 
     to find the solution.
