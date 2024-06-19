@@ -62,6 +62,17 @@ public class YPuzzle {
         for (int i = 0; i < 4; i++) {
             list.get(i).setExpectedSum(circles[i]);
         }
+        while (scanner.hasNext()) {
+            String rowChar = scanner.next();
+            int row = rowChar.charAt(0) - 'a';
+            int col = scanner.nextInt();
+            int value = scanner.nextInt();
+            
+            int position = row * 3 + col;  // Convert row and column to position
+            System.out.println("Row: " + row + "Col: " + col + " Value: " + value);
+            this.grid.setCell(position, value);
+        }
+        scanner.close();
     }
 
     private static int[] createCircles(Scanner sc) {
@@ -70,7 +81,7 @@ public class YPuzzle {
         for (int i = 0; i < 4; i++) {
             circles[i] = sc.nextInt();
         }
-        sc.close();
+        // sc.close();
 
         return circles;
     }
