@@ -6,6 +6,7 @@ import ypa.command.SetCommand;
 import ypa.command.UndoRedo;
 import ypa.model.YCell;
 import ypa.model.YPuzzle;
+import ypa.model.YGrid;
 import ypa.reasoning.BasicEmptyCellByContradiction;
 import ypa.reasoning.FixpointReasoner;
 import ypa.reasoning.Reasoner;
