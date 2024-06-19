@@ -5,14 +5,10 @@ import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
 import ypa.command.UndoRedo;
 import ypa.model.YCell;
-import ypa.model.YGrid;
 import ypa.model.YPuzzle;
 import ypa.reasoning.BasicEmptyCellByContradiction;
-import ypa.reasoning.EntryWithOneEmptyCell;
 import ypa.reasoning.FixpointReasoner;
 import ypa.reasoning.Reasoner;
-// import ypa.solvers.AbstractSolver;
-// import ypa.solvers.BacktrackSolver;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -22,7 +18,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -402,24 +397,13 @@ public class MainFrame extends javax.swing.JFrame {
                     "File Save Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-
-        // Auto close file instead of calling out.close()
-        // try (PrintWriter out = new PrintWriter(puzzleFile)) {
-        // out.print(puzzle.toFileFormat());
-        // unsavedModifications = false;
-        // } catch (FileNotFoundException e) {
-        // JOptionPane.showMessageDialog(this,
-        // "IO error while saving file: " + e,
-        // "File Save Error",
-        // JOptionPane.ERROR_MESSAGE);
-        // }
     }// GEN-LAST:event_jMenuItemSaveAsActionPerformed
 
     private void jMenuItemQuitActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemQuitActionPerformed
         if (!confirmDiscard()) {
             return;
         }
-        // Maybe do some finalization first
+        
         System.exit(0);
     }// GEN-LAST:event_jMenuItemQuitActionPerformed
 
@@ -468,11 +452,7 @@ public class MainFrame extends javax.swing.JFrame {
         Reasoner reasoner = null;
         YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
 
-        if (solver.isSolvable()) {
-            return true;
-        } else {
-            return false;
-        }
+        return solver.isSolvable();
     }
 
     private void jMenuItemNewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemNewActionPerformed
@@ -581,41 +561,8 @@ public class MainFrame extends javax.swing.JFrame {
             if (circle != -1) {
                 circleIndex = circle;
                 jTextArea.append("Selected circle " + circle + "\n");
-                // int[] circles = puzzle.getCircles();
-                // String userInput = JOptionPane.showInputDialog("Please enter a number:");
-                // if (userInput != null && !userInput.isEmpty()) {
-                // try {
-                // int number = Integer.parseInt(userInput);
-                // circles[circleIndex] = number;
-                // } catch (NumberFormatException e) {
-                // JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number.",
-                // "Error",
-                // JOptionPane.ERROR_MESSAGE);
-                // }
-                // }
             }
         }
-
-        // final YCell cell = puzzlePanel.mouseToCell(evt);
-        // // if (cell == null) {
-        // // return;
-        // // }
-        // // cell != null
-
-        // if (cell != null) {
-        // // clicked an unblocked cell
-        // this.puzzlePanel.setSelected(cell);
-        
-        // jTextArea.append("Selected cell " + String.valueOf(cell.getLocation()) +
-        // "\n");
-        // } else {
-        // // this.puzzlePanel.setSelected(null);
-        // }
-
-        // if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
-        // final int circle = puzzlePanel.mouseToCircle(evt);
-        // jTextArea.append("Clicked circle " + circle + "\n");
-        // }
 
         updateFrame();
         jPanelPuzzle.requestFocusInWindow();
@@ -673,7 +620,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextArea.append("Duplicate key detected.\n");
                 return;
             }
-            // } else {
+            
             // Create undoable set command and pass it to undo-redo facility
             undoRedo.did(new SetCommand(cell, state));
             //
@@ -739,9 +686,7 @@ public class MainFrame extends javax.swing.JFrame {
         puzzle.clear();
         unsavedModifications = false;
         if (UNDO) {
-            // Clear undo-redo facility
             undoRedo.clear();
-            //
         }
         updateFrame();
     } // GEN-LAST:event_jMenuItemClearActionPerformed

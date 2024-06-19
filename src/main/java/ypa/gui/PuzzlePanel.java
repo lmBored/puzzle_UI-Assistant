@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A graphical view on a Kakuro puzzle state.
+ * A graphical view on a Sujiko puzzle state.
  *
  * @author Tom Verhoeff (Eindhoven University of Technology)
  */
