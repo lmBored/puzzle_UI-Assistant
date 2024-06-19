@@ -5,8 +5,9 @@ import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
 import ypa.model.YCell;
 import ypa.model.YPuzzle;
-
-import ypa.model.*;
+import ypa.solvers.YAbstractSolver;
+import ypa.solvers.YBacktrackSolver;
+import ypa.model.YGrid;
 
 /**
  * When only one way of filling an empty cell does not lead to an invalid state,
@@ -22,6 +23,17 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
         super(puzzle);
     }
 
+    private boolean checkSolvability(YGrid grid) {
+        Reasoner reasoner = null;
+        YAbstractSolver solver = new YBacktrackSolver(puzzle, reasoner);
+
+        if (solver.isSolvableFromExisting(grid)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         CompoundCommand result = super.applyToCell(cell);
@@ -30,7 +42,8 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
         for (int state = 1; state <= 9; ++state) {
             Command command = new SetCommand(cell, state);
             command.execute();
-            boolean valid = puzzle.isValid();
+            boolean check = checkSolvability(puzzle.getGrid());
+            boolean valid = puzzle.isValid() && check;
             command.revert();
             if (valid) {
                 // no contraction; command is a candidate

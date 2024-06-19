@@ -629,6 +629,8 @@ public class MainFrame extends javax.swing.JFrame {
         updateModeRadioButtons(YPuzzle.Mode.EDIT);
     }// GEN-LAST:event_jRadioButtonMenuItemEditActionPerformed
 
+    private int circleIndex; // circle index
+
     private void jPanelPuzzleMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanelPuzzleMouseClicked
         if (evt.getClickCount() == 0) {
             return;
@@ -648,23 +650,66 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        final YCell cell = puzzlePanel.mouseToCell(evt);
-        if (cell == null) {
-            return;
+        if (puzzle.getMode() != YPuzzle.Mode.EDIT) {
+            final YCell cell = puzzlePanel.mouseToCell(evt);
+            if (cell != null) {
+                // clicked an unblocked cell
+                this.puzzlePanel.setSelected(cell);
+                jTextArea.append("Selected cell " + String.valueOf(cell.getLocation()) + "\n");
+            }
         }
-        // cell != null
 
-        if (cell != null) {
-            // clicked an unblocked cell
-            this.puzzlePanel.setSelected(cell);
-            // comment added to test. TODO: remove
-            jTextArea.append("Selected cell " + String.valueOf(cell.getLocation()) + "\n");
-        } else {
-            this.puzzlePanel.setSelected(null);
+        if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
+            final int circle = puzzlePanel.mouseToCircle(evt);
+            if (circle != -1) {
+                circleIndex = circle;
+                jTextArea.append("Selected circle " + circle + "\n");
+                // int[] circles = puzzle.getCircles();
+                // String userInput = JOptionPane.showInputDialog("Please enter a number:");
+                // if (userInput != null && !userInput.isEmpty()) {
+                // try {
+                // int number = Integer.parseInt(userInput);
+                // circles[circleIndex] = number;
+                // } catch (NumberFormatException e) {
+                // JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number.",
+                // "Error",
+                // JOptionPane.ERROR_MESSAGE);
+                // }
+                // }
+            }
         }
+
+        // if (puzzle.getMode() == YPuzzle.Mode.VIEW) {
+        // jTextArea.append("Mode is " + puzzle.getMode() + "\n");
+        // return;
+        // }
+
+        // final YCell cell = puzzlePanel.mouseToCell(evt);
+        // // if (cell == null) {
+        // // return;
+        // // }
+        // // cell != null
+
+        // if (cell != null) {
+        // // clicked an unblocked cell
+        // this.puzzlePanel.setSelected(cell);
+        // // comment added to test. TODO: remove
+        // jTextArea.append("Selected cell " + String.valueOf(cell.getLocation()) +
+        // "\n");
+        // } else {
+        // // this.puzzlePanel.setSelected(null);
+        // }
+
+        // if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
+        // final int circle = puzzlePanel.mouseToCircle(evt);
+        // jTextArea.append("Clicked circle " + circle + "\n");
+        // }
+
         updateFrame();
         jPanelPuzzle.requestFocusInWindow();
-    } // GEN-LAST:event_jPanelPuzzleMouseClicked
+    }// GEN-LAST:event_jPanelPuzzleMouseClicked
+
+    private StringBuilder numberInput = new StringBuilder(); // Number input for circle values
 
     private void jPanelPuzzleKeyTyped(java.awt.event.KeyEvent evt) {
         // GEN-FIRST:event_jPanelPuzzleKeyTyped
@@ -684,48 +729,79 @@ public class MainFrame extends javax.swing.JFrame {
         }
         // else it is EDIT or SOLVE mode and it is possible to type
 
-        final YCell cell = this.puzzlePanel.getSelected();
+        if (puzzle.getMode() != YPuzzle.Mode.EDIT) {
+            final YCell cell = this.puzzlePanel.getSelected();
 
-        if (cell == null) {
-            return;
-        }
-        // cell != null
+            if (cell == null) {
+                return;
+            }
+            // cell != null
 
-        // convert key typed to new state
-        final char c = evt.getKeyChar();
-        final int state;
-        if ('1' <= c && c <= '9') {
-            jTextArea.append("Numberic value typed: " + c + "\n");
-            state = c - '0';
-            DUPLICATE = puzzle.getGrid().isValuePresent(state);
+            // convert key typed to new state
+            final char c = evt.getKeyChar();
+            final int state;
+            if ('1' <= c && c <= '9') {
+                jTextArea.append("Numberic value typed: " + c + "\n");
+                state = c - '0';
+                DUPLICATE = puzzle.getGrid().isValuePresent(state);
 
-        } else if (c == '0' | c == ' ' | c == '\b') {
-            jTextArea.append("Empty value typed: " + c + "\n");
-            state = YCell.EMPTY;
-        } else {
-            jTextArea.append("Incorrect key.\n"
-                    + "Enter a number from 1 to 9, or 0 for empty.\n");
-            return;
+            } else if (c == '0' | c == ' ' | c == '\b') {
+                jTextArea.append("Empty value typed: " + c + "\n");
+                state = YCell.EMPTY;
+            } else {
+                jTextArea.append("Incorrect key.\n"
+                        + "Enter a number from 1 to 9, or 0 for empty.\n");
+                return;
+            }
+            // if (UNDO) {
+            puzzlePanel.clearViolatedCells(violatedCell);
+            if (!DUPLICATE || state == 0) {
+                cell.setState(state);
+                violatedCell = puzzle.getViolatedCells();
+                puzzlePanel.setViolatedCells(violatedCell);
+            } else {
+                jTextArea.append("Duplicate key detected.\n");
+                return;
+            }
+            // } else {
+            // Create undoable set command and pass it to undo-redo facility
+            // comment added to test. TODO: remove
+            undoRedo.did(new SetCommand(cell, state));
+            //
+            // }
+            unsavedModifications = true;
+            if (puzzle.isSolved() && puzzle.isValid()) {
+                jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
+            }
         }
-        // if (UNDO) {
-        puzzlePanel.clearViolatedCells(violatedCell);
-        if (!DUPLICATE || state == 0) {
-            cell.setState(state);
-            violatedCell = puzzle.getViolatedCells();
-            puzzlePanel.setViolatedCells(violatedCell);
-        } else {
-            jTextArea.append("Duplicate key detected.\n");
-            return;
-        }
-        // } else {
-        // Create undoable set command and pass it to undo-redo facility
-        // comment added to test. TODO: remove
-        undoRedo.did(new SetCommand(cell, state));
-        //
-        // }
-        unsavedModifications = true;
-        if (puzzle.isSolved() && puzzle.isValid()) {
-            jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
+
+        if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
+            int[] circles = puzzle.getCircles();
+            char keyChar = evt.getKeyChar();
+
+            // If the keyChar is a digit, append it to the numberInput
+            if (Character.isDigit(keyChar)) {
+                numberInput.append(keyChar);
+                try {
+                    circles[circleIndex] = Integer.parseInt(numberInput.toString());
+                    updateFrame();
+                } catch (NumberFormatException e) {
+                    // handle the situation where the StringBuilder does not contain a valid integer
+                }
+            } else if (keyChar == '\n') { // If the keyChar is the Enter key
+                try {
+                    int number = Integer.parseInt(numberInput.toString());
+                    circles[circleIndex] = number;
+                    numberInput.setLength(0); // Reset the numberInput for the next number
+                    if (!checkPuzzleSolvability()) {
+                        jTextArea.append("The entered puzzle is not solvable.\n");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    numberInput.setLength(0); // Reset the numberInput after an error
+                }
+            }
         }
         updateFrame();
     } // GEN-LAST:event_jPanelPuzzleKeyTyped
@@ -1241,12 +1317,14 @@ public class MainFrame extends javax.swing.JFrame {
 
             final Collection<YCell> markedCells = new HashSet<>();
             // If available, set markedCells to cells involved in last command
+
             
-            if (undoRedo.canUndo()) {
-                final Command command = undoRedo.lastDone();
-                markedCells.addAll(command.getCells());
-            }
-            puzzlePanel.setMarkedCells(markedCells);
+            // if (undoRedo.canUndo()) {
+            //     final Command command = undoRedo.lastDone();
+            //     markedCells.addAll(command.getCells());
+            // }
+
+            // puzzlePanel.setMarkedCells(markedCells);
 
         }
 

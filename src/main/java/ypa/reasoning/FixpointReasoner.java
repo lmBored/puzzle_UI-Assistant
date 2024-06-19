@@ -22,7 +22,7 @@ public class FixpointReasoner extends ReasonerDecorator {
     public CompoundCommand apply() {
         final CompoundCommand result = super.apply();
 
-// repeatedly apply reasoner until no change occurs
+        // repeatedly apply reasoner until no change occurs
         CompoundCommand compound;
         do {
             compound = reasoner.apply();
@@ -32,7 +32,6 @@ public class FixpointReasoner extends ReasonerDecorator {
             }
             result.addAll(compound);
         } while (compound.size() > 0);
-//
 
         return result;
     }

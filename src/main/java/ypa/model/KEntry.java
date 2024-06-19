@@ -45,7 +45,8 @@
 //      * @param direction  the given direction
 //      * @param specification  the given specification
 //      */
-//     public KEntry(final Location location, final Direction direction, final KSpec specification) {
+//     public KEntry(final Location location,
+//                   final Direction direction, final KSpec specification) {
 //         this.location = location;
 //         this.direction = direction;
 //         this.specification = specification;
@@ -144,7 +145,8 @@
 //                 result.add(new KEntry(scanner));
 //             } catch (Exception e) {
 //                 throw new IllegalArgumentException(KEntry.class.getSimpleName()
-//                         + ".scanEntries(Scanner).pre failed: after " + result.size() + " entries");
+//                         + ".scanEntries(Scanner).pre failed: after " +
+//                                                    result.size() + " entries");
 //             }
 //             scanner.skip("\\p{javaWhitespace}*");
 //             scanner.useDelimiter("");
