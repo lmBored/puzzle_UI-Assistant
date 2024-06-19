@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A graphical view on a Kakuro puzzle state.
+ * A graphical view on a Sujiko puzzle state.
  *
  * @author Tom Verhoeff (Eindhoven University of Technology)
  */
@@ -42,7 +42,7 @@ public class PuzzlePanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 300, Short.MAX_VALUE));
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

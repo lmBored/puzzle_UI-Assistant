@@ -283,6 +283,13 @@ public class YBacktrackSolver extends YAbstractSolver {
         return false;
     }
 
+    /**
+     * Determines if a puzzle can be solved from an existing grid configuration.
+     * 
+     * @param existingGrid The grid.
+     * @return {@code true} if the puzzle is solvable from the existing grid, 
+     *      {@code false} otherwise
+     */
     public boolean isSolvableFromExisting(YGrid existingGrid) {
         YGrid gridCopy = new YGrid(existingGrid);
     
