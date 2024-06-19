@@ -2,15 +2,14 @@ package ypa.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for {@Link YEntry}.
+ */
 public class YEntryTest {
-
     @Test
     public void testConstructorWithExpectedSum() {
         YEntry entry = new YEntry(15);
