@@ -27,7 +27,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
     public CompoundCommand apply() {
         final CompoundCommand result = super.apply();
 
-// Apply reasoner to all empty cells, execute and return command
+        // Apply reasoner to all empty cells, execute and return command
         for (KCell cell : puzzle.getCells()) {
             if (cell.isEmpty()) {
                 CompoundCommand command = applyToCell(cell);
@@ -39,7 +39,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
                 }
             }
         }
-//
+        //
 
         return result;
     }

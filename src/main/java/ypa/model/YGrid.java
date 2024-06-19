@@ -1,16 +1,16 @@
 package ypa.model;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A 3x3 grid of cells for a Sujiko puzzle,
  * representing the solution grid.
  *
  */
-public class YGrid {
+public class YGrid extends HashSet<YCell> {
 
     /** The grid of cells as a list of 9 numbers. */
     private final List<YCell> grid = new ArrayList<>();

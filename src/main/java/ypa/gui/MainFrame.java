@@ -1207,7 +1207,6 @@ public class MainFrame extends javax.swing.JFrame {
             jMenuItemRedo.setEnabled(undoRedo.canRedo());
             jMenuItemUndoAll.setEnabled(undoRedo.canUndo());
             jMenuItemRedoAll.setEnabled(undoRedo.canRedo());
-            //
 
             jPanelPuzzle.setHighlight(
                     jCheckBoxMenuItemHighlight.getState());
@@ -1215,14 +1214,13 @@ public class MainFrame extends javax.swing.JFrame {
             final Collection<YCell> markedCells = new HashSet<>();
             // If available, set markedCells to cells involved in last command
 
-            /*
-             * if (undoRedo.canUndo()) {
-             * final Command command = undoRedo.lastDone();
-             * markedCells.addAll(command.getCells());
-             * }
-             * //
-             * puzzlePanel.setMarkedCells(markedCells);
-             */
+            
+            // if (undoRedo.canUndo()) {
+            //     final Command command = undoRedo.lastDone();
+            //     markedCells.addAll(command.getCells());
+            // }
+
+            // puzzlePanel.setMarkedCells(markedCells);
 
         }
 
