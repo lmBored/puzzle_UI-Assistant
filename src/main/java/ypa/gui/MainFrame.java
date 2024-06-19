@@ -869,6 +869,25 @@ public class MainFrame extends javax.swing.JFrame {
             message = "Reasoning did not help.";
         }
         // }
+
+        // These line is supposed to work but no, it doesn't LLLLLLL
+        // // Start the solving process using YBacktrackSolver
+        // YBacktrackSolver solver = new YBacktrackSolver(puzzle, reasoner);
+        // solver.setStopAtFirstSolution(true);
+        // solver.startSolving();
+
+        // try {
+        //     List<YGrid> solutions = solver.getSolutions();
+        //     if (solutions.isEmpty()) {
+        //         message += "\nNo solutions found.";
+        //     } else {
+        //         message += "\n" + solutions.size() + " solution(s) found.";
+        //         updateFrame();
+        //     }
+        // } catch (Exception e) {
+        //     message += "\nError while solving: " + e.getMessage();
+        // }
+
         jTextArea.append(message + "\n");
         updateFrame();
 
