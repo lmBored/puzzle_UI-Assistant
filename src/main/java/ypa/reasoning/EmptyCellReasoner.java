@@ -57,7 +57,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
      *      (\result == null  ==>  puzzle is not solvable and not modified) &&
      *      (\result.size() > 0  ==>  ! \result.isExecuted() && puzzle.isValid())}
      */
-    public CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         assert cell.isEmpty() : "cell at location " + cell.getLocation() + " not empty";
         return new CompoundCommand(false);
     }

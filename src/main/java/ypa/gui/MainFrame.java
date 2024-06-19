@@ -625,7 +625,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (puzzle.isSolved()) {
+        if (puzzle.isSolved() && puzzle.isValid()) {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
             return;
         }
@@ -659,7 +659,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (puzzle.isSolved()) {
+        if (puzzle.isSolved() && puzzle.isValid()) {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
             return;
         }
@@ -710,7 +710,7 @@ public class MainFrame extends javax.swing.JFrame {
             //
         }
         unsavedModifications = true;
-        if (puzzle.isSolved()) {
+        if (puzzle.isSolved() && puzzle.isValid()) {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
         }
         updateFrame();
@@ -854,7 +854,7 @@ public class MainFrame extends javax.swing.JFrame {
         // reasoner = new GeneralizedEmptyCellByContradiction(puzzle);
         //
         // if (reasoner == null) {
-        //     message = "Apply Reasoning is not yet implemented.";
+        // message = "Apply Reasoning is not yet implemented.";
         // } else {
         if (!jCheckBoxMenuItemStopAtFirstChange.isSelected()) {
             reasoner = new FixpointReasoner(puzzle, reasoner);
@@ -885,7 +885,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (puzzle.isSolved()) {
+        if (puzzle.isSolved() && puzzle.isValid()) {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
             return;
         }

@@ -41,10 +41,9 @@ public class YPuzzle {
     /** The grid of cells. */
 
     private YGrid grid;
-    
+
     /** The array of 4 numbers representing the 4 given hints. */
     private final int[] circles;
-
 
     /**
      * Constructs a new puzzle with initial state read from given scanner
@@ -119,7 +118,21 @@ public class YPuzzle {
      * @return whether the current state of this puzzle is valid
      */
     public boolean isValid() {
-        return grid.isValid();
+        // return grid.isValid();
+
+        // Check if the grid is valid
+        if (!grid.isValid()) {
+            return false;
+        }
+
+        // Check for violated cells
+        List<YCell> violatedCells = getViolatedCells();
+        if (!violatedCells.isEmpty()) {
+            return false;
+        }
+
+        // If there are no violated cells and the grid is valid, the puzzle is valid
+        return true;
     }
 
     /**
@@ -133,12 +146,13 @@ public class YPuzzle {
 
     /**
      * Updates the puzzle grid.
+     * 
      * @param grid the new puzzle's grid
      */
     public void setGrid(YGrid grid) {
         this.grid = grid;
     }
-    
+
     /**
      * Gets the circles in this puzzle, so as to iterate over them.
      *
@@ -218,11 +232,11 @@ public class YPuzzle {
         }
     }
 
-    /** Gets the list of cell locations that arent equal to the sum.  */
+    /** Gets the list of cell locations that arent equal to the sum. */
     public List<YCell> getViolatedCells() {
         List<YGroup> groups = grid.getGroups();
         List<YCell> violated = new ArrayList<>();
-        for (YGroup yg: groups) {
+        for (YGroup yg : groups) {
             if (!yg.equalsExpectedSum() && yg.isFull()) {
                 violated.addAll(yg.getCells());
             }

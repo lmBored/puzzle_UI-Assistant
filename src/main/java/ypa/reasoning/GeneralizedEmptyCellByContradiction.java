@@ -56,7 +56,7 @@ public class GeneralizedEmptyCellByContradiction extends EmptyCellReasoner {
     }
 
     @Override
-    public CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         if (!puzzle.isValid()) {
             return null;
         }

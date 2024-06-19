@@ -23,7 +23,7 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
     }
 
     @Override
-    public CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         CompoundCommand result = super.applyToCell(cell);
         Command candidateForcedCommand = null; // command that worked, if any
 
@@ -39,6 +39,7 @@ public class BasicEmptyCellByContradiction extends EmptyCellReasoner {
                     candidateForcedCommand = command;
                 } else {
                     // multiple valid ways of filling cell; no forced command
+                    result.add(command); // Add the command to the result
                     return result;
                 }
             }

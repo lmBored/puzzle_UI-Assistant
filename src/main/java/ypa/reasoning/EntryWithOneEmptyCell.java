@@ -22,7 +22,7 @@ public class EntryWithOneEmptyCell extends EmptyCellReasoner {
     }
 
     @Override
-    public CompoundCommand applyToCell(YCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(YCell cell) throws NullPointerException {
         if (!cell.isEmpty()) {
             throw new IllegalArgumentException(this.getClass().getSimpleName()
                     + "applyToCell.pre failed: cell is not empty");
