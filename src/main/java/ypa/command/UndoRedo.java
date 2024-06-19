@@ -10,9 +10,9 @@ import java.util.Stack;
 <p><b>Miquel Ibáñez Solbes, 2118998</b></p>
 <p><b>Vinh Nguyen, 1957104</b></p>
 <p><b>Nam Mai, 1959190</b></p>
-<p><b>Khoi Nguyen, 1979388</b></p>
-<p><b>Replace this line</b></p>
-<p><b>Replace this line</b></p>
+<p><b>Hoang Bao Khoi Nguyen, 1979388</b></p>
+<p><b>Isabel Cantero Corchero, 2064413</b></p>
+<p><b>Nguyen Duy Anh Quan, 1704311</b></p>
 <!--//# END TODO-->
  */
 public class UndoRedo {
