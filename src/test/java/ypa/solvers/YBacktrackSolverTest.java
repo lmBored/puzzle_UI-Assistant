@@ -35,4 +35,16 @@ public class YBacktrackSolverTest {
         boolean result = instance.solve();
         assertEquals(expResult, result, "return value");
     }
+
+    @Test
+    public void testUnsolvablePuzzle() {
+        String puzzleString = "1 2 3 4";
+        Scanner scanner = new Scanner(puzzleString);
+        YPuzzle puzzle = new YPuzzle(scanner, "Test");
+        Reasoner reasoner = new Reasoner(puzzle);
+        YBacktrackSolver instance = new YBacktrackSolver(puzzle, reasoner);
+        boolean expResult = false;
+        boolean result = instance.solve();
+        assertEquals(expResult, result, "return value");
+    }
 }
