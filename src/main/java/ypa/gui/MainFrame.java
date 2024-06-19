@@ -450,10 +450,7 @@ public class MainFrame extends javax.swing.JFrame {
             jTextArea.append(puzzle.toString() + "\n");
             puzzlePanel.setPuzzle(puzzle);
             if (UNDO) {
-
-                // Clear undo-redo facility
                 undoRedo.clear();
-                //
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
@@ -479,10 +476,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void jMenuItemNewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuItemNewActionPerformed
-        // jTextArea.append("New is not yet implemented.\n");
         jTextArea.setText("");
 
-        // if (puzzle == null) {
         jTextArea.append("Creating a new puzzle.\n");
         String puzzleName = JOptionPane.showInputDialog(this,
                 "Enter a name for the new puzzle", "New Puzzle Name",
@@ -504,7 +499,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         Scanner scanner = new Scanner(circleValues);
         scanner.useDelimiter(",");
-
+        
         try {
             puzzle = new YPuzzle(scanner, puzzleName);
             while (!checkPuzzleSolvability()) {
@@ -529,81 +524,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
             unsavedModifications = false;
             updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+            worker = new SolverWorker(puzzle, null); // Null is the reasoner we use
+            worker.execute();
             updateFrame();
         } catch (IllegalArgumentException e) {
             jTextArea.append("Invalid circle values entered for the new puzzle.\n");
             jTextArea.append(e + "\n");
         }
-        // }
-        // else {
-        // jTextArea.append("Clearing existing puzzle.\n");
-        // puzzle.clear();
-        // updateFrame();
-
-        // int[] circles = puzzle.getCircles();
-        // boolean validPuzzle = false;
-
-        // while (validPuzzle == false) {
-        // for (int index = 0; index < circles.length; index++) {
-        // int newCircleProperty = 0;
-        // boolean validInput = false;
-        // do {
-        // String value = JOptionPane.showInputDialog(this,
-        // "Enter new property for circle " + index, "Input Circle Property",
-        // JOptionPane.INFORMATION_MESSAGE);
-        // if (value == null || value.isEmpty()) {
-        // jTextArea.append("No property entered for circle " + index + ".\n");
-        // continue;
-        // }
-        // try {
-        // newCircleProperty = Integer.parseInt(value);
-        // validInput = true;
-        // } catch (NumberFormatException e) {
-        // jTextArea.append(
-        // "Invalid property entered for circle " + index
-        // + ". Please enter a valid number.\n");
-        // }
-        // } while (!validInput);
-
-        // circles[index] = newCircleProperty;
-        // jTextArea.append("New property for circle " + index + ": " +
-        // newCircleProperty + "\n");
-        // updateFrame();
-        // }
-
-        // if (checkPuzzleSolvability()) {
-        // validPuzzle = true;
-        // } else {
-        // jTextArea.append("The entered puzzle is not solvable. Please enter the circle
-        // values again.\n");
-        // }
-        // }
-        // updateFrame();
-        // }
-
-        // if (! confirmDiscard()) {
-        // return;
-        // }
-        // Object[] possibleValues = { "4", "6", "8", "10", "12", "14" };
-        // String value = (String)JOptionPane.showInputDialog(this,
-        // "Select Size", "Input Size",
-        // JOptionPane.INFORMATION_MESSAGE, null,
-        // possibleValues, possibleValues[0]);
-        // if (value == null || value.isEmpty()) {
-        // return;
-        // }
-        // final int size = Integer.parseInt(value);
-        // puzzle = new YPuzzle(new Scanner(
-        // YPuzzle.makeEmptyDescriptor(size)),
-        // "Untitled " + value + "x" + value);
-        // this.setTitle("Sujiko Puzzle Assistant: " + puzzle.getName());
-        // jTextArea1.append("Created new puzzle: " +
-        // puzzle.getName() + "\n");
-        // jTextArea1.append(puzzle.toString() + "\n");
-        // puzzlePanel.setPuzzle(puzzle);
-        // unsavedModifications = false;
-        // updateModeRadioButtons(YPuzzle.Mode.EDIT);
-        // updateFrame();
+        
     }// GEN-LAST:event_jMenuItemNewActionPerformed
 
     private void jRadioButtonMenuItemViewActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonMenuItemViewActionPerformed
