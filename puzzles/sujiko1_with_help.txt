@@ -1,8 +1,0 @@
-Name: sujiko1.txt
-Mode: SOLVE
-4 7 8 
-5 . . 
-6 . . 
-Circles:
-17 18
-15 15

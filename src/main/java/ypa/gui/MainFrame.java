@@ -483,101 +483,104 @@ public class MainFrame extends javax.swing.JFrame {
         // jTextArea.append("New is not yet implemented.\n");
         jTextArea.setText("");
 
-        if (puzzle == null) {
-            jTextArea.append("Creating a new puzzle.\n");
-            String puzzleName = JOptionPane.showInputDialog(this,
-                    "Enter a name for the new puzzle", "New Puzzle Name",
-                    JOptionPane.INFORMATION_MESSAGE);
+        // if (puzzle == null) {
+        jTextArea.append("Creating a new puzzle.\n");
+        String puzzleName = JOptionPane.showInputDialog(this,
+                "Enter a name for the new puzzle", "New Puzzle Name",
+                JOptionPane.INFORMATION_MESSAGE);
 
-            if (puzzleName == null || puzzleName.isEmpty()) {
-                jTextArea.append("No name entered for the new puzzle.\n");
-                return;
-            }
-
-            String circleValues = JOptionPane.showInputDialog(this,
-                    "Enter the circle values for the new puzzle (comma-separated)", "New Puzzle Circle Values",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            if (circleValues == null || circleValues.isEmpty()) {
-                jTextArea.append("No circle values entered for the new puzzle.\n");
-                return;
-            }
-
-            Scanner scanner = new Scanner(circleValues);
-            scanner.useDelimiter(",");
-
-            try {
-                puzzle = new YPuzzle(scanner, puzzleName);
-                while (!checkPuzzleSolvability()) {
-                    jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
-                    circleValues = JOptionPane.showInputDialog(this,
-                            "Enter the circle values for the new puzzle (comma-separated)", "New Puzzle Circle Values",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    if (circleValues == null || circleValues.isEmpty()) {
-                        jTextArea.append("No circle values entered for the new puzzle.\n");
-                        return;
-                    }
-                    scanner = new Scanner(circleValues);
-                    scanner.useDelimiter(",");
-                    puzzle = new YPuzzle(scanner, puzzleName);
-                }
-                this.setTitle("Sujiko Puzzle Assistant: " + puzzle.getName());
-                jTextArea.append("Created new puzzle " + puzzle.getName() + "\n");
-                jTextArea.append(puzzle.toString() + "\n");
-                puzzlePanel.setPuzzle(puzzle);
-                if (UNDO) {
-                    undoRedo.clear();
-                }
-                unsavedModifications = false;
-                updateModeRadioButtons(YPuzzle.Mode.SOLVE);
-                updateFrame();
-            } catch (IllegalArgumentException e) {
-                jTextArea.append("Invalid circle values entered for the new puzzle.\n");
-                jTextArea.append(e + "\n");
-            }
-        } else {
-            jTextArea.append("Clearing existing puzzle.\n");
-            puzzle.clear();
-            updateFrame();
-
-            int[] circles = puzzle.getCircles();
-            boolean validPuzzle = false;
-
-            while (validPuzzle == false) {
-                for (int index = 0; index < circles.length; index++) {
-                    int newCircleProperty = 0;
-                    boolean validInput = false;
-                    do {
-                        String value = JOptionPane.showInputDialog(this,
-                                "Enter new property for circle " + index, "Input Circle Property",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        if (value == null || value.isEmpty()) {
-                            jTextArea.append("No property entered for circle " + index + ".\n");
-                            continue;
-                        }
-                        try {
-                            newCircleProperty = Integer.parseInt(value);
-                            validInput = true;
-                        } catch (NumberFormatException e) {
-                            jTextArea.append(
-                                    "Invalid property entered for circle " + index
-                                            + ". Please enter a valid number.\n");
-                        }
-                    } while (!validInput);
-
-                    circles[index] = newCircleProperty;
-                    jTextArea.append("New property for circle " + index + ": " + newCircleProperty + "\n");
-                    updateFrame();
-                }
-
-                if (checkPuzzleSolvability()) {
-                    validPuzzle = true;
-                } else {
-                    jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
-                }
-            }
-            updateFrame();
+        if (puzzleName == null || puzzleName.isEmpty()) {
+            jTextArea.append("No name entered for the new puzzle.\n");
+            return;
         }
+
+        String circleValues = JOptionPane.showInputDialog(this,
+                "Enter the circle values for the new puzzle (comma-separated)", "New Puzzle Circle Values",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        if (circleValues == null || circleValues.isEmpty()) {
+            jTextArea.append("No circle values entered for the new puzzle.\n");
+            return;
+        }
+
+        Scanner scanner = new Scanner(circleValues);
+        scanner.useDelimiter(",");
+
+        try {
+            puzzle = new YPuzzle(scanner, puzzleName);
+            while (!checkPuzzleSolvability()) {
+                jTextArea.append("The entered puzzle is not solvable. Please enter the circle values again.\n");
+                circleValues = JOptionPane.showInputDialog(this,
+                        "Enter the circle values for the new puzzle (comma-separated)", "New Puzzle Circle Values",
+                        JOptionPane.INFORMATION_MESSAGE);
+                if (circleValues == null || circleValues.isEmpty()) {
+                    jTextArea.append("No circle values entered for the new puzzle.\n");
+                    return;
+                }
+                scanner = new Scanner(circleValues);
+                scanner.useDelimiter(",");
+                puzzle = new YPuzzle(scanner, puzzleName);
+            }
+            this.setTitle("Sujiko Puzzle Assistant: " + puzzle.getName());
+            jTextArea.append("Created new puzzle " + puzzle.getName() + "\n");
+            jTextArea.append(puzzle.toString() + "\n");
+            puzzlePanel.setPuzzle(puzzle);
+            if (UNDO) {
+                undoRedo.clear();
+            }
+            unsavedModifications = false;
+            updateModeRadioButtons(YPuzzle.Mode.SOLVE);
+            updateFrame();
+        } catch (IllegalArgumentException e) {
+            jTextArea.append("Invalid circle values entered for the new puzzle.\n");
+            jTextArea.append(e + "\n");
+        }
+        // }
+        // else {
+        // jTextArea.append("Clearing existing puzzle.\n");
+        // puzzle.clear();
+        // updateFrame();
+
+        // int[] circles = puzzle.getCircles();
+        // boolean validPuzzle = false;
+
+        // while (validPuzzle == false) {
+        // for (int index = 0; index < circles.length; index++) {
+        // int newCircleProperty = 0;
+        // boolean validInput = false;
+        // do {
+        // String value = JOptionPane.showInputDialog(this,
+        // "Enter new property for circle " + index, "Input Circle Property",
+        // JOptionPane.INFORMATION_MESSAGE);
+        // if (value == null || value.isEmpty()) {
+        // jTextArea.append("No property entered for circle " + index + ".\n");
+        // continue;
+        // }
+        // try {
+        // newCircleProperty = Integer.parseInt(value);
+        // validInput = true;
+        // } catch (NumberFormatException e) {
+        // jTextArea.append(
+        // "Invalid property entered for circle " + index
+        // + ". Please enter a valid number.\n");
+        // }
+        // } while (!validInput);
+
+        // circles[index] = newCircleProperty;
+        // jTextArea.append("New property for circle " + index + ": " +
+        // newCircleProperty + "\n");
+        // updateFrame();
+        // }
+
+        // if (checkPuzzleSolvability()) {
+        // validPuzzle = true;
+        // } else {
+        // jTextArea.append("The entered puzzle is not solvable. Please enter the circle
+        // values again.\n");
+        // }
+        // }
+        // updateFrame();
+        // }
 
         // if (! confirmDiscard()) {
         // return;
@@ -693,22 +696,22 @@ public class MainFrame extends javax.swing.JFrame {
                     + "Enter a number from 1 to 9, or 0 for empty.\n");
             return;
         }
-        if (!UNDO) {
-            puzzlePanel.clearViolatedCells(violatedCell);
-            if (!DUPLICATE || state == 0) {
-                cell.setState(state);
-                violatedCell = puzzle.getViolatedCells();
-                puzzlePanel.setViolatedCells(violatedCell);
-            } else {
-                jTextArea.append("Duplicate key detected.\n");
-                return;
-            }
+        // if (UNDO) {
+        puzzlePanel.clearViolatedCells(violatedCell);
+        if (!DUPLICATE || state == 0) {
+            cell.setState(state);
+            violatedCell = puzzle.getViolatedCells();
+            puzzlePanel.setViolatedCells(violatedCell);
         } else {
-            // Create undoable set command and pass it to undo-redo facility
-            // comment added to test. TODO: remove
-            undoRedo.did(new SetCommand(cell, state));
-            //
+            jTextArea.append("Duplicate key detected.\n");
+            return;
         }
+        // } else {
+        // Create undoable set command and pass it to undo-redo facility
+        // comment added to test. TODO: remove
+        undoRedo.did(new SetCommand(cell, state));
+        //
+        // }
         unsavedModifications = true;
         if (puzzle.isSolved() && puzzle.isValid()) {
             jTextArea.append("\n> > > Puzzle is SOLVED. < < <\n");
@@ -877,15 +880,15 @@ public class MainFrame extends javax.swing.JFrame {
         // solver.startSolving();
 
         // try {
-        //     List<YGrid> solutions = solver.getSolutions();
-        //     if (solutions.isEmpty()) {
-        //         message += "\nNo solutions found.";
-        //     } else {
-        //         message += "\n" + solutions.size() + " solution(s) found.";
-        //         updateFrame();
-        //     }
+        // List<YGrid> solutions = solver.getSolutions();
+        // if (solutions.isEmpty()) {
+        // message += "\nNo solutions found.";
+        // } else {
+        // message += "\n" + solutions.size() + " solution(s) found.";
+        // updateFrame();
+        // }
         // } catch (Exception e) {
-        //     message += "\nError while solving: " + e.getMessage();
+        // message += "\nError while solving: " + e.getMessage();
         // }
 
         jTextArea.append(message + "\n");
