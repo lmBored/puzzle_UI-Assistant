@@ -72,6 +72,7 @@ public class YGrid extends HashSet<YCell> {
         for (int state : initialStates) {
             grid.add(new YCell(state));
         }
+        filledCell = new HashSet<>();
     }
 
     public YCell getCell(int position) {
