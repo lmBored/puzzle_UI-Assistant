@@ -1,8 +1,8 @@
 package ypa.reasoning;
 
 import ypa.command.CompoundCommand;
-import ypa.model.KCell;
-import ypa.model.KPuzzle;
+import ypa.model.YCell;
+import ypa.model.YPuzzle;
 
 /**
  * Abstract template class for reasoners based on empty cells,
@@ -19,7 +19,7 @@ import ypa.model.KPuzzle;
  */
 public abstract class EmptyCellReasoner extends Reasoner {
 
-    public EmptyCellReasoner(KPuzzle puzzle) {
+    public EmptyCellReasoner(YPuzzle puzzle) {
         super(puzzle);
     }
 
@@ -27,8 +27,13 @@ public abstract class EmptyCellReasoner extends Reasoner {
     public CompoundCommand apply() {
         final CompoundCommand result = super.apply();
 
+<<<<<<< HEAD
         // Apply reasoner to all empty cells, execute and return command
         for (KCell cell : puzzle.getCells()) {
+=======
+// Apply reasoner to all empty cells, execute and return command
+        for (YCell cell : puzzle.getCells()) {
+>>>>>>> 5eeea29223ae844c2f18ef7b63dde8a0d022632a
             if (cell.isEmpty()) {
                 CompoundCommand command = applyToCell(cell);
                 if (command == null) {
@@ -57,7 +62,7 @@ public abstract class EmptyCellReasoner extends Reasoner {
      *      (\result == null  ==>  puzzle is not solvable and not modified) &&
      *      (\result.size() > 0  ==>  ! \result.isExecuted() && puzzle.isValid())}
      */
-    CompoundCommand applyToCell(final KCell cell) throws NullPointerException {
+    CompoundCommand applyToCell(final YCell cell) throws NullPointerException {
         assert cell.isEmpty() : "cell at location " + cell.getLocation() + " not empty";
         return new CompoundCommand(false);
     }

@@ -1,6 +1,7 @@
 package ypa.solvers;
 
 import ypa.command.Command;
+import ypa.command.CompoundCommand;
 import ypa.command.SetCommand;
 import ypa.model.YCell;
 import ypa.model.YPuzzle;
@@ -28,7 +29,6 @@ public class YBacktrackSolver extends YAbstractSolver {
     /** The grid of cells. */
     private final YGrid grid;
 
-    
     /** The grid of cells in the background. */
     public YGrid backgroundGrid = null;
     
@@ -59,6 +59,7 @@ public class YBacktrackSolver extends YAbstractSolver {
         this.reasoner = reasoner;
         this.grid = puzzle.getGrid();
         this.circles = puzzle.getCircles();
+        this.backgroundGrid = new YGrid(grid); // Initialize background grid
     }
 
     /**
@@ -95,13 +96,20 @@ public class YBacktrackSolver extends YAbstractSolver {
     private class SolverWorker extends SwingWorker<Void, Void> {
         @Override
         protected Void doInBackground() {
+            if (reasoner != null) {
+                CompoundCommand command = reasoner.apply();
+                if (command != null && command.size() > 0) {
+                    command.execute();
+                }
+            }
+
             if (stopAtFirstSolution) {
-                YGrid solution = sujikoSolver(circles, grid);
+                YGrid solution = sujikoSolver(circles, backgroundGrid);
                 if (solution != null) {
                     solutions.add(solution);
                 }
             } else {
-                findAllSolutions(grid, circles, 0);
+                findAllSolutions(backgroundGrid, circles, 0);
             }
             return null;
         }
@@ -156,7 +164,6 @@ public class YBacktrackSolver extends YAbstractSolver {
      */
     @Override
     public boolean solve() {
-
         this.backgroundGrid = this.grid.clone();
         YGrid solution = sujikoSolver(circles, backgroundGrid);
         return solution != null;
@@ -171,8 +178,7 @@ public class YBacktrackSolver extends YAbstractSolver {
      * @return YGrid of 9 integers with the solution grid or
      *         {@code null} if no solution exists
      */
-    public static YGrid sujikoSolver(int[] circles,
-            YGrid grid) {
+    public static YGrid sujikoSolver(int[] circles, YGrid grid) {
         if (backtrack(grid, circles, 0)) {
             return grid;
         }
@@ -185,12 +191,10 @@ public class YBacktrackSolver extends YAbstractSolver {
      * @param grid    the current grid being filled
      * @param circles an array of 4 integers representing the sums of the
      *                numbers in each circle
-     * @param used    an array to track which numbers have been used in the grid
      * @param index   the current index in the grid being filled
      * @return {@code true} if a solution is found, {@code false} otherwise
      */
-    private static boolean backtrack(YGrid grid,
-            int[] circles, int index) {
+    private static boolean backtrack(YGrid grid, int[] circles, int index) {
         if (index == 9) {
             return checkSums(circles, grid);
         }
@@ -226,7 +230,7 @@ public class YBacktrackSolver extends YAbstractSolver {
                 && (grid.getValue(4) + grid.getValue(5) + grid.getValue(7)
                         + grid.getValue(8) == circles[3]);
     }
-    
+
     /**
      * Gets the cells in this puzzle, so as to iterate over them.
      *
@@ -249,5 +253,4 @@ public class YBacktrackSolver extends YAbstractSolver {
         }
         return false;
     }
-
 }
