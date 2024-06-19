@@ -2,6 +2,7 @@ package ypa.solvers;
 
 import ypa.command.Command;
 import ypa.model.YPuzzle;
+import ypa.model.YGrid;
 
 import java.util.Collection;
 import java.util.Stack;
@@ -56,5 +57,7 @@ public abstract class YAbstractSolver {
     public abstract boolean solve();
 
     public abstract boolean isSolvable();
+
+    public abstract boolean isSolvableFromExisting(YGrid grid);
 
 }

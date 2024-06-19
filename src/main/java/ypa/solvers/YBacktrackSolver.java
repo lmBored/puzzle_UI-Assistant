@@ -253,4 +253,42 @@ public class YBacktrackSolver extends YAbstractSolver {
         }
         return false;
     }
+
+    /**
+     * Backtracks from an existing configuration of the grid to find a solution.
+     * 
+     * @param grid The grid to solve.
+     * @param circles The array of circle values.
+     * @param index The current index in the grid.
+     * @return {@code true} if a solution is found, {@code false} otherwise.
+     */
+    private static boolean backtrackFromExisting(YGrid grid, int[] circles, int index) {
+        if (index == 9) {
+            return checkSums(circles, grid);
+        }
+    
+        if (grid.getValue(index) != YCell.EMPTY) {
+            return backtrackFromExisting(grid, circles, index + 1);
+        }
+    
+        for (int num = 1; num <= 9; num++) {
+            if (!isUsed(grid, num)) {
+                grid.setCell(index, num);
+                if (backtrackFromExisting(grid, circles, index + 1)) {
+                    return true;
+                }
+                grid.setCell(index, YCell.EMPTY);
+            }
+        }
+        return false;
+    }
+
+    public boolean isSolvableFromExisting(YGrid existingGrid) {
+        YGrid gridCopy = new YGrid(existingGrid);
+    
+        if (backtrackFromExisting(gridCopy, this.circles, 0)) {
+            return true;
+        }
+        return false;
+    }
 }

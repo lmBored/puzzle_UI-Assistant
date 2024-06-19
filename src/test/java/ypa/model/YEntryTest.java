@@ -2,12 +2,9 @@ package ypa.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class contains unit tests for the YEntry class.
