@@ -74,16 +74,27 @@ The Sujiko Puzzle Assistant operates in three distinct modes:
     in the puzzle cells and also press the "Solve" button in the menu 
     to find the solution.
 
-## Use Case
-To experience the Sujiko Puzzle Assistant, follow these steps:
+## Use Cases
+
+### Main Use Case: Solve a Sujiko Puzzle
+To get a complete solution for a Sujiko puzzle, follow these steps:
 1. Open the application.
-2. Navigate to `File > Open` and select one of the Sujiko puzzle files (.txt) 
-    from the `puzzles` folder. For this example, choose `sujiko1.txt`.
+2. Load a Sujiko Puzzle:
+    - Navigate to `File > Open`.
+    - Select a Sujiko puzzle file (.txt) from the `puzzles` folder. For this example, choose `sujiko1.txt`.
 3. The puzzle will appear on the screen.
-4. To solve the puzzle, simply click `Puzzle > Solve`. The backtracking 
-    algorithm will find the solution and display it to the user.
-5. To get hints, click `Puzzle > Apply Reasoning`. If `Stop at First Change` is enabled, the next cell in the puzzle will be filled in for you, else it will solve all the puzzle at once.
-6. To create new puzzle, click `File > New`, this will first ask you to name the puzzle, then enter the number in the circles with the format `X,X,X,X`.
+4. To get the Sujiko puzzle solved automatically by the Sujiko Puzzle Assistant, simply click `Puzzle > Solve`. The backtracking algorithm will find the solution and display it to the user.
+
+### Alternative Use Case 1: Get Hints
+If you need help solving the puzzle, you can get hints:
+
+4. (a) To get hints, click `Puzzle > Apply Reasoning`. If `Stop at First Change` is enabled, the next cell in the puzzle will be filled in for you, else it will solve all the puzzle at once.
+
+### Alternative Use Case 2: Create a New Puzzle
+2. (a) To create a new puzzle, click `File > New`.
+2. (a1) Enter a name for your puzzle.
+2. (a2) After that, enter 4 numbers for the circles with the following format: `X,X,X,X`. As a example you could write `22,18,15,17`.
+> Be aware that your 4 input numbers must form a solvable Sujiko puzzle. Otherwise, the Sujiko Puzzle Assistant may not be able to help you.
 
 ## Design Patterns
 - The YPA project as a whole uses the MVC design pattern, with each packages representing each of the 3 layers. This structure not only separates the application's logic but also enhances maintainability and scalability. Below is a detailed explanation of the specific design patterns implemented or modified in different parts of the YPA project:
