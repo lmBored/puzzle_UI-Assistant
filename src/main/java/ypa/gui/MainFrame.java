@@ -660,6 +660,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         if (puzzle.getMode() == YPuzzle.Mode.EDIT) {
+            YGrid grid = puzzle.getGrid();
+            grid.clear();
+            updateFrame();
+
             final int circle = puzzlePanel.mouseToCircle(evt);
             if (circle != -1) {
                 circleIndex = circle;
