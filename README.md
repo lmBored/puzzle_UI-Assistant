@@ -2,16 +2,6 @@
 
 # Sujiko Puzzle Assistant
 
-## Group Assignment 2IRR00 2024 Group 6
-
-### Members
-- Nguyen Duy Anh Quan (1704311)
-- Mai Hoang Nam (1959190)
-- Nguyen Thanh Vinh (1957104)
-- Miquel Ibáñez Solbes (2118998)
-- Isabel Cantero Corchero (2064413)
-- Hoang Bao Khoi Nguyen (1979388)
-
 ### Description
 Sujiko is a number puzzle game played on a 3x3 grid. The objective is to fill 
 in the empty cells with numbers from 1 to 9. Each of the four central cells in 
